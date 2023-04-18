@@ -1,7 +1,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "lib/gui_lib.h"
+#include<QString>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,7 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     // Set the window to open as full screen
     this->showMaximized();
-    setWindowTitle("CHat Vibes");
+    ;
+    GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
 
 
 
