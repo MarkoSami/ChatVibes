@@ -1,5 +1,9 @@
 <RCC>
-    <qresource prefix="/imgs">
-        <file>logo.png</file>
+    <qresource prefix="/">
+        <file>imgs/discussion_1.png</file>
+        <file>imgs/find_1.png</file>
+        <file>imgs/profile.png</file>
+        <file>imgs/undraw_new_message_re_fp03.svg</file>
+        <file>imgs/logo.png</file>
     </qresource>
 </RCC>
