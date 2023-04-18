@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     // Set the window to open as full screen
     this->showMaximized();
-    ;
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     int width = ui->Textimg2->width() ;
     int height= ui->Textimg2->height() ;

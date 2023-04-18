@@ -10,6 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     lib/gui_lib.cpp \
+    logic/message.cpp \
+    logic/user.cpp \
     loginform.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,6 +20,8 @@ SOURCES += \
 
 HEADERS += \
     lib/gui_lib.h \
+    logic/message.h \
+    logic/user.h \
     loginform.h \
     mainwindow.h \
     profilewindow.h \
