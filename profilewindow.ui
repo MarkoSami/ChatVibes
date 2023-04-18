@@ -26,6 +26,19 @@
     <string>Mark Maher Bymsy</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>169</y>
+     <width>231</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Marko kaman  bymassy</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
