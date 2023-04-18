@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1023</width>
-    <height>541</height>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,7 +87,7 @@ border:none
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="resources.qrc">:/icons/D:/Downloads/find (1).png</pixmap>
+               <pixmap resource="resources.qrc">:/imgs/find_1.png</pixmap>
               </property>
              </widget>
             </item>
@@ -192,7 +192,7 @@ QScrollBar::sub-line:vertical {
               <x>0</x>
               <y>0</y>
               <width>282</width>
-              <height>363</height>
+              <height>410</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -255,7 +255,7 @@ color : white ;
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="resources.qrc">:/icons/D:/Downloads/user.png</pixmap>
+                   <pixmap resource="resources.qrc">:/imgs/profile.png</pixmap>
                   </property>
                  </widget>
                 </item>
@@ -358,7 +358,7 @@ margin-top : 50px;
 }</string>
              </property>
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -423,7 +423,7 @@ margin-top : 10px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="resources.qrc">:/icons/D:/Downloads/discussion (1).png</pixmap>
+          <pixmap resource="resources.qrc">:/imgs/logo.png</pixmap>
          </property>
         </widget>
        </item>
@@ -446,7 +446,7 @@ margin-top : 10px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="resources.qrc">:/icons/D:/Downloads/profile.png</pixmap>
+          <pixmap resource="resources.qrc">:/imgs/profile.png</pixmap>
          </property>
         </widget>
        </item>
