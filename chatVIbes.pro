@@ -13,17 +13,20 @@ SOURCES += \
     loginform.cpp \
     main.cpp \
     mainwindow.cpp \
+    profilewindow.cpp \
     registerform.cpp
 
 HEADERS += \
     lib/gui_lib.h \
     loginform.h \
     mainwindow.h \
+    profilewindow.h \
     registerform.h
 
 FORMS += \
     loginform.ui \
     mainwindow.ui \
+    profilewindow.ui \
     registerform.ui
 
 # Default rules for deployment.
