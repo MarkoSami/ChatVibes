@@ -3,7 +3,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include "profilewindow.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    profileWindow *profWin;
 };
 
 #endif // MAINWINDOW_H
