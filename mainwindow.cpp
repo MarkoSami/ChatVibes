@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     int width = ui->Textimg2->width() ;
     int height= ui->Textimg2->height() ;
-    QPixmap myPixmap(":/icons/D:/Downloads/undraw_new_message_re_fp03.svg");
+    QPixmap myPixmap(":/imgs/undraw_new_message_re_fp03.svg");
     ui->Textimg2->setPixmap(myPixmap.scaled(width,height,Qt::KeepAspectRatio));
     // Set the width of the pixmap using a style sheet
 

@@ -4,15 +4,7 @@
 #include<iostream>
 #include <string.h>
 #include<vector>
- #include "message.h"
-/*
---ID
-username
-password
-List of Contacts
-Messages
-image
-*/
+#include "message.h"
 
 
 
@@ -22,9 +14,9 @@ private:
     std::string ID;
     std::string user_name;
     std::string password;
-    std::vector<User> contacts;
+    std::vector<std::string> contacts;
     std::vector<Message> messages;
-    std::vector<Message> FavouriteMessages;
+    std::vector<std::string> FavouriteMessages;
     std::string imgPath;
     bool loggedIn;
 
@@ -42,14 +34,17 @@ public:
     std::string getUserPassword();
     void setUserPassword(std::string password);
 
-    std::vector<User> getUserContacts();
-    void setUserContacts(std::vector<User> &contacts);
+    std::vector<std::string> getUserContacts();
+    void setUserContacts(std::vector<std::string> &contacts);
 
-    std::vector<User> getUserMessages();
-    void setUserMessages(std::vector<User> &messages);
+    std::vector<Message> getUserMessages();
+    void setUserMessages(std::vector<Message> &messages);
 
-    void setFavoriteMessages(std::vector<Message> &favMessages);
-    std::vector<Message> getFavoriteMessages();
+    std::vector<std::string> getFavoriteMessages();
+    void setFavoriteMessages(std::vector<std::string> &favMessages);
+
+    std::string getIMGpath();
+    void setIMGpath(std::string);
 
 
     // user logic functions

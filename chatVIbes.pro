@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    lib/filesystem_lib.cpp \
     lib/gui_lib.cpp \
     logic/message.cpp \
     logic/user.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     registerform.cpp
 
 HEADERS += \
+    lib/filesystem_lib.h \
     lib/gui_lib.h \
     logic/message.h \
     logic/user.h \
@@ -40,3 +42,18 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    img/discussion_1.png \
+    img/find_1.png \
+    img/profile.png \
+    img/undraw_new_message_re_fp03.svg
+
+
+RESOURCES +=
+
+DISTFILES += \
+    img/discussion_1.png \
+    img/find_1.png \
+    img/profile.png \
+    img/undraw_new_message_re_fp03.svg

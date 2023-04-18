@@ -1,10 +1,9 @@
 <RCC>
-    <qresource prefix="/icons">
-        <file>D:/Downloads/find (1).png</file>
-        <file>D:/Downloads/user.png</file>
-        <file>D:/Downloads/discussion (1).png</file>
-        <file>D:/Downloads/profile.png</file>
-        <file>D:/Downloads/undraw_new_message_re_fp03.svg</file>
-        <file>D:/Downloads/undraw_messages_re_qy9x.svg</file>
+    <qresource prefix="/">
+        <file>imgs/discussion_1.png</file>
+        <file>imgs/find_1.png</file>
+        <file>imgs/profile.png</file>
+        <file>imgs/undraw_new_message_re_fp03.svg</file>
+        <file>imgs/logo.png</file>
     </qresource>
 </RCC>

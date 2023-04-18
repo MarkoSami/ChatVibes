@@ -26,6 +26,11 @@ private:
 
 public:
     Message();
+    std::string getID();
+    std::string getMessageTxt();
+    QDateTime getSendDate();
+    bool isSeen();
+    void setSeenStatus(bool seenStatus);
 };
 
 #endif // MESSAGE_H
