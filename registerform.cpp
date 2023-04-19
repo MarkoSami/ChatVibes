@@ -1,14 +1,14 @@
 #include "registerform.h"
 #include "ui_registerform.h"
-
-registerForm::registerForm(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::registerForm)
+#include <QPixmap>
+registerform::registerform(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::registerform)
 {
     ui->setupUi(this);
 }
 
-registerForm::~registerForm()
+registerform::~registerform()
 {
     delete ui;
 }

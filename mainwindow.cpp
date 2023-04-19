@@ -1,5 +1,8 @@
 
 #include "mainwindow.h"
+#include "profilewindow.h"
+#include "loginform.h"
+#include "registerfrom.h"
 #include "ui_mainwindow.h"
 #include "lib/gui_lib.h"
 #include<QString>
@@ -12,11 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     // Set the window to open as full screen
     this->showMaximized();
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
-    int width = ui->Textimg2->width() ;
-    int height= ui->Textimg2->height() ;
-    QPixmap myPixmap(":/imgs/undraw_new_message_re_fp03.svg");
-    ui->Textimg2->setPixmap(myPixmap.scaled(width,height,Qt::KeepAspectRatio));
-    // Set the width of the pixmap using a style sheet
+
+    regWin = new Registerfrom();
+
+    regWin->show();
 
 }
 

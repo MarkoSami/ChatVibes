@@ -13,13 +13,14 @@
 class fileSystem_lib
 {
 private :
-    static std::string PATH;
+    static  std::string PATH;
+    static std::string fullPath;
+
 public:
     fileSystem_lib();
     // sets up the file system if it doesn't exist (can be used on the start of the programm to ensure the file system exists)
     static bool setUpFileSystem(){
 
-        std::string fullPath = PATH + "User.json";
         QFile file(QString (fullPath.c_str() ) );
 
         if(file.exists()){
