@@ -17,7 +17,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     profilewindow.cpp \
-    registerform.cpp
+    registerfrom.cpp
 
 HEADERS += \
     lib/filesystem_lib.h \
@@ -27,13 +27,13 @@ HEADERS += \
     loginform.h \
     mainwindow.h \
     profilewindow.h \
-    registerform.h
+    registerfrom.h
 
 FORMS += \
     loginform.ui \
     mainwindow.ui \
     profilewindow.ui \
-    registerform.ui
+    registerfrom.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

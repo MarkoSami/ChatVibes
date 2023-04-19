@@ -7,9 +7,8 @@ profileWindow::profileWindow(QWidget *parent) :
     ui(new Ui::profileWindow)
 {
     ui->setupUi(this);
-    QPixmap profilePic("C:/DSProject/chatVibes/user.png");
-    ui->ProfileImageLabel->setPixmap(profilePic.scaled(200,200,Qt::KeepAspectRatio));
-
+//    ui->ProfileUploadBtn->setStyleSheet("QPushButton#ProfileUploadBtn{background-color: #3663fd; border-radius: 5px; font-size: 20px; color: white; font-weight: bold;}"
+//                                      "QPushButton#ProfileUploadBtn:hover{color : red;}");
 }
 
 profileWindow::~profileWindow()

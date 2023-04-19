@@ -4,7 +4,8 @@
 
 #include <QMainWindow>
 #include "profilewindow.h"
-
+#include "registerfrom.h"
+#include "loginform.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,8 @@ public:
 private:
     Ui::MainWindow *ui;
     profileWindow *profWin;
+    loginForm *logWin ;
+    Registerfrom *regWin ;
 };
 
 #endif // MAINWINDOW_H

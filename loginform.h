@@ -15,6 +15,9 @@ public:
     explicit loginForm(QWidget *parent = nullptr);
     ~loginForm();
 
+
+
+
 private:
     Ui::loginForm *ui;
 };

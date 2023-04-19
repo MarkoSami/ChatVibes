@@ -1,22 +1,22 @@
 #ifndef REGISTERFORM_H
 #define REGISTERFORM_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui {
-class registerForm;
+class registerform;
 }
 
-class registerForm : public QWidget
+class registerform : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit registerForm(QWidget *parent = nullptr);
-    ~registerForm();
+    explicit registerform(QWidget *parent = nullptr);
+    ~registerform();
 
 private:
-    Ui::registerForm *ui;
+    Ui::registerform *ui;
 };
 
-#endif // REGISTERFORM_H
+#endif // RIGISTERFORM_H
