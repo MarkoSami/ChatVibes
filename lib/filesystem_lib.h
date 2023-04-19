@@ -66,7 +66,7 @@ public:
 
         // adding user contacts IDs to the QJson array
         QJsonArray contacts;
-        for(auto contact : user.getUserContacts()){
+        for(auto &contact : user.getUserContacts()){
             contacts.append(contact.c_str());
         }
         userData["contacts"] = contacts;
@@ -80,7 +80,7 @@ public:
 
         // adding the user favourite messages to the QJsonArray
         QJsonArray favMessages;
-        for(auto message : user.getFavoriteMessages()){
+        for(auto &message : user.getFavoriteMessages()){
             favMessages.append(message.c_str());
         }
         userData["favMessages"] = favMessages;
