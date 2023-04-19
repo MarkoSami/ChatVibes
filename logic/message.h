@@ -21,11 +21,12 @@ class Message
 private:
     std::string ID;
     std::string messageTxt;
+    std::string receiverID;
     QDateTime sendDate;
     bool seen;
 
 public:
-    Message();
+    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen  );
     std::string getID();
     std::string getMessageTxt();
     QDateTime getSendDate();

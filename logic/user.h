@@ -5,6 +5,7 @@
 #include <string.h>
 #include<vector>
 #include "message.h"
+#include "logic/contact.h"
 
 
 
@@ -13,17 +14,19 @@ class User
 private:
     std::string ID;
     std::string user_name;
+    std::string first_name;
+    std::string last_name;
     std::string password;
-    std::vector<std::string> contacts;
+    std::vector<Contact> contacts;
     std::vector<Message> messages;
-    std::vector<std::string> FavouriteMessages;
+    std::vector<Message> FavouriteMessages;
     std::string imgPath;
     bool loggedIn;
 
 
 
 public:
-    User();
+    User(std::string _ID, std::string _user_name, std::string _first_name, std::string _last_name ,std::string _password, std::string _imgPath = ":/imgs/Profile (2).png", bool _loggedIn = false);
     // getters and setters
     std::string getUserID();
     void setUserID(std::string ID);
@@ -51,7 +54,7 @@ public:
     bool registerUser();
     bool logUserIn();
     bool isLoggedIn();
-    bool addContact(User &newContact);
+    bool addContact(Contact &newContact);
     bool removeContact(std::string contactID);
     User findContact(std::string contactID);
     bool addToFavouriteMessages(std::string messageID);

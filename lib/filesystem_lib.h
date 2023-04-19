@@ -92,7 +92,16 @@ public:
 
 
 
+/*
+{
+    ID:2342354,
+    firstName:marko
+    pass
+    contacts: [],
+    messages: [],
+}
 
+*/
 
 
 

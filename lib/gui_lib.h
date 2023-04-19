@@ -13,7 +13,7 @@ class GUI_lib
 public:
     GUI_lib();
     // this function is used to set up any window in this application
-    static void setUpWindow(QMainWindow *window,std::string  windowTitle,std::string imagePath){
+    static void setUpWindow(QWidget *window,std::string  windowTitle,std::string imagePath){
         window->setWindowIcon(QIcon(imagePath.c_str()));
         window->setWindowTitle(QString(windowTitle.c_str()));
     }

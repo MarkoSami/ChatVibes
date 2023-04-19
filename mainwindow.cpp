@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
 
     regWin = new Registerfrom();
-
     regWin->show();
 
 }

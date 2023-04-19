@@ -11,6 +11,8 @@ CONFIG += c++17
 SOURCES += \
     lib/filesystem_lib.cpp \
     lib/gui_lib.cpp \
+    logic/contact.cpp \
+    logic/conversation.cpp \
     logic/message.cpp \
     logic/user.cpp \
     loginform.cpp \
@@ -22,6 +24,8 @@ SOURCES += \
 HEADERS += \
     lib/filesystem_lib.h \
     lib/gui_lib.h \
+    logic/contact.h \
+    logic/conversation.h \
     logic/message.h \
     logic/user.h \
     loginform.h \
