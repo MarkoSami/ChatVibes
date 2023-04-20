@@ -5,13 +5,13 @@
 #include<string.h>
 #include "logic/contact.h"
 #include "logic/message.h"
-#include <vector>
+#include <list>
 
 class Conversation
 {
 private:
     Contact receiver;
-    std::vector<Message> messages;
+    std::list<Message> messages;
     std::string name;
     bool isFavourite;
 

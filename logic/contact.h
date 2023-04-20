@@ -11,7 +11,7 @@ private:
     std::string ID;
     std::string name;
     std::string imgPath;
-    std::vector<Message> messages;
+    std::list<Message> messages;
 
 public:
     Contact(std::string _ID , std::string _imgPath , std::string _name  );
@@ -26,7 +26,7 @@ public:
 
     void addMessage(Message message);
     void removeMessage(Message message);
-    std::vector<Message> getMessages();
+    std::list<Message> getMessages();
 
 
 
