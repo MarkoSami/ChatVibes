@@ -30,6 +30,7 @@ public:
     std::string getID();
     std::string getMessageTxt();
     QDateTime getSendDate();
+    std::string getReceiverId();
     bool isSeen();
     void setSeenStatus(bool seenStatus);
 };

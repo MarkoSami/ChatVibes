@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include<QJsonArray>
 #include "logic/user.h"
+#include "logic/contact.h"
 
 class fileSystem_lib
 {
@@ -30,26 +31,43 @@ public:
         if(file.open(QIODevice::WriteOnly)){
             file.write("{}"); // Write an empty JSON object to the file
             file.close();
-            return true;
         }
         return true;
     }
 
 
     // ________create a new message QJson object ready to add for QJsonArray
-    static QJsonObject createNewMessage(Message &message){
+    static QJsonObject createNewJSONMessage(Message &message){
         QJsonObject JSONmessage;
         JSONmessage["ID"] = message.getID().c_str();
         JSONmessage["msgTxt"] = message.getMessageTxt().c_str();
         JSONmessage["seen"] = message.isSeen();
         JSONmessage["sendDate"] = QJsonValue::fromVariant(message.getSendDate());
+        JSONmessage["receiverID"] = message.getReceiverId().c_str();
         return JSONmessage;
     }
 
-    // _______create new user file if it doesn't exist
-    static bool createNewUser(User user){
+    // ________create a new Contact QJson object ready to add for QJsonArray
+    static QJsonObject createNewJSONContact(Contact &contact){
+        QJsonObject JSONContact;
+        JSONContact["ID"] = contact.getID().c_str();
+        JSONContact["name"] = contact.getName().c_str();
+        JSONContact["imgPath"] = contact.getImgPath().c_str();
 
-        if(user.getUserID().empty() || user.getUserName().empty() || user.getUserPassword().empty()){
+        QJsonArray messages;
+        for(auto message : contact.getMessages()){
+            messages.append(createNewJSONMessage(message));
+        }
+
+        JSONContact["messages"] = messages;
+        return JSONContact;
+
+    }
+
+    // _______create new user file if it doesn't exist
+    static bool createNewJSONUser(User user){
+
+        if( (&user) == nullptr ||user.getUserID().empty() || user.getUserName().empty() || user.getUserPassword().empty()){
             return false;
         }
         if(!setUpFileSystem()){
@@ -59,23 +77,25 @@ public:
         // preparing user data
         QJsonObject userData;
         userData["ID"] =  user.getUserID().c_str();
-        userData["username"] =  user.getUserID().c_str();
-        userData["password"] =  user.getUserID().c_str();
-        userData["ID"] =  user.getUserID().c_str();
+        userData["firstName"] =  user.getUserName().c_str();
+        userData["lastName"] =  user.getlastName().c_str();
+
+        userData["username"] =  user.getUserName().c_str();
+        userData["password"] =  user.getUserPassword().c_str();
         userData["loggedIn"] = user.isLoggedIn();
         userData["imgPath"] = user.getIMGpath().c_str();
 
         // adding user contacts IDs to the QJson array
         QJsonArray contacts;
         for(auto &contact : user.getUserContacts()){
-            contacts.append(contact.c_str());
+            contacts.append(createNewJSONContact(contact));
         }
         userData["contacts"] = contacts;
 
         // adding user messages IDs to the QJson array
         QJsonArray messages;
         for(auto message : user.getUserMessages()){
-            messages.append(createNewMessage(message));
+            messages.append(createNewJSONMessage(message));
         }
         userData["messages"] = messages;
 

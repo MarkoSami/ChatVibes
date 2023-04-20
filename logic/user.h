@@ -37,7 +37,7 @@ public:
     std::string getUserPassword();
     void setUserPassword(std::string password);
 
-    std::vector<std::string> getUserContacts();
+    std::vector<Contact> getUserContacts();
     void setUserContacts(std::vector<std::string> &contacts);
 
     std::vector<Message> getUserMessages();
@@ -48,6 +48,12 @@ public:
 
     std::string getIMGpath();
     void setIMGpath(std::string);
+
+    std::string getlastName();
+    void setlastName(std::string name);
+
+    std::string getFirstName();
+    void setFirstName(std::string name);
 
 
     // user logic functions
