@@ -10,6 +10,7 @@
 class Conversation
 {
 private:
+
     Contact receiver;
     std::list<Message> messages;
     std::string name;

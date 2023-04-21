@@ -43,7 +43,7 @@ public:
     std::list<Message> getUserMessages();
     void setUserMessages(std::list<Message> &messages);
 
-    std::list<std::string> getFavoriteMessages();
+    std::list<Message> getFavoriteMessages();
     void setFavoriteMessages(std::list<std::string> &favMessages);
 
     std::string getIMGpath();

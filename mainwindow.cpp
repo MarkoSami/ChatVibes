@@ -7,17 +7,20 @@
 #include "lib/gui_lib.h"
 #include<QString>
 #include <QPixmap>
+#include "lib/filesystem_lib.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    fileSystem_lib ::saveData();
+     ui->setupUi(this);
     // Set the window to open as full screen
     this->showMaximized();
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
 
     regWin = new Registerfrom();
     regWin->show();
+
 
 }
 
