@@ -8,11 +8,14 @@
 #include<QString>
 #include <QPixmap>
 #include "lib/filesystem_lib.h"
+
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    fileSystem_lib ::saveData();
+    fileSystem_lib ::loadData( );
      ui->setupUi(this);
     // Set the window to open as full screen
     this->showMaximized();
@@ -20,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     regWin = new Registerfrom();
     regWin->show();
+    fileSystem_lib::saveData();
+
 
 
 }

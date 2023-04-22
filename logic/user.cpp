@@ -52,4 +52,18 @@ bool User::isLoggedIn(){
     return this->loggedIn;
 }
 
+bool User::addNewMessage( const Message &message){
+    this->messages.push_back(message);
+    return true;
+}
+
+bool User::addToFavouriteMessages( const Message& message){
+    this->FavouriteMessages.push_back(message);
+    return true;
+}
+
+bool User::addContact( const Contact& newContact){
+    this->contacts.push_back(newContact);
+    return true;
+}
 
