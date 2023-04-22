@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+
 namespace Ui {
 class loginForm;
 }
@@ -20,6 +21,11 @@ public:
 
 private:
     Ui::loginForm *ui;
+
+signals:
+    void RegisterClicked();
+private slots:
+    void on_pushButton_2_clicked();
 };
 
 #endif // LOGINFORM_H

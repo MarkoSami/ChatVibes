@@ -15,8 +15,17 @@ public:
     explicit Registerfrom(QWidget *parent = nullptr);
     ~Registerfrom();
 
+private slots:
+
+
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::Registerfrom *ui;
+
+signals:
+    void LoginClicked();
 };
 
 #endif // REGISTERFROM_H

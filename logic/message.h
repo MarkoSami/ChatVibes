@@ -4,7 +4,7 @@
 #include<iostream>
 #include<string.h>
 #include<QDateTime>
-
+#include <QGroupBox>
 /*
 
 Message text
@@ -24,15 +24,19 @@ private:
     std::string receiverID;
     QDateTime sendDate;
     bool seen;
+    bool Favourite;
 
 public:
-    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen  );
+    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite );
     std::string getID();
     std::string getMessageTxt();
     QDateTime getSendDate();
     std::string getReceiverId();
     bool isSeen();
+    void isFavourite();
     void setSeenStatus(bool seenStatus);
+    void rendermessageSender(QGroupBox* layoutSpecified , std::string messageText , std::string imgPath);
+    void rendermessageReciever(QGroupBox* layoutSpecified , std::string messageText , std::string imgPath);
 };
 
 #endif // MESSAGE_H

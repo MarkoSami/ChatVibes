@@ -7,63 +7,42 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>558</height>
+    <height>548</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>900</width>
-    <height>558</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>900</width>
-    <height>558</height>
+    <height>548</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <item>
-    <widget class="QGroupBox" name="contLogin">
-     <property name="styleSheet">
-      <string notr="true">#contLogin { 
-border : none;  
-border-image: url(:/imgs/profileBg.png);
-}</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="maximumSize">
+      <size>
+       <width>900</width>
+       <height>500</height>
+      </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="leftMargin">
-       <number>15</number>
-      </property>
-      <property name="topMargin">
-       <number>2</number>
-      </property>
-      <property name="rightMargin">
-       <number>15</number>
-      </property>
-      <property name="bottomMargin">
-       <number>15</number>
-      </property>
+     <property name="styleSheet">
+      <string notr="true">border : none;</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="groupBox_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -82,7 +61,7 @@ border : none ;
 }
 </string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
           <number>26</number>
          </property>
@@ -99,7 +78,7 @@ border : none ;
           <number>0</number>
          </property>
          <item>
-          <spacer name="verticalSpacer">
+          <spacer name="verticalSpacer_4">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -111,17 +90,17 @@ border : none ;
            </property>
           </spacer>
          </item>
-         <item alignment="Qt::AlignTop">
-          <widget class="QGroupBox" name="verticalGroupBox">
+         <item>
+          <widget class="QGroupBox" name="verticalGroupBox_3">
            <property name="styleSheet">
             <string notr="true">border :none;</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
+           <layout class="QVBoxLayout" name="verticalLayout_10">
             <property name="spacing">
-             <number>22</number>
+             <number>6</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="label_5">
               <property name="styleSheet">
                <string notr="true">font-size : 20px; 
 font-weight : bold ; 
@@ -133,20 +112,26 @@ color : white ;</string>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_6">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>44</height>
+               </size>
+              </property>
               <property name="styleSheet">
-               <string notr="true">#label_2 {
+               <string notr="true">
 color:white;
 font-size: 30px;
 font-weight:bold
 
-}</string>
+</string>
               </property>
               <property name="text">
                <string>Register</string>
@@ -154,7 +139,7 @@ font-weight:bold
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="label_8">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -162,11 +147,10 @@ font-weight:bold
                </sizepolicy>
               </property>
               <property name="styleSheet">
-               <string notr="true">#label_3 {
+               <string notr="true">
 color:white;
 font-size: 12px;
-
-}</string>
+</string>
               </property>
               <property name="text">
                <string>You already have an account ? Log in</string>
@@ -177,11 +161,11 @@ font-size: 12px;
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox">
+          <widget class="QGroupBox" name="horizontalGroupBox_2">
            <property name="styleSheet">
             <string notr="true">border : none ;</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="spacing">
              <number>13</number>
             </property>
@@ -224,7 +208,7 @@ padding:0;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_8">
+                <widget class="QLabel" name="label_9">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -290,7 +274,7 @@ padding:0;</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_9">
+                <widget class="QLabel" name="label_10">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -333,7 +317,7 @@ padding:5px;
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="verticalGroupBox_5">
+          <widget class="QGroupBox" name="verticalGroupBox_8">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -345,7 +329,7 @@ padding:5px;
 margin:0;
 padding:0;</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_11">
+           <layout class="QVBoxLayout" name="verticalLayout_14">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -359,7 +343,7 @@ padding:0;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="label_11">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -367,11 +351,11 @@ padding:0;</string>
                </sizepolicy>
               </property>
               <property name="styleSheet">
-               <string notr="true">#label_7 {
+               <string notr="true">
 color:white;
-font-size: 10px;
+font-size: 15px;
 
-}</string>
+</string>
               </property>
               <property name="text">
                <string>Username</string>
@@ -379,17 +363,16 @@ font-size: 10px;
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_4">
+             <widget class="QLineEdit" name="lineEdit_7">
               <property name="styleSheet">
-               <string notr="true">#lineEdit_4 {
+               <string notr="true">
 color:white;
 font-size: 12px;
 border-radius: 5px;
 	
 	background-color: rgb(51, 54, 71);
 padding:5px;
-
-}</string>
+</string>
               </property>
               <property name="placeholderText">
                <string>Enter your username</string>
@@ -400,7 +383,7 @@ padding:5px;
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="verticalGroupBox_11">
+          <widget class="QGroupBox" name="verticalGroupBox_12">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -412,7 +395,7 @@ padding:5px;
 margin:0;
 padding:0;</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_20">
+           <layout class="QVBoxLayout" name="verticalLayout_21">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -426,7 +409,7 @@ padding:0;</string>
              <number>15</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_20">
+             <widget class="QLabel" name="label_21">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -434,11 +417,12 @@ padding:0;</string>
                </sizepolicy>
               </property>
               <property name="styleSheet">
-               <string notr="true">#label_20 {
+               <string notr="true">
 color:white;
-font-size: 10px;
+font-size: 15px;
 
-}</string>
+
+</string>
               </property>
               <property name="text">
                <string>Password</string>
@@ -446,9 +430,9 @@ font-size: 10px;
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_11">
+             <widget class="QLineEdit" name="lineEdit_12">
               <property name="styleSheet">
-               <string notr="true">#lineEdit_11 {
+               <string notr="true">
 color:white;
 font-size: 12px;
 border-radius: 5px;
@@ -456,7 +440,7 @@ border-radius: 5px;
 	background-color: rgb(51, 54, 71);
 padding:5px;
 
-}</string>
+</string>
               </property>
               <property name="echoMode">
                <enum>QLineEdit::Password</enum>
@@ -470,12 +454,18 @@ padding:5px;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
+          <widget class="QGroupBox" name="horizontalGroupBox_3">
            <property name="styleSheet">
-            <string notr="true">QPushButton{background-color :#3663fd ;
+            <string notr="true">border : none ;</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QPushButton" name="pushButton_3">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{background-color :#3663fd ;
 font-weight : bold ;
 border-radius : 5px;
 font-size : 15px; 
@@ -485,14 +475,39 @@ QPushButton:pressed {
     border: 2px solid blue;
 }
 </string>
-           </property>
-           <property name="text">
-            <string>Register</string>
-           </property>
+              </property>
+              <property name="text">
+               <string>Register</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_4">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{background-color :#3663fd ;
+font-weight : bold ;
+border-radius : 5px;
+font-size : 15px; 
+color:white;
+padding: 5px;}
+QPushButton:pressed {
+    border: 2px solid blue;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>Login</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer_2">
+          <spacer name="verticalSpacer_5">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -508,7 +523,7 @@ QPushButton:pressed {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="verticalGroupBox_2">
+       <widget class="QGroupBox" name="verticalGroupBox_4">
         <property name="minimumSize">
          <size>
           <width>400</width>
@@ -518,9 +533,9 @@ QPushButton:pressed {
         <property name="styleSheet">
          <string notr="true">border : none ; </string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <spacer name="verticalSpacer_3">
+          <spacer name="verticalSpacer_6">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
@@ -536,7 +551,7 @@ QPushButton:pressed {
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="label_12">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -558,7 +573,7 @@ QPushButton:pressed {
           </widget>
          </item>
          <item>
-          <spacer name="verticalSpacer_4">
+          <spacer name="verticalSpacer_7">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>

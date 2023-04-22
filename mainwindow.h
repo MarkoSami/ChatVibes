@@ -5,7 +5,8 @@
 #include <QMainWindow>
 #include "profilewindow.h"
 #include "registerfrom.h"
-#include "loginform.h"
+#include "starting_handle.h"
+#include "welcomepage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,11 +21,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_2_clicked();
+
+
 private:
     Ui::MainWindow *ui;
-    profileWindow *profWin;
-    loginForm *logWin ;
-    Registerfrom *regWin ;
+//    profileWindow *profWin;
+//    Registerfrom *regWin ;
+    WelcomePage *welcomeWin;
 };
 
 #endif // MAINWINDOW_H

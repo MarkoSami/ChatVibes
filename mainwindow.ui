@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1022</width>
-    <height>600</height>
+    <width>1087</width>
+    <height>619</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>2000</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>ChatVibes</string>
@@ -18,8 +30,364 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
+    <property name="leftMargin">
+     <number>9</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="verticalGroupBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border : none ; 
+background : #161a1d;
+border-radius : 5px; </string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="logo">
+         <property name="minimumSize">
+          <size>
+           <width>33</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::PreventContextMenu</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#logo { 
+
+image: url(:/imgs/discussion_1.png);
+}
+</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label">
+         <property name="minimumSize">
+          <size>
+           <width>49</width>
+           <height>41</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">image: url(:/imgs/5875354.png);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2" alignment="Qt::AlignRight">
+     <widget class="QGroupBox" name="horizontalGroupBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border : none ;</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>9</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="minimumSize">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>11</width>
+           <height>11</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background : rgb(0, 255, 0); 
+border-radius : 5px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="minimumSize">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>11</width>
+           <height>11</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background : orange; 
+border-radius : 5px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="minimumSize">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>11</width>
+           <height>11</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background : red; 
+border-radius : 5px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="1">
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="Conversation">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background : #161a1d ;
+border:none;
+border-radius : 5px ;</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QStackedWidget" name="stackedWidget">
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <widget class="QWidget" name="page_3">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="Textimg2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>500</width>
+                   <height>500</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">#Textimg2 { 
+	image: url(:/imgs/undraw_Opened_re_i38e (1).png);
+margin-top : 50px; 
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_4">
+            <property name="styleSheet">
+             <string notr="true">background :#1d2127</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>20</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
+             </property>
+             <property name="bottomMargin">
+              <number>20</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size : 20px ; 
+font-weight : bold ; 
+color : white ; 
+</string>
+               </property>
+               <property name="text">
+                <string>Anonymous ID</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QScrollArea" name="scrollArea_2">
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaWidgetContents">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>558</width>
+                  <height>470</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QGroupBox" name="verticalGroupBox_3">
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <property name="spacing">
+                     <number>24</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QGroupBox" name="verticalGroupBox">
         <property name="sizePolicy">
@@ -30,7 +398,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>300</width>
+          <width>350</width>
           <height>0</height>
          </size>
         </property>
@@ -200,8 +568,8 @@ QScrollBar::sub-line:vertical {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>282</width>
-              <height>422</height>
+              <width>332</width>
+              <height>414</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -240,12 +608,18 @@ QScrollBar::sub-line:vertical {
                <property name="styleSheet">
                 <string notr="true">QGroupBox { 
 border:none; 
+background :#161a1d ;
+border-radius : 5px;
 }
-QGroupBox:hover { 
-background : red;  
-}</string>
+</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_82">
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
                 <item>
                  <widget class="QLabel" name="label_82">
                   <property name="sizePolicy">
@@ -255,9 +629,7 @@ background : red;
                    </sizepolicy>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">#label { 
-color : white ; 
-}</string>
+                   <string notr="true">background:transparent;</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -284,7 +656,7 @@ border:none ;
                       <string notr="true">font-size : 15px ; 
 font-weight : bold ; 
 color:white; 
-</string>
+background:transparent;</string>
                      </property>
                      <property name="text">
                       <string>Sender ID</string>
@@ -294,7 +666,7 @@ color:white;
                    <item>
                     <widget class="QLineEdit" name="lineEdit_163">
                      <property name="styleSheet">
-                      <string notr="true">
+                      <string notr="true">background:transparent;
 font-size : 15px;
 color : gray; 
 </string>
@@ -330,176 +702,7 @@ color : gray;
         </layout>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QGroupBox" name="Conversation">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background : #161a1d ;
-border:none;
-border-radius : 5px ;</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <item>
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLabel" name="Textimg2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>500</width>
-               <height>500</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">#Textimg2 { 
-	image: url(:/imgs/undraw_Opened_re_i38e (1).png);
-margin-top : 50px; 
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="title">
-           <property name="styleSheet">
-            <string notr="true">#title { 
-font-size : 30px; 
-font-weight : bold ;
-color : white ; 
-}</string>
-           </property>
-           <property name="text">
-            <string>Start new Conversation with ChatVibes</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
      </layout>
-    </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="verticalGroupBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>60</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border : none ; 
-background : #161a1d;
-border-radius : 5px; </string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="logo">
-         <property name="contextMenuPolicy">
-          <enum>Qt::PreventContextMenu</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#logo { 
-margin-top : 10px; 
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="resources.qrc">:/imgs/logo.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="resources.qrc">:/imgs/profile.png</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
     </item>
    </layout>
   </widget>

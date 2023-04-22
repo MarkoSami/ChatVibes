@@ -58,12 +58,11 @@ public:
 
     // user logic functions
     bool isLoggedIn();
-
     bool addContact(Contact &newContact);
     bool removeContact(std::string contactID);
-    User findContact(std::string contactID);
-    bool addToFavouriteMessages(std::string messageID);
-    bool removeFromFavouriteMessages(std::string messageID);
+    Contact findContact(std::string contactID);
+    void addToFavouriteMessages(std::string messageID);
+    void removeFromFavouriteMessages(std::string messageID);
 
 
 

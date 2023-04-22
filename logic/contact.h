@@ -15,7 +15,7 @@ private:
 
 public:
     Contact(std::string _ID , std::string _imgPath , std::string _name  );
-
+    Contact();
     std::string getID();
 
     std::string getImgPath();
