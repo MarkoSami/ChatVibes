@@ -24,6 +24,7 @@ private:
 
 signals:
     void RegisterClicked();
+
 private slots:
     void on_pushButton_2_clicked();
 };

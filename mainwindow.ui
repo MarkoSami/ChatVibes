@@ -226,7 +226,7 @@ border-radius : 5px;</string>
         </property>
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>700</width>
           <height>0</height>
          </size>
         </property>
@@ -259,36 +259,91 @@ border-radius : 5px ;</string>
            <widget class="QWidget" name="page_3">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QLabel" name="Textimg2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>500</width>
-                   <height>500</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#Textimg2 { 
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+              <widget class="QGroupBox" name="groupBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item alignment="Qt::AlignTop">
+                 <widget class="QLabel" name="Textimg2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>300</width>
+                    <height>265</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#Textimg2 { 
 	image: url(:/imgs/undraw_Opened_re_i38e (1).png);
 margin-top : 50px; 
 }</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter">
+                 <widget class="QLabel" name="label_4">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font-size : 20px;
+color:white ; 
+font-weight : bold</string>
+                  </property>
+                  <property name="text">
+                   <string>Start Chat With ChatVibes</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -330,6 +385,29 @@ color : white ;
              </item>
              <item>
               <widget class="QScrollArea" name="scrollArea_2">
+               <property name="styleSheet">
+                <string notr="true">QScrollBar::vertical {
+    border: none;
+    width: 6px;
+}
+QScrollArea { 
+border:none ; 
+}
+
+QScrollBar::handle:vertical {
+    background-color: white;
+    border-radius: 3px;
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    background-color: transparent;
+    height: 0px;
+    width: 0px;
+}
+</string>
+               </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
@@ -338,8 +416,8 @@ color : white ;
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>558</width>
-                  <height>470</height>
+                  <width>614</width>
+                  <height>453</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -362,6 +440,25 @@ color : white ;
                      <number>0</number>
                     </property>
                    </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>fsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaffsaf</string>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -398,7 +495,7 @@ color : white ;
         </property>
         <property name="minimumSize">
          <size>
-          <width>350</width>
+          <width>400</width>
           <height>0</height>
          </size>
         </property>
@@ -568,8 +665,8 @@ QScrollBar::sub-line:vertical {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>332</width>
-              <height>414</height>
+              <width>376</width>
+              <height>404</height>
              </rect>
             </property>
             <property name="sizePolicy">

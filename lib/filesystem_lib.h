@@ -100,7 +100,8 @@ private :
                 jsonMessageObj["msgTxt"].toString().toStdString(),
                 jsonMessageObj["receiverID"].toString().toStdString(),
                 jsonMessageObj["sendDate"].toVariant().toDateTime(),
-                jsonMessageObj["seen"].toBool()
+                jsonMessageObj["seen"].toBool(),
+                jsonMessageObj["Favourite"].toBool()
             );
         return message;
     }

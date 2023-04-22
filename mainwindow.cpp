@@ -10,12 +10,9 @@
 #include<QString>
 #include <QScreen>
 #include <QPixmap>
-<<<<<<< HEAD
-=======
 #include "lib/filesystem_lib.h"
 
 
->>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,23 +21,52 @@ MainWindow::MainWindow(QWidget *parent)
     fileSystem_lib ::loadData( );
      ui->setupUi(this);
     // Set the window to open as full screen
-    this->showMaximized();
+
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
-//    this->setWindowFlags( Qt::WindowTitleHint);
+//    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    for (int i = 0 ; i<20 ; i++) {
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    QHBoxLayout *hLayoutParent = new QHBoxLayout;
+
+    // Add QLabel widgets to the layout
+    QLabel *ProfilePic = new QLabel();
+    ProfilePic->setSizePolicy(QSizePolicy::Fixed , QSizePolicy::Fixed);
+    ProfilePic->setMinimumHeight(30); ProfilePic->setMinimumWidth(30);
+    ProfilePic->setStyleSheet("image: url(:/imgs/Profile (2).png);");
+
+    QLabel *textMsg = new QLabel(" مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص مارك الجياص");
+    textMsg->setSizePolicy(QSizePolicy::Fixed , QSizePolicy::Fixed);
+    textMsg->setMinimumHeight(30);
+    textMsg->setStyleSheet("color : white ;font-weight :bold;font-size : 16px ;");
+
+    // Add the QLabel to the child QGroupBox layout
+    hLayout->addWidget(ProfilePic);
+    hLayout->addWidget(textMsg);
+
+    // Add a horizontal spacer to the parent QGroupBox layout
+    QSpacerItem *hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+
+    // Create a new QGroupBox with the child QHBoxLayout as its layout
+    QGroupBox *hGroupBox = new QGroupBox();
+    hGroupBox->setMinimumHeight(60);
+    hGroupBox->setMaximumWidth(300);
+    hGroupBox->setStyleSheet("background :#161a1d ;");
+    hLayout->setSpacing(30);
+    hLayout->setContentsMargins(20,9,20,9);
+    hGroupBox->setLayout(hLayout);
+
+    // Add the child QGroupBox to the parent QGroupBox layout
+    hLayoutParent->addWidget(hGroupBox);
+    hLayoutParent->addItem(hSpacer);
+    // Set the parent QGroupBox layout and style sheet
+    QGroupBox *hGroupBoxParent = new QGroupBox();
+    hGroupBoxParent->setLayout(hLayoutParent);
+    ui->verticalGroupBox_3->layout()->addWidget(hGroupBoxParent);
+    }
     welcomeWin = new WelcomePage();
     welcomeWin->show();
-
-<<<<<<< HEAD
-    // Add the parent QGroupBox to the vertical layout
-//    ui->verticalGroupBox_3->layout()->addWidget(hGroupBoxParent);
-=======
-    regWin = new Registerfrom();
-    regWin->show();
     fileSystem_lib::saveData();
-
-
->>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
-
 }
 
 MainWindow::~MainWindow()

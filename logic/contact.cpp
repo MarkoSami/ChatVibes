@@ -11,17 +11,12 @@ Contact::Contact( std::string _ID , std::string _imgPath = ":/imgs/Profile (2).p
     this->name = _name;
 }
 
-<<<<<<< HEAD
 Contact::Contact(){
 
 }
 
 std::string Contact::getID(){
     return this->ID;
-=======
-std::string Contact::getID()
-{
-    return ID;
 }
 
 std::string Contact::getImgPath()
@@ -49,7 +44,6 @@ void Contact::setName(std::string name)
 std::list<Message> Contact::getMessages()
 {
     return messages;
->>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
 }
 
 void Contact::addMessage(Message message) {

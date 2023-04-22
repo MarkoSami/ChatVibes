@@ -9,20 +9,8 @@ User::User(std::string ID, std::string user_name, std::string first_name, std::s
 {
 }
 
-bool User::addContact(Contact &newContact) {
-
-<<<<<<< HEAD
-    // Check if the contact already exists
-    for (auto &contact : contacts) {
-        if (contact.getID() == newContact.getID()) {
-            // Contact already exists, return false
-            return false;
-        }
-    }
-
-    // Add the new contact
-    contacts.push_back(newContact);
-
+bool User::addContact( const Contact& newContact){
+    this->contacts.push_back(newContact);
     return true;
 }
 
@@ -46,10 +34,10 @@ Contact User::findContact(std::string contactID) {
     return Contact(); // contact not found
 }
 
-void User::addToFavouriteMessages(std::string messageID) {
+void User::addToFavouriteMessages(Message message) {
 
     for (auto it = messages.begin(); it != messages.end(); ++it) {
-        if (it->getID() == messageID) {
+        if (it->getID() == message.getID()) {
             it->isFavourite();
             return ;
         }
@@ -65,7 +53,12 @@ void User::removeFromFavouriteMessages(std::string messageID) {
         }
     }
 }
-=======
+
+bool User::addNewMessage( const Message &message){
+    this->messages.push_back(message);
+    return true;
+}
+
 // getters
 std::string User::getFirstName(){
     return this->first_name;
@@ -77,8 +70,8 @@ std::string User::getlastName(){
 
 std::string User::getUserID(){
     return this->ID;
-
 }
+
 std::string User::getUserName(){
     return this->user_name;
 };
@@ -107,19 +100,4 @@ bool User::isLoggedIn(){
     return this->loggedIn;
 }
 
-bool User::addNewMessage( const Message &message){
-    this->messages.push_back(message);
-    return true;
-}
 
-bool User::addToFavouriteMessages( const Message& message){
-    this->FavouriteMessages.push_back(message);
-    return true;
-}
-
-bool User::addContact( const Contact& newContact){
-    this->contacts.push_back(newContact);
-    return true;
-}
-
->>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
