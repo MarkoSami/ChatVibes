@@ -17,6 +17,7 @@ Message::Message(std::string _ID, std::string _messageTxt, std::string _receiver
     this->Favourite = _Favourite ;
 }
 
+<<<<<<< HEAD
 void Message::isFavourite() {
     Favourite = !Favourite;
 }
@@ -103,3 +104,36 @@ void rendermessageSender(QGroupBox* layoutSpecified , std::string messageText , 
     QGroupBox *hGroupBoxParent = new QGroupBox();
     hGroupBoxParent->setLayout(hLayoutParent);
 }
+=======
+
+std::string Message::getID()
+{
+    return ID;
+}
+
+std::string Message::getMessageTxt()
+{
+    return messageTxt;
+}
+
+QDateTime Message::getSendDate()
+{
+    return sendDate;
+}
+
+std::string Message::getReceiverId()
+{
+    return receiverID;
+}
+
+bool Message::isSeen()
+{
+    return seen;
+}
+
+void Message::setSeenStatus(bool seenStatus)
+{
+    seen = seenStatus;
+}
+
+>>>>>>> 904ca86c456cab439afdf13f84232e641f54e921

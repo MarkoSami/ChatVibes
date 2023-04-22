@@ -43,7 +43,7 @@ public:
     std::list<Message> getUserMessages();
     void setUserMessages(std::list<Message> &messages);
 
-    std::list<std::string> getFavoriteMessages();
+    std::list<Message> getFavoriteMessages();
     void setFavoriteMessages(std::list<std::string> &favMessages);
 
     std::string getIMGpath();
@@ -58,11 +58,21 @@ public:
 
     // user logic functions
     bool isLoggedIn();
+<<<<<<< HEAD
     bool addContact(Contact &newContact);
     bool removeContact(std::string contactID);
     Contact findContact(std::string contactID);
     void addToFavouriteMessages(std::string messageID);
     void removeFromFavouriteMessages(std::string messageID);
+=======
+
+    bool addContact(const Contact& newContact);
+    bool removeContact(std::string contactID);
+    User findContact(std::string contactID);
+    bool addToFavouriteMessages(const Message& message);
+    bool removeFromFavouriteMessages(const Message& message);
+    bool addNewMessage(const Message &message);
+>>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
 
 
 

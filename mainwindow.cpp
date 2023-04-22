@@ -10,12 +10,19 @@
 #include<QString>
 #include <QScreen>
 #include <QPixmap>
+<<<<<<< HEAD
+=======
+#include "lib/filesystem_lib.h"
+
+
+>>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    fileSystem_lib ::loadData( );
+     ui->setupUi(this);
     // Set the window to open as full screen
     this->showMaximized();
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
@@ -23,8 +30,16 @@ MainWindow::MainWindow(QWidget *parent)
     welcomeWin = new WelcomePage();
     welcomeWin->show();
 
+<<<<<<< HEAD
     // Add the parent QGroupBox to the vertical layout
 //    ui->verticalGroupBox_3->layout()->addWidget(hGroupBoxParent);
+=======
+    regWin = new Registerfrom();
+    regWin->show();
+    fileSystem_lib::saveData();
+
+
+>>>>>>> 904ca86c456cab439afdf13f84232e641f54e921
 
 }
 
