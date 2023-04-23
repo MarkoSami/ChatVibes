@@ -100,4 +100,8 @@ bool User::isLoggedIn(){
     return this->loggedIn;
 }
 
+void User::setLoggedIn(bool value) {
+    this->loggedIn = value;
+}
+
 

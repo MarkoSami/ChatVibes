@@ -58,6 +58,7 @@ public:
 
     // user logic functions
     bool isLoggedIn();
+    void setLoggedIn(bool value) ;
     bool addContact(const Contact& newContact);
     bool removeContact(std::string contactID);
     Contact findContact(std::string contactID);

@@ -198,10 +198,12 @@ public:
             qWarning("Failed to open file");
             return;
          }
+
          QByteArray jsonData = file.readAll();
          file.close();
 
          QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+
          if (!jsonDoc.isObject()) {
             qWarning("JSON data is not an object");
             return;

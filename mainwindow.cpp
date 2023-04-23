@@ -18,12 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    fileSystem_lib ::loadData( );
+//    fileSystem_lib ::loadData( );
      ui->setupUi(this);
     // Set the window to open as full screen
 
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+
     ui->scrollAreaWidgetContents->setContentsMargins(9,20,9,40);
     for (int i = 0; i < 5; i++) {
         QHBoxLayout *hLayout = new QHBoxLayout;

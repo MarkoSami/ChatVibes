@@ -5,7 +5,6 @@
 #include <list>
 #include"logic/user.h"
 #include "logic/conversation.h"
-
 class Application
 {
 public:
