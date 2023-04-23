@@ -14,7 +14,7 @@ private:
     std::list<Message> messages;
 
 public:
-    Contact(std::string _ID , std::string _imgPath , std::string _name  );
+    Contact( std::string _ID , std::string _imgPath = ":/imgs/Profile (2).png", std::string _name = "");
     Contact();
     std::string getID();
 

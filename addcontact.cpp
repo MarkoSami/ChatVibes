@@ -33,17 +33,12 @@ void AddContact::on_pushButton_10_clicked()
 
 void AddContact::on_pushButton_2_clicked()
 {
-     // Check if an image was selected
-     if (img_path.isEmpty()) {
-         qDebug() << "No image selected.";
-         return;
-     }
 
      std::string id = ui->lineEdit_4->text().toStdString(); // assign unique id to each contact
      std::string name = ui->lineEdit_5->text().toStdString();
      std::string imgPath = img_path.toStdString();
 
-     for (auto user : Application::users) {
+     for (auto &user : Application::users) {
          if (user.isLoggedIn()) {
              Contact newContact(id, imgPath, name);
              user.addContact(newContact);
