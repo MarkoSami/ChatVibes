@@ -60,7 +60,7 @@ private :
             return userData ;
         }
         userData["ID"] =  user.getUserID().c_str();
-        userData["firstName"] =  user.getUserName().c_str();
+        userData["firstName"] =  user.getFirstName().c_str();
         userData["lastName"] =  user.getlastName().c_str();
         userData["username"] =  user.getUserName().c_str();
         userData["password"] =  user.getUserPassword().c_str();
@@ -204,14 +204,14 @@ public:
 
          QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
 
-         if (!jsonDoc.isObject()) {
-            qWarning("JSON data is not an object");
-            return;
-         }
+//         if (!jsonDoc.isObject()) {
+//            qWarning("JSON data is not an object");
+//            return;
+//         }
 
          if (!Application::users.empty()) {
             std::list<User>& mutableUsers = const_cast<std::list<User>&>(Application::users);
-            mutableUsers.clear();
+//            mutableUsers.clear();
          }
 
          if (jsonDoc.isArray()) {

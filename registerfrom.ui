@@ -227,7 +227,7 @@ font-size: 15px;
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_5">
+                <widget class="QLineEdit" name="firstNameLE">
                  <property name="styleSheet">
                   <string notr="true">
 color:white;
@@ -293,7 +293,7 @@ font-size: 15px;
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_6">
+                <widget class="QLineEdit" name="secondNameLE">
                  <property name="styleSheet">
                   <string notr="true">
 color:white;
@@ -363,7 +363,7 @@ font-size: 15px;
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_7">
+             <widget class="QLineEdit" name="userNameLE">
               <property name="styleSheet">
                <string notr="true">
 color:white;
@@ -430,7 +430,7 @@ font-size: 15px;
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_12">
+             <widget class="QLineEdit" name="passwordLE">
               <property name="styleSheet">
                <string notr="true">
 color:white;

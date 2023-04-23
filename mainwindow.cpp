@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-//    fileSystem_lib ::loadData( );
      ui->setupUi(this);
     // Set the window to open as full screen
 
