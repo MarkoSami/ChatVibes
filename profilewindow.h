@@ -15,6 +15,13 @@ public:
     explicit profileWindow(QWidget *parent = nullptr);
     ~profileWindow();
 
+private slots:
+    void on_pushButton_5_clicked();
+
+    void on_ProfileUploadBtn_clicked();
+
+
+
 private:
     Ui::profileWindow *ui;
 };

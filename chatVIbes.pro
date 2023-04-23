@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addcontact.cpp \
     application/application.cpp \
     lib/filesystem_lib.cpp \
     lib/gui_lib.cpp \
@@ -21,9 +22,11 @@ SOURCES += \
     mainwindow.cpp \
     profilewindow.cpp \
     registerfrom.cpp \
+    startnewchat.cpp \
     welcomepage.cpp
 
 HEADERS += \
+    addcontact.h \
     application/application.h \
     lib/filesystem_lib.h \
     lib/gui_lib.h \
@@ -35,13 +38,16 @@ HEADERS += \
     mainwindow.h \
     profilewindow.h \
     registerfrom.h \
+    startnewchat.h \
     welcomepage.h
 
 FORMS += \
+    addcontact.ui \
     loginform.ui \
     mainwindow.ui \
     profilewindow.ui \
     registerfrom.ui \
+    startnewchat.ui \
     welcomepage.ui
 
 # Default rules for deployment.
