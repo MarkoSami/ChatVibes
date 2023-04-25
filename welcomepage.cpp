@@ -6,11 +6,13 @@ WelcomePage::WelcomePage(QWidget *parent) :
     ui(new Ui::WelcomePage)
 {
     fileSystem_lib::loadData();
+
     ui->setupUi(this);
     ui->stackedWidget->insertWidget(2,&logWin);
     ui->stackedWidget->insertWidget(3,&regWin);
     connect(&regWin, SIGNAL(LoginClicked()), this, SLOT(moveLogin()));
     connect(&logWin, SIGNAL(RegisterClicked()), this, SLOT(moveRegister()));
+    connect(&logWin , SIGNAL(LoggedInSuccessfully()), this , SLOT(closedHandle()));
 }
 
 WelcomePage::~WelcomePage()
@@ -26,6 +28,10 @@ void WelcomePage::on_pushButton_2_clicked()
 void WelcomePage::moveLogin()
 {
     ui->stackedWidget->setCurrentIndex(2);
+}
+
+void WelcomePage::closedHandle() {
+    this->close() ;
 }
 
 void WelcomePage::moveRegister()

@@ -42,7 +42,7 @@ void Registerfrom::on_pushButton_3_clicked()
 
     if(Application::registerUser(regUser))
     {
-        qDebug()<< "Registered successfully";
+        ui->RegisteredSuccessfully->setText("Registered successfully");
         for( auto &us : Application::users)
         {
             qDebug()<< us.getFirstName();

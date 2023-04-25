@@ -4,6 +4,9 @@
 #include "logic/contact.h"
 
 
+std::list<User> Application::users = {};
+std::stack<Conversation> Application::conversations ;
+
 
 Application::Application()
 {
@@ -12,5 +15,5 @@ Application::Application()
 
 
 
-   std::list<User> Application::users = {};
 
+// User("starterUser","starterUser","starterUser","fdsfs","dsfsdf","dsff",true)

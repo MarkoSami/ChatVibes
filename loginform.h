@@ -24,9 +24,11 @@ private:
 
 signals:
     void RegisterClicked();
+    void LoggedInSuccessfully();
 
 private slots:
     void on_pushButton_2_clicked();
+    void on_LoginBtn_clicked();
 };
 
 #endif // LOGINFORM_H

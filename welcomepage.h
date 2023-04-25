@@ -23,6 +23,7 @@ private slots:
     void moveRegister();
     void on_pushButton_3_clicked();
     void on_pushButton_clicked();
+    void closedHandle() ;
 
 private:
     Ui::WelcomePage *ui;

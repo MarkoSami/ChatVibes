@@ -20,6 +20,18 @@ private:
 
 public:
     Conversation(Contact _receiver, bool _isFavourite = false,std::string _name = "");
+    // Setters
+    void setReceiver(Contact _receiver) { receiver = _receiver; }
+    void setName(std::string _name) { name = _name; }
+    void setIsFavourite(bool _isFavourite) { isFavourite = _isFavourite; }
+
+    // Getters
+    Contact getReceiver(){ return receiver; }
+    std::list<Message> getMessages()   { return messages; }
+    std::string getName(){ return name; }
+    bool getIsFavourite(){ return isFavourite; }
+
+    bool addNewMessage(Message& newMessage);
 };
 
 #endif // CONVERSATION_H

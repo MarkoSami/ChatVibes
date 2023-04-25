@@ -204,17 +204,16 @@ font-size: 10px;
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_4">
+            <widget class="QLineEdit" name="userNameLE">
              <property name="styleSheet">
-              <string notr="true">#lineEdit_4 {
+              <string notr="true">
 color:white;
 font-size: 12px;
 border-radius: 5px;
 	
 	background-color: rgb(51, 54, 71);
 padding:5px;
-
-}</string>
+</string>
              </property>
              <property name="placeholderText">
               <string>Enter your username</string>
@@ -271,17 +270,16 @@ font-size: 10px;
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_11">
+            <widget class="QLineEdit" name="passwordLE">
              <property name="styleSheet">
-              <string notr="true">#lineEdit_11 {
+              <string notr="true">
 color:white;
 font-size: 12px;
 border-radius: 5px;
 	
 	background-color: rgb(51, 54, 71);
 padding:5px;
-
-}</string>
+</string>
              </property>
              <property name="echoMode">
               <enum>QLineEdit::Password</enum>
@@ -301,7 +299,7 @@ padding:5px;
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="LoginBtn">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -345,6 +343,16 @@ QPushButton:pressed {
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="loggedInSuccessfully">
+          <property name="styleSheet">
+           <string notr="true">color : green ;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </item>
         <item>

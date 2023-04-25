@@ -2,14 +2,15 @@
 #ifndef FILESYSTEM_LIB_H
 #define FILESYSTEM_LIB_H
 
+#include <stack>
 #include <strings.h>
-#include<iostream>
-#include<QFile>
-#include<QDir>
+#include <iostream>
+#include <QFile>
+#include <QDir>
 #include <list>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include<QJsonArray>
+#include <QJsonArray>
 #include "logic/user.h"
 #include "logic/contact.h"
 #include "application/application.h"
@@ -33,7 +34,7 @@ private :
     }
 
     // ________create a new Contact QJson object ready to add for QJsonArray
-    static  QJsonObject createNewJSONContact(Contact &contact){
+    static  QJsonObject createNewJSONContact( Contact &contact){
         QJsonObject JSONContact;
         JSONContact["ID"] = contact.getID().c_str();
         JSONContact["name"] = contact.getName().c_str();
@@ -48,15 +49,33 @@ private :
         return JSONContact;
 
     }
+    // ________create a new Conversation QJson object ready to add for QJsonArray
+
+    static QJsonObject createNewJSONConversation(Conversation conversation){
+        QJsonObject jsonConversation;
+
+        // adding conversation basic data
+        Contact receiver = conversation.getReceiver();
+        jsonConversation["receiver"] = (createNewJSONContact(receiver));
+        jsonConversation["name"] = conversation.getName().c_str();
+        jsonConversation["isFavourite"] = conversation.getIsFavourite();
+
+        // adding conversation messages
+        QJsonArray messages;
+        for(auto message : conversation.getMessages()){
+            messages.append(createNewJSONMessage(message));
+        }
+        jsonConversation["messages"] = messages;
+
+        return jsonConversation;
+    }
 
     // _______create new user file if it doesn't exist
     static QJsonObject createNewJSONUser(User user){
 
-
-
         // preparing user data
         QJsonObject userData;
-        if( (&user) == nullptr ||user.getUserID().empty() || user.getUserName().empty() || user.getUserPassword().empty()){
+        if( (&user) == nullptr ||user.getUserID() == "" || user.getUserName() == "" || user.getUserPassword() == ""){
             return userData ;
         }
         userData["ID"] =  user.getUserID().c_str();
@@ -117,14 +136,30 @@ private :
         return contact;
     }
 
+
+    //_____ this function creates new COnversation object from a Conversation QJsonObj
+    static Conversation createNewConversationObject(QJsonObject& jsonConversationObj){
+        Conversation conversation
+            (
+                createNewContactObject(jsonConversationObj["receiver"].toObject()),
+                jsonConversationObj["isFavourite"].toBool(),
+                jsonConversationObj["name"].toString().toStdString()
+            );
+        return conversation;
+    }
+
+
     //_____ this function creates new user object from a user QJsonObj
     static User createNewUserObject(QJsonObject& jsonUserObj){
         // adding basic data from the json Filel oaded from the disk
         User user
             (
-                jsonUserObj["ID"].toString().toStdString(),jsonUserObj["userName"].toString().toStdString(),
-                jsonUserObj["firstName"].toString().toStdString(),jsonUserObj["lastName"].toString().toStdString(),
-                jsonUserObj["password"].toString().toStdString(),jsonUserObj["imgPath"].toString().toStdString(),
+                jsonUserObj["ID"].toString().toStdString(),
+                jsonUserObj["username"].toString().toStdString(),
+                jsonUserObj["firstName"].toString().toStdString(),
+                jsonUserObj["lastName"].toString().toStdString(),
+                jsonUserObj["password"].toString().toStdString(),
+                jsonUserObj["imgPath"].toString().toStdString(),
                 jsonUserObj["loggedIn"].toBool()
             );
 
@@ -151,25 +186,62 @@ private :
         return user;
     }
 
+    //_______this function constructs the conversation document to be ready to save at the disk
+
+    static QJsonDocument buildConversationsJSONDocument(std::stack<Conversation> conversations){
+        QJsonArray JSONConversations;
+        while(!conversations.empty()){
+            Conversation conversation = conversations.top();
+            conversations.pop();
+            JSONConversations.append(createNewJSONConversation(conversation));
+        }
+        return (QJsonDocument(JSONConversations));
+    }
 
 
-    // _______this function constructs the users document to be ready to save at the disk
-    static   QJsonDocument buildUsersJSONDocument(std::list<User> users){
+     //_______this function constructs the users document to be ready to save at the disk
+    static QJsonDocument buildUsersJSONDocument(const std::list<User>& users) {
         QJsonArray JSONUsers;
-         for(auto &user : users){
-            JSONUsers.append(createNewJSONUser(user));
+        for (const User& user : users) {
+                JSONUsers.append(createNewJSONUser(user));
         }
 
-        return (QJsonDocument(JSONUsers));
+
+
+        return QJsonDocument(JSONUsers);
+    }
+
+
+
+    // types of the JSON document
+    enum DocumentType {
+        USERS,
+        CONVERSATIONS,
+        UNKNOWN
+    };
+
+    static DocumentType getDocumentType(QJsonDocument &document) {
+        if (document.isArray() && !document.array().isEmpty()) {
+                const QJsonObject& firstObject = document.array().at(0).toObject();
+                if (firstObject.contains("username") && firstObject.contains("password")) {
+                    return USERS;
+                } else if (firstObject.contains("conversationName") && firstObject.contains("participants")) {
+                    return CONVERSATIONS;
+                }
+        }
+        return UNKNOWN;
     }
 
     //_______ this function saves takes a JSON document and save it to the disk
     static   bool storeJSONDocument(QJsonDocument &document){
-        QFile file("users.json");
+
+        QString PATH = (getDocumentType(document) == USERS)? "users.json" : "conversations.json";
+        QFile file(PATH);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QTextStream out(&file);
             out << document.toJson(QJsonDocument::Indented); // <-- Use QTextStream to write the formatted JSON data to the file
+            qDebug()<<"Data"<<document.toJson(QJsonDocument::Indented);
             file.close();
             return true;
         }
@@ -186,51 +258,83 @@ public:
         // constructing and saving users list in a json file
         QJsonDocument users = buildUsersJSONDocument(Application::users);
         storeJSONDocument(users);
-        /*//______ NEED TO DO THE SAME FOR CONVERSATIONS _________\\*/
 
-         return true;
+        // constructing and saving conversations stack in a json file
+        QJsonDocument conversations = buildConversationsJSONDocument(Application::conversations);
+        storeJSONDocument(conversations);
+
+        return true;
     }
+
+    static void internalLoadData(DocumentType type){
+
+        QString PATH = (type == USERS)? "users.json" : "conversations.json";
+        QFile file(PATH);
+
+        if (!file.open(QIODevice::ReadOnly)) {
+            qWarning("Failed to open file");
+            return;
+        }
+
+        QByteArray jsonData = file.readAll();
+        file.close();
+
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+
+        // checking if  the json document is not aan arry of jsons
+        if (!jsonDoc.isArray()) {
+            qWarning("JSON data is not an Array");
+            return;
+        }
+
+        // checking if the users list is not empty ehan reading if the function wasused accidentally in a wrong place
+
+        if(type == USERS){
+            if (!Application::users.empty()) {
+                    std::list<User>& mutableUsers = const_cast<std::list<User>&>(Application::users);
+                    mutableUsers.clear();
+            }
+
+            // putting the read users data into the application::users list
+            if (jsonDoc.isArray()) {
+                    QJsonArray jsonArray = jsonDoc.array();
+                    for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
+                        if (arrayItr->isObject()) {
+                            QJsonObject jsonUserObj = arrayItr->toObject();
+                            User user = createNewUserObject(jsonUserObj);
+                            Application::users.push_back(user);
+                        }
+                    }
+            }
+        }
+        else{
+            if (!Application::conversations.empty()) {
+                    std::stack<Conversation>& mutableConversations = const_cast<std::stack<Conversation>&>(Application::conversations);
+                    std::stack<Conversation>().swap(mutableConversations);
+            }
+
+            // putting the read users data into the application::users list
+            if (jsonDoc.isArray()) {
+                    QJsonArray jsonArray = jsonDoc.array();
+                    for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
+                        if (arrayItr->isObject()) {
+                            QJsonObject jsonUserObj = arrayItr->toObject();
+                            Conversation conversation = createNewConversationObject(jsonUserObj);
+                            Application::conversations.push(conversation);
+                        }
+                    }
+            }
+        }
+
+    }
+
 
     //______loading application data from the json files
     static void loadData(){
-        QFile file("users.json");
-         if (!file.open(QIODevice::ReadOnly)) {
-            qWarning("Failed to open file");
-            return;
-         }
-
-         QByteArray jsonData = file.readAll();
-         file.close();
-
-         QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-
-//         if (!jsonDoc.isObject()) {
-//            qWarning("JSON data is not an object");
-//            return;
-//         }
-
-         if (!Application::users.empty()) {
-            std::list<User>& mutableUsers = const_cast<std::list<User>&>(Application::users);
-//            mutableUsers.clear();
-         }
-
-         if (jsonDoc.isArray()) {
-            QJsonArray jsonArray = jsonDoc.array();
-            for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
-                if (arrayItr->isObject()) {
-                    QJsonObject jsonUserObj = arrayItr->toObject();
-                    Application::users.push_back(createNewUserObject(jsonUserObj));
-                }
-            }
-         }
+        internalLoadData(USERS);
+        internalLoadData(CONVERSATIONS);
 
     }
-
-
-
-/*std::string _ID, std::string _user_name, std::string _first_name, std::string _last_name, std::string _password, std::string _imgPath, bool _loggedIn)*/
-
-
 
 };
 

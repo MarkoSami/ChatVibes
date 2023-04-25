@@ -14,10 +14,14 @@
 #include "addcontact.h"
 #include <QPropertyAnimation>
 #include "startnewchat.h"
+#include "application/application.h"
+#include <QScrollBar>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
      ui->setupUi(this);
     // Set the window to open as full screen
 
@@ -25,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     ui->scrollAreaWidgetContents->setContentsMargins(9,20,9,40);
+    ui->scrollArea_2->verticalScrollBar()->setSingleStep(6);
     for (int i = 0; i < 5; i++) {
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -73,6 +78,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+
+//    Application::conversations.push(Conversation(Contact("sdfs")));
     fileSystem_lib::saveData();
     this->close();
 }
