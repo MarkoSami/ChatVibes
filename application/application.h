@@ -1,8 +1,9 @@
 
 #ifndef APPLICATION_H
 #define APPLICATION_H
-#include "logic/user.h"
 #include <list>
+#include <stack>
+#include "logic/user.h"
 #include"logic/user.h"
 #include "logic/conversation.h"
 class Application
@@ -10,17 +11,19 @@ class Application
 public:
 
     Application();
-    static     std::list<User> users;
-    static     std::list<Conversation> conversations;
+
+    static std::list<User> users ;
+    static std::stack<Conversation> conversations;
+
     static bool logUserIn(User& user);
 
     static bool registerUser(User& user)
     {
-        if(Application::isAlreadyRegistered(user))
+        if(Application::isAlreadyRegistered(user)){
             return false;
+        }
         Application::users.push_back(user);
-
-            return true;
+        return true;
     }
 
     static bool isAlreadyRegistered(User& user)

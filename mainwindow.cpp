@@ -14,6 +14,9 @@
 #include "addcontact.h"
 #include <QPropertyAnimation>
 #include "startnewchat.h"
+#include "application/application.h"
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -73,6 +76,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+
+//    Application::conversations.push(Conversation(Contact("sdfs")));
     fileSystem_lib::saveData();
     this->close();
 }

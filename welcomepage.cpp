@@ -6,6 +6,7 @@ WelcomePage::WelcomePage(QWidget *parent) :
     ui(new Ui::WelcomePage)
 {
     fileSystem_lib::loadData();
+
     ui->setupUi(this);
     ui->stackedWidget->insertWidget(2,&logWin);
     ui->stackedWidget->insertWidget(3,&regWin);
