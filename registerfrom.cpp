@@ -51,3 +51,9 @@ void Registerfrom::on_pushButton_3_clicked()
     else qDebug()<< "Registeration failed";
 }
 
+
+void Registerfrom::on_backButton_clicked()
+{
+    emit BackClicked() ;
+}
+

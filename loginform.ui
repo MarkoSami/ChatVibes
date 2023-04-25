@@ -29,6 +29,9 @@
    <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>6</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <property name="spacing">
@@ -79,19 +82,6 @@ border : none ;
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item alignment="Qt::AlignTop">
          <widget class="QGroupBox" name="verticalGroupBox">
           <property name="styleSheet">
@@ -387,12 +377,38 @@ QPushButton:pressed {
        </property>
       </spacer>
      </item>
-     <item>
+     <item alignment="Qt::AlignTop">
       <widget class="QGroupBox" name="verticalGroupBox_2">
        <property name="styleSheet">
         <string notr="true">border : none ; </string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>36</number>
+        </property>
+        <property name="topMargin">
+         <number>15</number>
+        </property>
+        <item alignment="Qt::AlignRight">
+         <widget class="QPushButton" name="backButton">
+          <property name="minimumSize">
+           <size>
+            <width>175</width>
+            <height>41</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/imgs/left-arrow.png);
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item>
          <spacer name="verticalSpacer_3">
           <property name="orientation">
@@ -404,7 +420,7 @@ QPushButton:pressed {
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>6</height>
+            <height>19</height>
            </size>
           </property>
          </spacer>

@@ -1,14 +1,13 @@
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include "profilewindow.h"
 #include "registerfrom.h"
 #include "starting_handle.h"
-#include "welcomepage.h"
 #include "addcontact.h"
 #include "startnewchat.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -39,7 +38,6 @@ private:
     Ui::MainWindow *ui;
     profileWindow *profWin;
 //    Registerfrom *regWin ;
-    WelcomePage *welcomeWin;
     AddContact *addContactWin ;
     StartNewChat *StartNewChatWin;
 };

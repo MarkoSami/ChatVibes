@@ -11,8 +11,13 @@ WelcomePage::WelcomePage(QWidget *parent) :
     ui->stackedWidget->insertWidget(2,&logWin);
     ui->stackedWidget->insertWidget(3,&regWin);
     connect(&regWin, SIGNAL(LoginClicked()), this, SLOT(moveLogin()));
+    connect(&regWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));
+    connect(&logWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));
     connect(&logWin, SIGNAL(RegisterClicked()), this, SLOT(moveRegister()));
     connect(&logWin , SIGNAL(LoggedInSuccessfully()), this , SLOT(closedHandle()));
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    mainWindowWin = new MainWindow();
+
 }
 
 WelcomePage::~WelcomePage()
@@ -31,7 +36,9 @@ void WelcomePage::moveLogin()
 }
 
 void WelcomePage::closedHandle() {
+
     this->close() ;
+     mainWindowWin->show();
 }
 
 void WelcomePage::moveRegister()
@@ -39,6 +46,9 @@ void WelcomePage::moveRegister()
     ui->stackedWidget->setCurrentIndex(3);
 }
 
+void WelcomePage::backHandler() {
+    ui->stackedWidget->setCurrentIndex(1);
+}
 
 void WelcomePage::on_pushButton_3_clicked()
 {
@@ -49,5 +59,21 @@ void WelcomePage::on_pushButton_3_clicked()
 void WelcomePage::on_pushButton_clicked()
 {
       ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void WelcomePage::on_pushButton_7_clicked()
+{
+       this->close();
+}
+
+
+void WelcomePage::on_pushButton_8_clicked()
+{
+       if (window()->isMinimized()) {
+           window()->showNormal();
+       } else {
+           window()->showMinimized();
+       }
 }
 

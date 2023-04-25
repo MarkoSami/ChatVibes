@@ -5,7 +5,6 @@
 #include "registerfrom.h"
 #include "ui_mainwindow.h"
 #include "ui_registerfrom.h"
-#include "welcomepage.h"
 #include "lib/gui_lib.h"
 #include<QString>
 #include <QScreen>
@@ -34,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
         QLabel *textmsg = new QLabel("Hello , how are u ? ") ;
+        textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
+         // Set the cursor to the I-beam cursor
+        textmsg->setCursor(Qt::IBeamCursor);
         QLabel *datemsg = new QLabel("1:00Am");
         textmsg->setWordWrap(true);
         VLayout->addWidget(textmsg);
@@ -60,12 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
         hGroupBox->setLayout(hLayout);
         ui->verticalGroupBox_3->layout()->addWidget(hGroupBox);
     }
-
-
-
-    welcomeWin = new WelcomePage();
-    welcomeWin->show();
-
 
 }
 

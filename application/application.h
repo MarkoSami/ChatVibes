@@ -18,16 +18,6 @@ public:
     static bool logUserIn(User& user);
 
 
-    static bool registerUser(User& user)
-    {
-        if(Application::isAlreadyRegistered(user)){
-            return false;
-        }
-        Application::users.push_back(user);
-        return true;
-    }
-
-
     static User* searchForurUser(std::string userId) {
 
         for(auto &user : Application::users)
@@ -38,6 +28,17 @@ public:
         }
         return nullptr;
     }
+
+    static bool registerUser(User& user)
+    {
+        if(Application::isAlreadyRegistered(user)){
+            return false;
+        }
+        Application::users.push_back(user);
+        return true;
+    }
+
+
 
 
     static bool isAlreadyRegistered(User& user)

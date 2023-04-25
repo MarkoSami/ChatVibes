@@ -53,7 +53,7 @@ void loginForm::on_LoginBtn_clicked()
          });
 
          // start the timer with a 1 second interval
-         delayTimer->start(2500);
+         delayTimer->start(2000);
 
          // enter the application event loop
          QCoreApplication::processEvents();
@@ -63,5 +63,11 @@ void loginForm::on_LoginBtn_clicked()
         ui->loggedInSuccessfully->setStyleSheet("color:red");
         ui->loggedInSuccessfully->setText("Login failed check your information again");
     }
+}
+
+
+void loginForm::on_backButton_clicked()
+{
+    emit BackClicked() ;
 }
 
