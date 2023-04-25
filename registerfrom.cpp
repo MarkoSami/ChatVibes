@@ -4,6 +4,10 @@
 #include <QPropertyAnimation>
 #include <QGraphicsOpacityEffect>
 #include <QAbstractAnimation>
+#include "logic/user.h"
+#include "application/application.h"
+#include <string>
+
 
 Registerfrom::Registerfrom(QWidget *parent) :
     QDialog(parent),
@@ -24,5 +28,26 @@ Registerfrom::~Registerfrom()
 void Registerfrom::on_pushButton_4_clicked()
 {
     emit LoginClicked();
+}
+
+
+void Registerfrom::on_pushButton_3_clicked()
+{
+    std::string firstName = ui->firstNameLE->text().toStdString();
+    std::string lastName = ui->secondNameLE->text().toStdString();
+    std::string userName = ui->userNameLE->text().toStdString();
+    std::string password = ui->passwordLE->text().toStdString();
+
+    User regUser(userName,userName, firstName, lastName, password);
+
+    if(Application::registerUser(regUser))
+    {
+        qDebug()<< "Registered successfully";
+        for( auto &us : Application::users)
+        {
+            qDebug()<< us.getFirstName();
+        }
+    }
+    else qDebug()<< "Registeration failed";
 }
 
