@@ -25,10 +25,12 @@ private:
 signals:
     void RegisterClicked();
     void LoggedInSuccessfully();
+    void BackClicked() ;
 
 private slots:
     void on_pushButton_2_clicked();
     void on_LoginBtn_clicked();
+    void on_backButton_clicked();
 };
 
 #endif // LOGINFORM_H

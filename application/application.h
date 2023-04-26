@@ -17,14 +17,14 @@ public:
 
     static bool logUserIn(User& user);
 
-
-    static bool registerUser(User& user)
-    {
-        if(Application::isAlreadyRegistered(user)){
-            return false;
+    static User* getLogInUser() {
+        for (auto &user : Application::users)
+        {
+            if (user.isLoggedIn()) {
+                return &user ;
+            }
         }
-        Application::users.push_back(user);
-        return true;
+        return nullptr;
     }
 
 
@@ -38,6 +38,17 @@ public:
         }
         return nullptr;
     }
+
+    static bool registerUser(User& user)
+    {
+        if(Application::isAlreadyRegistered(user)){
+            return false;
+        }
+        Application::users.push_back(user);
+        return true;
+    }
+
+
 
 
     static bool isAlreadyRegistered(User& user)

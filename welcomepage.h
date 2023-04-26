@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "registerfrom.h"
 #include "loginform.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class WelcomePage;
@@ -20,15 +21,22 @@ public:
 private slots:
     void on_pushButton_2_clicked();
     void moveLogin();
+    void backHandler();
     void moveRegister();
     void on_pushButton_3_clicked();
     void on_pushButton_clicked();
     void closedHandle() ;
+    void on_pushButton_7_clicked();
+    void on_pushButton_8_clicked();
+    void showWelcomePage();
 
 private:
     Ui::WelcomePage *ui;
     Registerfrom regWin ;
     loginForm logWin ;
+    MainWindow *mainWindowWin ;
+    profileWindow profWindow;
+
 };
 
 #endif // WELCOMEPAGE_H

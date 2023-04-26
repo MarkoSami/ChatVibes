@@ -43,17 +43,22 @@ void loginForm::on_LoginBtn_clicked()
 
     if(Application::loginUser(userName , password))
     {
-         ui->loggedInSuccessfully->setStyleSheet("color:green");
+        ui->loggedInSuccessfully->setStyleSheet("color:green");
         ui->loggedInSuccessfully->setText("Logged in successfully!");
          // create a new QTimer instance and connect its timeout() signal to a lambda function
-         QTimer* delayTimer = new QTimer(this);
-         connect(delayTimer, &QTimer::timeout, [=]() {
-             // close the current window
+        QTimer* delayTimer = new QTimer(this);
+
+        connect(delayTimer, &QTimer::timeout, [=]() {
+            // close the current window
             emit LoggedInSuccessfully();
-         });
+            delayTimer->disconnect(); // disconnect the signal after emitting once
+        });
+
+        delayTimer->setSingleShot(true); // make the QTimer emit only once
 
          // start the timer with a 1 second interval
-         delayTimer->start(1000);
+
+         delayTimer->start(2000);
 
          // enter the application event loop
          QCoreApplication::processEvents();
@@ -63,5 +68,11 @@ void loginForm::on_LoginBtn_clicked()
         ui->loggedInSuccessfully->setStyleSheet("color:red");
         ui->loggedInSuccessfully->setText("Login failed check your information again");
     }
+}
+
+
+void loginForm::on_backButton_clicked()
+{
+    emit BackClicked() ;
 }
 

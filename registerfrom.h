@@ -18,12 +18,14 @@ public:
 private slots:
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
+    void on_backButton_clicked();
 
 private:
     Ui::Registerfrom *ui;
 
 signals:
     void LoginClicked();
+    void BackClicked() ;
 };
 
 #endif // REGISTERFROM_H
