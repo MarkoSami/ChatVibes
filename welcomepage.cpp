@@ -10,8 +10,6 @@ WelcomePage::WelcomePage(QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->insertWidget(2,&logWin);
     ui->stackedWidget->insertWidget(3,&regWin);
-    disconnect(&profWindow, SIGNAL(showWelcomePage()), this, SLOT(showWelcomePage()));
-    connect(&profWindow, SIGNAL(showWelcomePage()), this, SLOT(showWelcomePage()));
     connect(&regWin, SIGNAL(LoginClicked()), this, SLOT(moveLogin()));
     connect(&regWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));
     connect(&logWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));

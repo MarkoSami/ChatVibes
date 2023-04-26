@@ -2,16 +2,24 @@
 #include "ui_profilewindow.h"
 #include <QPixmap>
 #include <QFileDialog>
+#include <application/application.h>
+QString file_path;
 profileWindow::profileWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::profileWindow)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-    ui->lineEdit->setText("Mina Melad") ;
+    if(Application::loggedUser != nullptr)
+    {
+
+        std::string loggedUserName = Application::loggedUser->getUserName();
+        ui->lineEdit->setText(QString::fromStdString(loggedUserName));
+        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + QString::fromStdString(Application::loggedUser->getIMGpath()) + ");");
+
+    }
     ui->lineEdit_2->setText("Hello there! I'm using chatVibes");
-//    ui->ProfileUploadBtn->setStyleSheet("QPushButton#ProfileUploadBtn{background-color: #3663fd; border-radius: 5px; font-size: 20px; color: white; font-weight: bold;}"
-//                                      "QPushButton#ProfileUploadBtn:hover{color : red;}");
+
 }
 
 profileWindow::~profileWindow()
@@ -29,12 +37,15 @@ void profileWindow::on_pushButton_5_clicked()
 void profileWindow::on_ProfileUploadBtn_clicked()
 {
     // Open a file dialog and get the selected file
-    QString file_path = QFileDialog::getOpenFileName(this, tr("Select Image"), QDir::homePath(), tr("Image files (*.png *.jpg *.jpeg *.bmp *.gif)"));
+     file_path = QFileDialog::getOpenFileName(this, tr("Select Image"), QDir::homePath(), tr("Image files (*.png *.jpg *.jpeg *.bmp *.gif)"));
 
     // Check if a file was selected
-    if (!file_path.isEmpty()) {
+    if (!file_path.isEmpty() && Application::loggedUser != nullptr) {
         // Upload the file to the server or perform other actions with it
         qDebug() << "File selected:" << file_path;
+        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + file_path + ");");
+
+
     } else {
         // Handle case where no file was selected
         qDebug() << "No file selected.";
@@ -45,9 +56,7 @@ void profileWindow::on_ProfileUploadBtn_clicked()
 
 void profileWindow::on_pushButton_clicked()
 {
-    emit showWelcomePage();
-    emit exitMainWindow();
-    qDebug() <<"ff";
-
+    Application::loggedUser->setUserName(ui->lineEdit->text().toStdString());
+    Application::loggedUser->setIMGpath(file_path.toStdString());
 }
 

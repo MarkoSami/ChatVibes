@@ -47,7 +47,7 @@ public:
     void setFavoriteMessages(std::list<std::string> &favMessages);
 
     std::string getIMGpath();
-    void setIMGpath(std::string);
+    void setIMGpath(std::string image);
 
     std::string getlastName();
     void setlastName(std::string name);

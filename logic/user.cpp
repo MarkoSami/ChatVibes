@@ -74,8 +74,11 @@ std::string User::getUserID(){
 
 std::string User::getUserName(){
     return this->user_name;
-};
-
+}
+void User::setUserName(std::string userName)
+{
+    this->user_name = userName;
+}
 std::string User::getUserPassword(){
     return this->password;
 }
@@ -83,7 +86,10 @@ std::string User::getUserPassword(){
 std::string User::getIMGpath(){
     return this->imgPath;
 }
-
+void User::setIMGpath(std::string img)
+{
+    this->imgPath = img;
+}
 std::list<Message> User::getUserMessages(){
     return this->messages;
 }

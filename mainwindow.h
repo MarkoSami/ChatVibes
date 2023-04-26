@@ -39,10 +39,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    profileWindow profWin;
 //    Registerfrom *regWin ;
     AddContact *addContactWin ;
     StartNewChat *StartNewChatWin;
+    profileWindow *profWin;
 };
 
 #endif // MAINWINDOW_H

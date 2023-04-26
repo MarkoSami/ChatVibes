@@ -14,7 +14,7 @@ public:
 
     static std::list<User> users ;
     static std::stack<Conversation> conversations;
-
+    static User* loggedUser;
     static bool logUserIn(User& user);
 
     static User* getLogInUser() {
