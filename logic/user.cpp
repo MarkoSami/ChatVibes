@@ -1,11 +1,10 @@
 
 #include "user.h"
-#include "message.h"
-#include "contact.h"
+ #include "contact.h"
 #include <list>
 
 User::User(std::string ID, std::string user_name, std::string first_name, std::string last_name, std::string password, std::string imgPath, bool loggedIn)
-    : ID(ID), user_name(user_name), first_name(first_name), last_name(last_name), password(password), contacts(), messages(), FavouriteMessages(), imgPath(imgPath), loggedIn(loggedIn)
+    : ID(ID), user_name(user_name), first_name(first_name), last_name(last_name), password(password), contacts(), imgPath(imgPath), loggedIn(loggedIn)
 {
 }
 
@@ -34,24 +33,13 @@ Contact User::findContact(std::string contactID) {
     return Contact(); // contact not found
 }
 
-void User::addToFavouriteMessages(Message message,const Conversation& conversation) {
 
-
+std::stack<Conversation> User::getConversations(){
+    return this->conversations;
 }
 
-void User::removeFromFavouriteMessages(std::string messageID,const Conversation& conversation) {
-
-    for (auto it = messages.begin(); it != messages.end(); ++it) {
-        if (it->getID() == messageID) {
-            it->isFavourite();
-            return ;
-        }
-    }
-}
-
-bool User::addNewMessage( const Message &message){
-    this->messages.push_back(message);
-    return true;
+void User::addNewConversation(Conversation& conversation){
+    this->conversations.push(conversation);
 }
 
 // getters
@@ -84,15 +72,8 @@ std::string User::getIMGpath(){
 void User::setIMGpath(std::string img)
 {
     this->imgPath = img;
-}
-std::list<Message> User::getUserMessages(){
-    return this->messages;
-}
 
-std::list<Message> User::getFavoriteMessages(){
-    return this->FavouriteMessages;
 }
-
 std::list<Contact> User::getUserContacts(){
     return this->contacts;
 }

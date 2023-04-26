@@ -40,20 +40,3 @@ void Contact::setName(std::string name)
 }
 
 
-
-std::list<Message> Contact::getMessages()
-{
-    return messages;
-}
-
-void Contact::addMessage(Message message) {
-    messages.push_back(message)    ;
-}
-
-void Contact::removeMessage(Message message) {
-    for (auto it = messages.begin() ; it != messages.end() ; it++) {
-        if (it->getID() == message.getID()) {
-            messages.erase(it) ;
-        }
-    }
-}

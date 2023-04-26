@@ -3,7 +3,6 @@
 #define CONTACT_H
 #include<iostream>
 #include<string.h>
- #include "logic/message.h"
 
 class Contact
 {
@@ -11,7 +10,6 @@ private:
     std::string ID;
     std::string name;
     std::string imgPath;
-    std::list<Message> messages;
 
 public:
     Contact( std::string _ID , std::string _imgPath = ":/imgs/Profile (2).png", std::string _name = "");
@@ -24,9 +22,6 @@ public:
     std::string getName();
     void setName(std::string name);
 
-    void addMessage(Message message);
-    void removeMessage(Message message);
-    std::list<Message> getMessages();
 
 
 

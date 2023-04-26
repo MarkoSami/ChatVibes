@@ -5,7 +5,6 @@
 
 
 std::list<User> Application::users = {};
-std::stack<Conversation> Application::conversations ;
 User* Application::loggedUser = nullptr;
 
 Application::Application()

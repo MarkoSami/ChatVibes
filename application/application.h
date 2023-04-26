@@ -5,15 +5,13 @@
 #include <stack>
 #include "logic/user.h"
 #include"logic/user.h"
-#include "logic/conversation.h"
-class Application
+ class Application
 {
 public:
 
     Application();
 
     static std::list<User> users ;
-    static std::stack<Conversation> conversations;
     static User* loggedUser;
     static bool logUserIn(User& user);
 

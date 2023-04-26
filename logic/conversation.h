@@ -52,9 +52,14 @@ public:
     Contact getReceiver(){ return receiver; }
     std::list<Message> getMessages()   { return messages; }
     std::string getName(){ return name; }
-    bool getIsFavourite(){ return isFavourite; }
-    bool addNewMessage(Message& newMessage);
+    bool getIsFavourite(){ return isFavourite; }// get is the conversation favourite or not
 
+    bool addNewMessage(const Message &message );
+    void setAsFavouriteMessage(std::string messageID);
+    \
+    void unsetAsFavouriteMessage(std::string messageID);
+
+//_______________________________________
     static QGroupBox* renderMessage(Message message , messageSide messageSide){
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;

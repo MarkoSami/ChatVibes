@@ -40,12 +40,7 @@ private :
         JSONContact["name"] = contact.getName().c_str();
         JSONContact["imgPath"] = contact.getImgPath().c_str();
 
-        QJsonArray messages;
-        for(auto message : contact.getMessages()){
-            messages.append(createNewJSONMessage(message));
-        }
 
-        JSONContact["messages"] = messages;
         return JSONContact;
 
     }
@@ -57,7 +52,7 @@ private :
         // adding conversation basic data
         Contact receiver = conversation.getReceiver();
         jsonConversation["receiver"] = (createNewJSONContact(receiver));
-        jsonConversation["name"] = conversation.getName().c_str();
+         jsonConversation["name"] = conversation.getName().c_str();
         jsonConversation["isFavourite"] = conversation.getIsFavourite();
 
         // adding conversation messages
@@ -93,19 +88,13 @@ private :
         }
         userData["contacts"] = contacts;
 
-        // adding user messages IDs to the QJson array
-        QJsonArray messages;
-        for(auto message : user.getUserMessages()){
-            messages.append(createNewJSONMessage(message));
+        QJsonArray conversations;
+        std::stack<Conversation> conversationsStack = user.getConversations();
+        while(!conversationsStack.empty()){
+            conversations.append(createNewJSONConversation(conversationsStack.top()));
+            conversationsStack.pop();
         }
-        userData["messages"] = messages;
-
-        // adding the user favourite messages to the QJsonArray
-        QJsonArray favMessages;
-        for(auto &message : user.getFavoriteMessages()){
-            favMessages.append(createNewJSONMessage(message));
-        }
-        userData["favMessages"] = favMessages;
+        userData["conversations"] = conversations;
 
         return userData;
 
@@ -138,14 +127,21 @@ private :
 
 
     //_____ this function creates new COnversation object from a Conversation QJsonObj
-    static Conversation createNewConversationObject(QJsonObject& jsonConversationObj){
-        Conversation conversation
+    static Conversation createNewConversationObject(const QJsonObject& jsonConversationObj){
+        Conversation conversationObj
             (
                 createNewContactObject(jsonConversationObj["receiver"].toObject()),
                 jsonConversationObj["isFavourite"].toBool(),
                 jsonConversationObj["name"].toString().toStdString()
             );
-        return conversation;
+
+        // adding conversation messages
+        QJsonArray jsonMessages = jsonConversationObj["messages"].toArray();
+        for(auto message : jsonMessages){
+            conversationObj.addNewMessage(createNewMessageObject(message.toObject()));
+        }
+
+        return conversationObj;
     }
 
 
@@ -165,22 +161,17 @@ private :
 
             // adding lists data from the json file loaded from the disk
 
-            // adding messages
-            QJsonArray jsonMessages = jsonUserObj["messages"].toArray();
-            for(auto message : jsonMessages){
-                user.addNewMessage(createNewMessageObject(message.toObject()));
-            }
-
-            // adding favMessages
-            QJsonArray jsonFavMessages = jsonUserObj["favMessages"].toArray();
-            for(auto message : jsonFavMessages){
-                user.addToFavouriteMessages(createNewMessageObject(message.toObject()));
-            }
-
             // adding contacts
             QJsonArray jsonContacts = jsonUserObj["contacts"].toArray();
             for(auto contact : jsonContacts){
                 user.addContact(createNewContactObject(contact.toObject()));
+            }
+
+            // adding conversations
+            QJsonArray jsonConversations = jsonUserObj["conversations"].toArray();
+            for(auto conversation : jsonConversations){
+                Conversation conversationObj = createNewConversationObject(conversation.toObject());
+                user.addNewConversation(conversationObj);
             }
 
         return user;
@@ -260,8 +251,8 @@ public:
         storeJSONDocument(users);
 
         // constructing and saving conversations stack in a json file
-        QJsonDocument conversations = buildConversationsJSONDocument(Application::conversations);
-        storeJSONDocument(conversations);
+//        QJsonDocument conversations = buildConversationsJSONDocument(Application::conversations);
+//        storeJSONDocument(conversations);
 
         return true;
     }
@@ -307,24 +298,7 @@ public:
                     }
             }
         }
-        else{
-            if (!Application::conversations.empty()) {
-                    std::stack<Conversation>& mutableConversations = const_cast<std::stack<Conversation>&>(Application::conversations);
-                    std::stack<Conversation>().swap(mutableConversations);
-            }
 
-            // putting the read users data into the application::users list
-            if (jsonDoc.isArray()) {
-                    QJsonArray jsonArray = jsonDoc.array();
-                    for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
-                        if (arrayItr->isObject()) {
-                            QJsonObject jsonUserObj = arrayItr->toObject();
-                            Conversation conversation = createNewConversationObject(jsonUserObj);
-                            Application::conversations.push(conversation);
-                        }
-                    }
-            }
-        }
 
     }
 

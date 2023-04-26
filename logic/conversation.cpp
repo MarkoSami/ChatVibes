@@ -11,10 +11,12 @@ Conversation::Conversation(Contact _receiver, bool _isFavourite, std::string _na
     this->name = (_name == "")? _receiver.getID(): _name;
 }
 
-bool Conversation::addNewMessage(Message& newMessage){
+bool Conversation::addNewMessage(const Message& newMessage){
     this->messages.push_back(newMessage);
     return true;
 }
+
+
 
 
 

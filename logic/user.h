@@ -51,6 +51,9 @@ public:
     std::string getFirstName();
     void setFirstName(std::string name);
 
+    std::stack<Conversation> getConversations();
+    void addNewConversation(Conversation& conversation);
+
 
     // user logic functions
     bool isLoggedIn();
@@ -58,9 +61,6 @@ public:
     bool addContact(const Contact& newContact);
     bool removeContact(std::string contactID);
     Contact findContact(std::string contactID);
-    void addToFavouriteMessages(Message message,const Conversation& conversation);
-    void removeFromFavouriteMessages(std::string messageID,const Conversation& conversation);
-    bool addNewMessage(const Message &message,const Conversation& conversation);
 
 
 
