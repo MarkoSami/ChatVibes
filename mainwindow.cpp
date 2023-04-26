@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Set the window to open as full screen
 
 
-    connect(&profWin, SIGNAL(exitMainWindow()), this, SLOT(on_pushButton_3_clicked()));
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
      this, &MainWindow::on_pushButton_7_clicked);
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
@@ -136,7 +135,8 @@ void MainWindow::on_pushButton_5_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-      profWin.show();
+      profWin = new profileWindow();
+      profWin->show();
 }
 
 

@@ -59,7 +59,6 @@ public:
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
         QLabel *textmsg = new QLabel() ;
-        textmsg->setStyleSheet("border: 1px solid red;");
         textmsg->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
          textmsg->setText(QString::fromStdString(message.getMessageTxt()));
         textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);

@@ -45,6 +45,7 @@ void loginForm::on_LoginBtn_clicked()
     {
         ui->loggedInSuccessfully->setStyleSheet("color:green");
         ui->loggedInSuccessfully->setText("Logged in successfully!");
+        Application::loggedUser = Application::getLogInUser();
          // create a new QTimer instance and connect its timeout() signal to a lambda function
         QTimer* delayTimer = new QTimer(this);
 

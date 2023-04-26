@@ -43,7 +43,7 @@ public:
     void setUserContacts(std::list<std::string> &contacts);
 
     std::string getIMGpath();
-    void setIMGpath(std::string);
+    void setIMGpath(std::string image);
 
     std::string getlastName();
     void setlastName(std::string name);

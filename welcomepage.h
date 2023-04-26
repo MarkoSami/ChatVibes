@@ -35,7 +35,6 @@ private:
     Registerfrom regWin ;
     loginForm logWin ;
     MainWindow *mainWindowWin ;
-    profileWindow profWindow;
 
 };
 
