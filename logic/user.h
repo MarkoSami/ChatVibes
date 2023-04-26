@@ -4,8 +4,11 @@
 #include<iostream>
 #include <string.h>
 #include<list>
+#include<stack>
 #include "message.h"
 #include "logic/contact.h"
+#include "logic/conversation.h"
+
 
 
 
@@ -18,8 +21,7 @@ private:
     std::string last_name;
     std::string password;
     std::list<Contact> contacts;
-    std::list<Message> messages;
-    std::list<Message> FavouriteMessages;
+    std::stack<Conversation> conversations;
     std::string imgPath;
     bool loggedIn;
 
@@ -40,12 +42,6 @@ public:
     std::list<Contact> getUserContacts();
     void setUserContacts(std::list<std::string> &contacts);
 
-    std::list<Message> getUserMessages();
-    void setUserMessages(std::list<Message> &messages);
-
-    std::list<Message> getFavoriteMessages();
-    void setFavoriteMessages(std::list<std::string> &favMessages);
-
     std::string getIMGpath();
     void setIMGpath(std::string);
 
@@ -62,9 +58,9 @@ public:
     bool addContact(const Contact& newContact);
     bool removeContact(std::string contactID);
     Contact findContact(std::string contactID);
-    void addToFavouriteMessages(Message message);
-    void removeFromFavouriteMessages(std::string messageID);
-    bool addNewMessage(const Message &message);
+    void addToFavouriteMessages(Message message,const Conversation& conversation);
+    void removeFromFavouriteMessages(std::string messageID,const Conversation& conversation);
+    bool addNewMessage(const Message &message,const Conversation& conversation);
 
 
 

@@ -34,17 +34,12 @@ Contact User::findContact(std::string contactID) {
     return Contact(); // contact not found
 }
 
-void User::addToFavouriteMessages(Message message) {
+void User::addToFavouriteMessages(Message message,const Conversation& conversation) {
 
-    for (auto it = messages.begin(); it != messages.end(); ++it) {
-        if (it->getID() == message.getID()) {
-            it->isFavourite();
-            return ;
-        }
-    }
+
 }
 
-void User::removeFromFavouriteMessages(std::string messageID) {
+void User::removeFromFavouriteMessages(std::string messageID,const Conversation& conversation) {
 
     for (auto it = messages.begin(); it != messages.end(); ++it) {
         if (it->getID() == messageID) {
