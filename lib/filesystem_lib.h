@@ -83,7 +83,7 @@ private :
         userData["lastName"] =  user.getlastName().c_str();
         userData["username"] =  user.getUserName().c_str();
         userData["password"] =  user.getUserPassword().c_str();
-        userData["loggedIn"] = user.isLoggedIn();
+        userData["loggedIn"] = false;
         userData["imgPath"] = user.getIMGpath().c_str();
 
         // adding user contacts IDs to the QJson array
@@ -241,7 +241,7 @@ private :
         {
             QTextStream out(&file);
             out << document.toJson(QJsonDocument::Indented); // <-- Use QTextStream to write the formatted JSON data to the file
-            qDebug()<<"Data"<<document.toJson(QJsonDocument::Indented);
+
             file.close();
             return true;
         }

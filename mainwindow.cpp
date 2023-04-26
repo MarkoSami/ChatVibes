@@ -9,12 +9,15 @@
 #include<QString>
 #include <QScreen>
 #include <QPixmap>
+#include <QDateTime>
 #include "lib/filesystem_lib.h"
 #include "addcontact.h"
 #include <QPropertyAnimation>
 #include "startnewchat.h"
 #include "application/application.h"
 #include <QScrollBar>
+#include "logic/conversation.h"
+#include "logic/message.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,46 +27,65 @@ MainWindow::MainWindow(QWidget *parent)
      ui->setupUi(this);
     // Set the window to open as full screen
 
-    GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
+    connect(&profWin, SIGNAL(exitMainWindow()), this, SLOT(on_pushButton_3_clicked()));
+    connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
+     this, &MainWindow::on_pushButton_7_clicked);
+    GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
+    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     ui->scrollAreaWidgetContents->setContentsMargins(9,20,9,40);
     ui->scrollArea_2->verticalScrollBar()->setSingleStep(6);
-    for (int i = 0; i < 5; i++) {
-        QHBoxLayout *hLayout = new QHBoxLayout;
-        QVBoxLayout *VLayout = new QVBoxLayout ;
-        QLabel *textmsg = new QLabel("Hello , how are u ? ") ;
-        textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
-         // Set the cursor to the I-beam cursor
-        textmsg->setCursor(Qt::IBeamCursor);
-        QLabel *datemsg = new QLabel("1:00Am");
-        textmsg->setWordWrap(true);
-        VLayout->addWidget(textmsg);
-        VLayout->addWidget(datemsg);
-        datemsg->setAlignment(Qt::AlignRight);
-        datemsg->setStyleSheet("color:grey; font-size:11px");
 
-        QGroupBox *VGroupBox = new QGroupBox();
-        VLayout->setSpacing(0);
-        VGroupBox->setLayout(VLayout);
-        VGroupBox->setStyleSheet("background:#161a1d; font-size:15px ; color:white ;font-weight:bold ");
-        QSpacerItem *hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        if (i % 2 == 0 ) {
-        hLayout->addWidget(VGroupBox);
-        hLayout->addItem(hSpacer);
-        }
-        if (i % 2 != 0 ) {
-        textmsg->setText("i'm Fine XD");
-        hLayout->addItem(hSpacer);
-        hLayout->addWidget(VGroupBox);
-        }
+    //-------------------------------------//
 
-        QGroupBox *hGroupBox = new QGroupBox();
-        hGroupBox->setLayout(hLayout);
-        ui->verticalGroupBox_3->layout()->addWidget(hGroupBox);
-    }
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    QHBoxLayout *hLayoutChild = new QHBoxLayout ;
+    QVBoxLayout *VLayout = new QVBoxLayout ;
+    QSpacerItem* hChildSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QLabel *pic = new QLabel() ;
+    pic->setMinimumSize(40, 40);
+    pic->setStyleSheet("image: url(:/imgs/Profile (2).png);background:none");
+
+    QLabel *senderName = new QLabel("marko samy") ;
+    QLabel *textmsg = new QLabel() ;
+    textmsg->setText("Hi");
+    textmsg->setLayoutDirection(Qt::LeftToRight);
+    textmsg->setAlignment(Qt::AlignLeft);
+    textmsg->setStyleSheet("color:gray ; font-size :12px ");
+    textmsg->setWordWrap(true);
+    textmsg->setTextFormat(Qt::RichText);
+    VLayout->addWidget(senderName);
+
+    VLayout->addWidget(textmsg);
+
+    QGroupBox *HGroupBoxChild = new QGroupBox();
+
+    QGroupBox *VGroupBox = new QGroupBox();
+    VLayout->setSpacing(4);
+    VGroupBox->setLayout(VLayout);
+    VGroupBox->setStyleSheet("background:#161a1d; font-size:15px ; color:white ;font-weight:bold ");
+    HGroupBoxChild->setLayout(hLayoutChild);
+    HGroupBoxChild->layout()->addItem(hChildSpacer);
+    hLayout->addWidget(pic);
+    hLayout->addWidget(HGroupBoxChild);
+
+    QGroupBox *hGroupBox = new QGroupBox();
+    hGroupBox->setLayout(hLayout);
+    QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    hGroupBox->layout()->addItem(hSpacer);
+
+    QLabel *datemsg = new QLabel();
+    datemsg->setText(QDate::currentDate().toString());
+    datemsg->setStyleSheet("color:grey; font-size:11px ; background:transparent");
+
+    hGroupBox->layout()->addWidget(datemsg);
+    hGroupBox->setStyleSheet("QGroupBox { border:none; background :#161a1d ;border-radius : 5px;}") ;
+    ui->contactsCont->layout()->addWidget(hGroupBox);
 
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -110,8 +132,7 @@ void MainWindow::on_pushButton_5_clicked()
 
 void MainWindow::on_pushButton_6_clicked()
 {
-      profWin = new profileWindow() ;
-      profWin->show();
+      profWin.show();
 }
 
 
@@ -121,3 +142,16 @@ void MainWindow::on_pushButton_clicked()
       StartNewChatWin->show();
 }
 
+
+void MainWindow::on_pushButton_7_clicked()
+{
+      QString textMsg = ui->sendMessageLineEdit->text();
+
+
+      if (!textMsg.isEmpty()) { // check if the text is not empty
+        Message messageTest("52", textMsg.toStdString(), "242", QDateTime::currentDateTime(), false, false);
+        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(messageTest , Conversation::left ));
+        ui->sendMessageLineEdit->setText("");
+        ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
+      }
+}

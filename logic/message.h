@@ -35,8 +35,7 @@ public:
     bool isSeen();
     void isFavourite();
     void setSeenStatus(bool seenStatus);
-    void rendermessageSender(QGroupBox* layoutSpecified , std::string messageText , std::string imgPath);
-    void rendermessageReciever(QGroupBox* layoutSpecified , std::string messageText , std::string imgPath);
+
 };
 
 #endif // MESSAGE_H

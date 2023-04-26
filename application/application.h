@@ -17,6 +17,16 @@ public:
 
     static bool logUserIn(User& user);
 
+    static User* getLogInUser() {
+        for (auto &user : Application::users)
+        {
+            if (user.isLoggedIn()) {
+                return &user ;
+            }
+        }
+        return nullptr;
+    }
+
 
     static User* searchForurUser(std::string userId) {
 

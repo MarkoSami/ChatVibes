@@ -34,9 +34,12 @@ private slots:
 
     void on_pushButton_clicked();
 
+
+    void on_pushButton_7_clicked();
+
 private:
     Ui::MainWindow *ui;
-    profileWindow *profWin;
+    profileWindow profWin;
 //    Registerfrom *regWin ;
     AddContact *addContactWin ;
     StartNewChat *StartNewChatWin;

@@ -5,6 +5,7 @@
 #include <QPropertyAnimation>
 #include <QEvent>
 #include "application/application.h"
+#include <QString>
 
 AddContact::AddContact(QWidget *parent) :
     QDialog(parent),
@@ -36,24 +37,17 @@ void AddContact::on_pushButton_2_clicked()
 
      std::string id = ui->lineEdit_4->text().toStdString(); // assign unique id to each contact
      std::string name = ui->lineEdit_5->text().toStdString();
-     std::string imgPath = img_path.toStdString();
+     QString imgPath = img_path;
 
-     for (auto &user : Application::users) {
-         if (user.isLoggedIn()) {
-             Contact newContact(id, imgPath, name);
-             user.addContact(newContact);
-                 // Add the new contact to the user's contact list and display a success message
-                 qDebug() << "New contact added:" << user.getUserName() << newContact.getName().c_str() << newContact.getID().c_str() << newContact.getImgPath().c_str() ;
-                 qDebug() << user.getUserContacts().size() ;
-             }
-         }
+     User *targetUser = Application::getLogInUser() ;
 
+     if ((&targetUser) != nullptr) {
 
-     // Display an error message if no user is currently logged in
-     qDebug() << "No user is currently logged in.";
+        Contact newContact(id, imgPath.toStdString(), name);
+        targetUser->addContact(newContact) ;
+     }
+
 }
-
-
 
 
 void AddContact::on_pushButton_9_clicked()
@@ -64,6 +58,7 @@ void AddContact::on_pushButton_9_clicked()
      // Check if a file was selected
      if (!img_path.isEmpty()) {
         // Upload the file to the server or perform other actions with it
+         ui->profileIMGLB->setStyleSheet("border-image: url(" + img_path + ");border-radius:5px");
         qDebug() << "File selected:" << img_path;
      } else {
         // Handle case where no file was selected

@@ -42,3 +42,12 @@ void profileWindow::on_ProfileUploadBtn_clicked()
 }
 
 
+
+void profileWindow::on_pushButton_clicked()
+{
+    emit showWelcomePage();
+    emit exitMainWindow();
+    qDebug() <<"ff";
+
+}
+

@@ -15,8 +15,6 @@ Registerfrom::Registerfrom(QWidget *parent) :
 {
     ui->setupUi(this);
     GUI_lib::setUpWindow(this, "Register", ":/imgs/logo.png");
-
-
 }
 
 Registerfrom::~Registerfrom()
@@ -43,10 +41,7 @@ void Registerfrom::on_pushButton_3_clicked()
     if(Application::registerUser(regUser))
     {
         ui->RegisteredSuccessfully->setText("Registered successfully");
-        for( auto &us : Application::users)
-        {
-            qDebug()<< us.getFirstName();
-        }
+
     }
     else qDebug()<< "Registeration failed";
 }

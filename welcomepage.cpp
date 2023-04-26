@@ -6,15 +6,19 @@ WelcomePage::WelcomePage(QWidget *parent) :
     ui(new Ui::WelcomePage)
 {
     fileSystem_lib::loadData();
-
+    QMetaObject::connectSlotsByName(this);
     ui->setupUi(this);
     ui->stackedWidget->insertWidget(2,&logWin);
     ui->stackedWidget->insertWidget(3,&regWin);
+    disconnect(&profWindow, SIGNAL(showWelcomePage()), this, SLOT(showWelcomePage()));
+    connect(&profWindow, SIGNAL(showWelcomePage()), this, SLOT(showWelcomePage()));
     connect(&regWin, SIGNAL(LoginClicked()), this, SLOT(moveLogin()));
     connect(&regWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));
     connect(&logWin, SIGNAL(BackClicked()), this, SLOT(backHandler()));
     connect(&logWin, SIGNAL(RegisterClicked()), this, SLOT(moveRegister()));
     connect(&logWin , SIGNAL(LoggedInSuccessfully()), this , SLOT(closedHandle()));
+
+
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     mainWindowWin = new MainWindow();
 
@@ -35,10 +39,14 @@ void WelcomePage::moveLogin()
     ui->stackedWidget->setCurrentIndex(2);
 }
 
-void WelcomePage::closedHandle() {
+void WelcomePage::showWelcomePage() {
+    qDebug() << "fsssss" ;
+    this->close();
+}
 
-    this->close() ;
-     mainWindowWin->show();
+void WelcomePage::closedHandle() {
+//    this->close() ;
+    mainWindowWin->show();
 }
 
 void WelcomePage::moveRegister()

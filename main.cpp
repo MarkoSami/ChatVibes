@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
     WelcomePage welcomeWin ;
     welcomeWin.show();
     w.show();
-
     // Connect a slot to the QApplication::aboutToQuit signal
     QObject::connect(&a, &QApplication::aboutToQuit, [](){
         fileSystem_lib::saveData();

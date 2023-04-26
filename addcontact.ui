@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>606</height>
+    <height>794</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -135,6 +135,34 @@ font-weight:bold ; </string>
               </property>
              </widget>
             </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="profileIMGLB">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>164</width>
+                <height>166</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>161</width>
+                <height>166</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/imgs/Profile (2).png);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QPushButton" name="pushButton_9">
               <property name="cursor">
@@ -202,7 +230,7 @@ color:white ;
 background:#161a1d;</string>
            </property>
            <property name="text">
-            <string>02</string>
+            <string>+20</string>
            </property>
           </widget>
          </item>
