@@ -3,11 +3,19 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <application/application.h>
+
+
+int const profileWindow::EXIT_CODE_REBOOT = -69;
+
 QString file_path;
 profileWindow::profileWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::profileWindow)
 {
+    actionReboot = new QAction(this);
+    actionReboot->setText(tr("Restart"));
+    actionReboot->setStatusTip(tr("Restarts the application"));
+    connect(actionReboot, &QAction::triggered, this, &profileWindow::rebootSlot);
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     if(Application::loggedUser != nullptr)
@@ -60,3 +68,14 @@ void profileWindow::on_pushButton_clicked()
     Application::loggedUser->setIMGpath(file_path.toStdString());
 }
 
+
+void profileWindow::on_pushButton_2_clicked()
+{
+    emit rebootSlot();
+}
+
+
+void profileWindow::rebootSlot(){
+    qDebug()<<"Performing Application reboot";
+    qApp->exit( profileWindow::EXIT_CODE_REBOOT );
+}

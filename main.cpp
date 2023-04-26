@@ -7,6 +7,9 @@
 
 int main(int argc, char *argv[])
 {
+    int currentExitCode = 0;
+
+    do{
     QApplication a(argc, argv);
     MainWindow w;
     WelcomePage welcomeWin ;
@@ -16,7 +19,8 @@ int main(int argc, char *argv[])
     QObject::connect(&a, &QApplication::aboutToQuit, [](){
         fileSystem_lib::saveData();
     });
+    currentExitCode = a.exec();
+    } while(currentExitCode == profileWindow::EXIT_CODE_REBOOT);
 
-
-    return a.exec();
+        return currentExitCode;
 }

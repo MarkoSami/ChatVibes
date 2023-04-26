@@ -19,6 +19,8 @@
 #include "logic/conversation.h"
 #include "logic/message.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
