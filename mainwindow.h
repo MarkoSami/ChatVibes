@@ -7,6 +7,7 @@
 #include "starting_handle.h"
 #include "addcontact.h"
 #include "startnewchat.h"
+#include <QGroupBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,6 +41,10 @@ private slots:
     void on_pushButton_7_clicked();
 
     void renderContactMain();
+
+    void handleClickedConversation(QGroupBox*);
+
+    void onRenderConversationClicked();
 
 
 private:

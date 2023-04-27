@@ -52,8 +52,22 @@ MainWindow::MainWindow(QWidget *parent)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
 
+
     for (auto &conversation : Application::loggedUser->getUserContacts()) {
-        ui->contactsCont->layout()->addWidget(Conversation::renderConversation(conversation));
+        // Convert the address to a string
+        std::stringstream ss;
+        ss << &conversation;
+        std::string conversationAddress = ss.str();
+
+        // Create the QGroupBox widget
+        QGroupBox *renderConversation = Conversation::renderConversation(conversation);
+        renderConversation->setObjectName(QString::fromStdString(conversationAddress));
+        ui->contactsCont->layout()->addWidget(renderConversation);
+        renderConversation->setEnabled(true);
+        // Connect the clicked() signal to a lambda function
+        connect(renderConversation, &QGroupBox::clicked, [=]() {
+            handleClickedConversation(renderConversation);
+        });
     }
 
 
@@ -63,6 +77,15 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::onRenderConversationClicked()
+{
+
+}
+
+void MainWindow::handleClickedConversation(QGroupBox * renderConversation) {
+    qDebug() << renderConversation->objectName() ;
 }
 
 
