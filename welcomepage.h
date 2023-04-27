@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "registerfrom.h"
 #include "loginform.h"
+#include "profilewindow.h"
 #include "mainwindow.h"
 
 namespace Ui {
@@ -34,8 +35,6 @@ private:
     Ui::WelcomePage *ui;
     Registerfrom regWin ;
     loginForm logWin ;
-    MainWindow *mainWindowWin ;
-
 };
 
 #endif // WELCOMEPAGE_H

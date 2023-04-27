@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>900</width>
-    <height>500</height>
+    <height>558</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -41,7 +41,7 @@
       <number>12</number>
      </property>
      <property name="topMargin">
-      <number>0</number>
+      <number>33</number>
      </property>
      <property name="rightMargin">
       <number>0</number>
@@ -184,7 +184,7 @@ padding:0;</string>
              <property name="styleSheet">
               <string notr="true">#label_7 {
 color:white;
-font-size: 10px;
+font-size: 15px;
 
 }</string>
              </property>
@@ -196,9 +196,8 @@ font-size: 10px;
            <item>
             <widget class="QLineEdit" name="userNameLE">
              <property name="styleSheet">
-              <string notr="true">
-color:white;
-font-size: 12px;
+              <string notr="true">color:white;
+font-size: 13px;
 border-radius: 5px;
 	
 	background-color: rgb(51, 54, 71);
@@ -250,7 +249,7 @@ padding:0;</string>
              <property name="styleSheet">
               <string notr="true">#label_20 {
 color:white;
-font-size: 10px;
+font-size: 15px;
 
 }</string>
              </property>
@@ -264,7 +263,7 @@ font-size: 10px;
              <property name="styleSheet">
               <string notr="true">
 color:white;
-font-size: 12px;
+font-size: 13px;
 border-radius: 5px;
 	
 	background-color: rgb(51, 54, 71);
@@ -337,6 +336,12 @@ QPushButton:pressed {
         </item>
         <item>
          <widget class="QLabel" name="loggedInSuccessfully">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="styleSheet">
            <string notr="true">color : green ;</string>
           </property>
@@ -346,7 +351,7 @@ QPushButton:pressed {
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_2">
+         <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>

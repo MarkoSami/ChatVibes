@@ -22,9 +22,6 @@ public:
     std::string getName();
     void setName(std::string name);
 
-
-
-
 };
 
 #endif // CONTACT_H

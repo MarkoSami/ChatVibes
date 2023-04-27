@@ -45,6 +45,7 @@ void AddContact::on_pushButton_2_clicked()
 
         Contact newContact(id, imgPath.toStdString(), name);
         targetUser->addContact(newContact) ;
+        emit renderContact() ;
      }
 
 }

@@ -15,6 +15,9 @@ public:
     explicit AddContact(QWidget *parent = nullptr);
     ~AddContact();
 
+
+signals: void renderContact();
+
 private slots:
 
     void on_pushButton_10_clicked();
@@ -27,6 +30,8 @@ private:
     Ui::AddContact *ui;
 
     QString img_path; // Member variable to store the selected image path
+
+
 };
 
 #endif // ADDCONTACT_H

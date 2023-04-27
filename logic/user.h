@@ -10,8 +10,6 @@
 #include "logic/conversation.h"
 
 
-
-
 class User
 {
 private:

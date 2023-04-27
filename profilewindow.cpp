@@ -23,7 +23,7 @@ profileWindow::profileWindow(QWidget *parent) :
 
         std::string loggedUserName = Application::loggedUser->getUserName();
         ui->lineEdit->setText(QString::fromStdString(loggedUserName));
-        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + QString::fromStdString(Application::loggedUser->getIMGpath()) + ");");
+        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + QString::fromStdString(Application::loggedUser->getIMGpath()) + ");border-radius:8px");
 
     }
     ui->lineEdit_2->setText("Hello there! I'm using chatVibes");
@@ -51,7 +51,7 @@ void profileWindow::on_ProfileUploadBtn_clicked()
     if (!file_path.isEmpty() && Application::loggedUser != nullptr) {
         // Upload the file to the server or perform other actions with it
         qDebug() << "File selected:" << file_path;
-        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + file_path + ");");
+        ui->ProfileImageLabel->setStyleSheet("border-image: url(" + file_path + ");border-radius:8px");
 
 
     } else {
@@ -77,5 +77,5 @@ void profileWindow::on_pushButton_2_clicked()
 
 void profileWindow::rebootSlot(){
     qDebug()<<"Performing Application reboot";
-    qApp->exit( profileWindow::EXIT_CODE_REBOOT );
+    qApp->exit( profileWindow::EXIT_CODE_REBOOT);
 }

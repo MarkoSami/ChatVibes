@@ -1,5 +1,3 @@
-
-#include "mainwindow.h"
 #include "welcomepage.h"
 #include<QJsonArray>
 #include <QApplication>
@@ -11,10 +9,12 @@ int main(int argc, char *argv[])
 
     do{
     QApplication a(argc, argv);
-    MainWindow w;
+    QApplication::setFont(QFont("Tajawal", 12));
+
+
     WelcomePage welcomeWin ;
     welcomeWin.show();
-//    w.show();
+
     // Connect a slot to the QApplication::aboutToQuit signal
     QObject::connect(&a, &QApplication::aboutToQuit, [](){
         fileSystem_lib::saveData();

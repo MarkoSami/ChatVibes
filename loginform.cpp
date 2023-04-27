@@ -59,7 +59,7 @@ void loginForm::on_LoginBtn_clicked()
 
          // start the timer with a 1 second interval
 
-         delayTimer->start(2000);
+         delayTimer->start(150);
 
          // enter the application event loop
          QCoreApplication::processEvents();
