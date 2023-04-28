@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     addcontact.cpp \
     application/application.cpp \
+    customGUI/qclickablegroubox.cpp \
     lib/filesystem_lib.cpp \
     lib/gui_lib.cpp \
     logic/contact.cpp \
@@ -28,6 +29,8 @@ SOURCES += \
 HEADERS += \
     addcontact.h \
     application/application.h \
+    customGUI/qclickablegroubox.h \
+    customGUI/qclickablegroubox.h \
     lib/filesystem_lib.h \
     lib/gui_lib.h \
     logic/contact.h \

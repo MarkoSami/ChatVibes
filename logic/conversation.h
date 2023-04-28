@@ -5,6 +5,7 @@
 #include<string.h>
 #include "logic/contact.h"
 #include "logic/message.h"
+#include "customGUI/qclickablegroubox.h"
 #include <list>
 #include <QWidget>
 #include <QLabel>
@@ -103,7 +104,7 @@ public:
     }
 
 
-    static QGroupBox* renderConversation(Contact contact){
+    static QClickableGroupBox* renderConversation(Contact contact){
 
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -146,7 +147,7 @@ public:
         hLayout->addWidget(pic);
         hLayout->addWidget(VGroupBox);
 
-        QGroupBox *hGroupBox = new QGroupBox();
+        QClickableGroupBox *hGroupBox = new QClickableGroupBox();
         hGroupBox->setLayout(hLayout);
         QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
         hGroupBox->layout()->addItem(hSpacer);

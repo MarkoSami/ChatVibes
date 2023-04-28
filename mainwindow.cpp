@@ -1,11 +1,8 @@
 
 #include "mainwindow.h"
 #include "profilewindow.h"
-#include "loginform.h"
-#include "registerfrom.h"
-#include "ui_mainwindow.h"
-#include "ui_registerfrom.h"
-#include "lib/gui_lib.h"
+  #include "ui_mainwindow.h"
+ #include "lib/gui_lib.h"
 #include<QString>
 #include <QScreen>
 #include <QPixmap>
@@ -18,6 +15,7 @@
 #include <QScrollBar>
 #include "logic/conversation.h"
 #include "logic/message.h"
+#include "customGUI/qclickablegroubox.h"
 
 
 
@@ -42,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create a QPropertyAnimation object to animate the window's opacity
     QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
-    animation->setDuration(500);  // set the animation duration to 500 milliseconds
+    animation->setDuration(150);  // set the animation duration to 500 milliseconds
     animation->setStartValue(0.0);  // set the start opacity value to 0
     animation->setEndValue(1.0);  // set the end opacity value to 1
 
@@ -60,12 +58,12 @@ MainWindow::MainWindow(QWidget *parent)
         std::string conversationAddress = ss.str();
 
         // Create the QGroupBox widget
-        QGroupBox *renderConversation = Conversation::renderConversation(conversation);
+        QClickableGroupBox *renderConversation = Conversation::renderConversation(conversation);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
         renderConversation->setEnabled(true);
         // Connect the clicked() signal to a lambda function
-        connect(renderConversation, &QGroupBox::clicked, [=]() {
+        connect(renderConversation, &QClickableGroupBox::clicked, [=]() {
             handleClickedConversation(renderConversation);
         });
     }
@@ -85,8 +83,21 @@ void MainWindow::onRenderConversationClicked()
 }
 
 void MainWindow::handleClickedConversation(QGroupBox * renderConversation) {
-    qDebug() << renderConversation->objectName() ;
+
+    // Create a stringstream object from the string.
+    std::stringstream ss(renderConversation->objectName().toStdString());
+
+    void* address;
+    ss >> address;// Read the address from the stringstream.
+
+    // Cast the void* pointer to the desired type.
+    Conversation* conversation = static_cast<Conversation*>(address);
+    std::list<Message> messagesList = conversation->getMessages();
+    for (const Message& msg : messagesList) {
+        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(msg , Conversation::left ));
+    }
 }
+
 
 
 
