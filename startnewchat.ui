@@ -107,7 +107,7 @@ border:none;}</string>
        <number>0</number>
       </property>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="contactName">
         <property name="styleSheet">
          <string notr="true">color:white;
 font-size: 15px;
@@ -123,7 +123,7 @@ padding:5px;
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="messageName">
         <property name="styleSheet">
          <string notr="true">color:white;
 font-size: 15px;

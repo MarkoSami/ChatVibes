@@ -6,6 +6,7 @@
 
 std::list<User> Application::users = {};
 User* Application::loggedUser = nullptr;
+Conversation *Application::currentConversation = nullptr ;
 
 Application::Application()
 {

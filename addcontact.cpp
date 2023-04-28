@@ -44,8 +44,10 @@ void AddContact::on_pushButton_2_clicked()
      if ((&targetUser) != nullptr) {
 
         Contact newContact(id, imgPath.toStdString(), name);
+        Conversation newConversation(newContact , false , newContact.getName());
         targetUser->addContact(newContact) ;
-        emit renderContact() ;
+        targetUser->addNewConversation(newConversation);
+        emit renderConversation() ;
      }
 
 }

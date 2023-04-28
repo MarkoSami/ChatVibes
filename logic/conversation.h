@@ -104,7 +104,7 @@ public:
     }
 
 
-    static QClickableGroupBox* renderConversation(Contact contact){
+    static QClickableGroupBox* renderConversation(Conversation conversation){
 
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -113,8 +113,8 @@ public:
         QLabel *pic = new QLabel() ;
         pic->setMinimumSize(50, 30);
         pic->setMaximumSize(pic->maximumSize());
-        pic->setStyleSheet("border-image: url(" + QString::fromStdString(contact.getImgPath()) + ");border-radius:8px");
-        QLabel *senderName = new QLabel(QString::fromStdString(contact.getName())) ;
+        pic->setStyleSheet("border-image: url(" + QString::fromStdString(conversation.receiver.getImgPath()) + ");border-radius:8px");
+        QLabel *senderName = new QLabel(QString::fromStdString(conversation.getName())) ;
         QLabel *textmsg = new QLabel() ;
         QString texttest = "Start Chat!";
         QSpacerItem* hchildSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);

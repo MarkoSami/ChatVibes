@@ -16,7 +16,7 @@ public:
     ~AddContact();
 
 
-signals: void renderContact();
+signals: void renderConversation();
 
 private slots:
 

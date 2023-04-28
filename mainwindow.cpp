@@ -49,27 +49,53 @@ MainWindow::MainWindow(QWidget *parent)
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
+    qDebug() << Application::loggedUser->getConversations().size() ;
 
+    std::stack<Conversation> ConversationsCoppied = Application::loggedUser->getConversations();
 
-    for (auto &conversation : Application::loggedUser->getUserContacts()) {
+    std::stack<Conversation*> ConvTemp;
+
+    while (!ConversationsCoppied.empty()) {
+        // Get the top conversation from the original stack
+        Conversation* conversation = &(ConversationsCoppied.top());
+
+        // Create a copy of the conversation with the same address
+        Conversation* conversationCopy = new Conversation(*conversation);
+
+        // Push the copy into the new stack
+        ConvTemp.push(conversationCopy);
+
+        // Pop the original stack
+        ConversationsCoppied.pop();
+    }
+
+    // Render the copied conversations
+    while (!ConvTemp.empty()) {
+        Conversation* conversation = ConvTemp.top();
+
         // Convert the address to a string
         std::stringstream ss;
-        ss << &conversation;
+        ss << conversation;
         std::string conversationAddress = ss.str();
 
-        // Create the QGroupBox widget
-        QClickableGroupBox *renderConversation = Conversation::renderConversation(conversation);
+        // Create the QClickableGroupBox widget
+        QClickableGroupBox *renderConversation = Conversation::renderConversation(*conversation);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
         renderConversation->setEnabled(true);
+
         // Connect the clicked() signal to a lambda function
         connect(renderConversation, &QClickableGroupBox::clicked, [=]() {
             handleClickedConversation(renderConversation);
         });
+
+        // Pop the copied stack
+        ConvTemp.pop();
     }
 
 
 }
+
 
 
 MainWindow::~MainWindow()
@@ -82,7 +108,11 @@ void MainWindow::onRenderConversationClicked()
 
 }
 
-void MainWindow::handleClickedConversation(QGroupBox * renderConversation) {
+void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
+    if (!renderConversation) {
+        qDebug() << "Render conversation is null";
+        return;
+    }
 
     // Create a stringstream object from the string.
     std::stringstream ss(renderConversation->objectName().toStdString());
@@ -92,11 +122,22 @@ void MainWindow::handleClickedConversation(QGroupBox * renderConversation) {
 
     // Cast the void* pointer to the desired type.
     Conversation* conversation = static_cast<Conversation*>(address);
-    std::list<Message> messagesList = conversation->getMessages();
-    for (const Message& msg : messagesList) {
-        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(msg , Conversation::left ));
+
+    Application::currentConversation = conversation ;
+
+    qDebug() << conversation->getMessages().size() ;
+
+    QLayoutItem *item;
+    while ((item = ui->verticalGroupBox_3->layout()->takeAt(0)) != nullptr) {
+        delete item->widget();
+        delete item;
+    }
+
+    for (auto &conv : conversation->getMessages()) {
+        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(conv,Conversation::left));
     }
 }
+
 
 
 
@@ -110,7 +151,7 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 void MainWindow::renderContactMain() {
-   ui->contactsCont->layout()->addWidget(Conversation::renderConversation(Application::loggedUser->getUserContacts().back()));
+//   ui->contactsCont->layout()->addWidget(Conversation::renderConversation(Application::loggedUser->getUserContacts().back()));
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -136,8 +177,8 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
      addContactWin = new AddContact() ;
-      addContactWin->show();
-      connect(addContactWin, SIGNAL(renderContact()), this, SLOT(renderContactMain()));
+     addContactWin->show();
+     connect(addContactWin, SIGNAL(renderConversation()), this, SLOT(renderContactMain()));
 }
 
 
@@ -162,7 +203,7 @@ void MainWindow::on_pushButton_7_clicked()
 
       if (!textMsg.isEmpty()) { // check if the text is not empty
         Message messageTest("52", textMsg.toStdString(), "242", QDateTime::currentDateTime(), false, false);
-
+        Application::currentConversation->addNewMessage(messageTest);
         ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(messageTest , Conversation::left ));
         ui->sendMessageLineEdit->setText("");
         ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());

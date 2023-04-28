@@ -89,6 +89,7 @@ private :
         userData["contacts"] = contacts;
 
         QJsonArray conversations;
+
         std::stack<Conversation> conversationsStack = user.getConversations();
         while(!conversationsStack.empty()){
             conversations.append(createNewJSONConversation(conversationsStack.top()));
