@@ -7,7 +7,7 @@
 #include "logic/user.h"
 #include "application/application.h"
 #include <string>
-
+#include <QKeyEvent>
 
 Registerfrom::Registerfrom(QWidget *parent) :
     QDialog(parent),
@@ -52,3 +52,15 @@ void Registerfrom::on_backButton_clicked()
     emit BackClicked() ;
 }
 
+void Registerfrom::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+    {
+        Registerfrom::on_pushButton_3_clicked();
+    }
+    else
+    {
+        QWidget::keyPressEvent(event);
+
+    }
+}

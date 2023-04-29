@@ -5,12 +5,13 @@
 #include "application/application.h"
 #include <QTimer>
 #include <QCoreApplication>
-
+#include <QKeyEvent>
 
 loginForm::loginForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::loginForm)
 {
+
     ui->setupUi(this);
     setWindowFlags( (windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowMaximizeButtonHint);
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
@@ -76,4 +77,21 @@ void loginForm::on_backButton_clicked()
 {
     emit BackClicked() ;
 }
+
+void loginForm::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+    {
+        on_LoginBtn_clicked();
+    }
+    else
+    {
+        QWidget::keyPressEvent(event);
+
+    }
+}
+
+
+
+
 

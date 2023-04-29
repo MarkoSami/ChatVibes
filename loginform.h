@@ -2,7 +2,8 @@
 #define LOGINFORM_H
 
 #include <QWidget>
-
+#include <QDialog>
+class QKeyEvent;
 
 namespace Ui {
 class loginForm;
@@ -31,6 +32,9 @@ private slots:
     void on_pushButton_2_clicked();
     void on_LoginBtn_clicked();
     void on_backButton_clicked();
+    void keyPressEvent(QKeyEvent *event);
+
+
 };
 
 #endif // LOGINFORM_H
