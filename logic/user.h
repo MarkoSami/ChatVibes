@@ -5,8 +5,7 @@
 #include <string.h>
 #include<list>
 #include<stack>
-#include "message.h"
-#include "logic/contact.h"
+ #include "logic/contact.h"
 #include "logic/conversation.h"
 
 
@@ -18,8 +17,8 @@ private:
     std::string first_name;
     std::string last_name;
     std::string password;
-    std::list<Contact> contacts;
-    std::stack<Conversation> conversations;
+    std::list<Contact*> contacts;
+    std::stack<Conversation*> conversations;
     std::string imgPath;
     bool loggedIn;
 
@@ -37,7 +36,7 @@ public:
     std::string getUserPassword();
     void setUserPassword(std::string password);
 
-    std::list<Contact> getUserContacts();
+    std::list<Contact*>& getUserContacts();
     void setUserContacts(std::list<std::string> &contacts);
 
     std::string getIMGpath();
@@ -49,16 +48,16 @@ public:
     std::string getFirstName();
     void setFirstName(std::string name);
 
-    std::stack<Conversation> getConversations();
-    void addNewConversation(Conversation& conversation);
+    std::stack<Conversation*>& getConversations();
+    void addNewConversation(Conversation* conversation);
 
 
     // user logic functions
     bool isLoggedIn();
     void setLoggedIn(bool value) ;
-    bool addContact(const Contact& newContact);
+    bool addContact(  Contact* newContact);
     bool removeContact(std::string contactID);
-    Contact findContact(std::string contactID);
+    Contact* findContact(std::string contactID);
 
 
 

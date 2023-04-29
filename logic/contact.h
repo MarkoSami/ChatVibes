@@ -15,6 +15,7 @@ public:
     Contact( std::string _ID , std::string _imgPath = ":/imgs/Profile (2).png", std::string _name = "");
     Contact();
     std::string getID();
+    void setID(std::string ID);
 
     std::string getImgPath();
     void setImgPath(std::string imgPath);

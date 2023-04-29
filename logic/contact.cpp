@@ -3,7 +3,7 @@
 #include <string.h>
 #include<iostream>
 #include <list>
-
+#include <assert.h>
 Contact::Contact( std::string _ID , std::string _imgPath  , std::string _name  )
 {
     this->ID = _ID;
@@ -16,9 +16,14 @@ Contact::Contact(){
 }
 
 std::string Contact::getID(){
+    assert(!this->ID.empty()); // Check if ID is not empty
+
     return this->ID;
 }
 
+void Contact::setID(std::string ID){
+    this->ID = ID;
+}
 std::string Contact::getImgPath()
 {
     return imgPath;

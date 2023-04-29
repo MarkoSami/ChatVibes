@@ -19,7 +19,7 @@ class Conversation
 {
 private:
 
-    Contact receiver;
+    Contact* receiver;
     std::list<Message> messages;
     std::string name;
     bool isFavourite;
@@ -45,14 +45,17 @@ public:
         return txt.size();
     }
 
-    Conversation(Contact _receiver, bool _isFavourite = false,std::string _name = "");
+    Conversation(Contact *_receiver, bool _isFavourite = false,std::string _name = "");
     // Setters
-    void setReceiver(Contact _receiver) { receiver = _receiver; }
+    void setReceiver(Contact _receiver) {
+        receiver->setName(_receiver.getName());
+        receiver->setImgPath(_receiver.getImgPath());
+    }
     void setName(std::string _name) { name = _name; }
     void setIsFavourite(bool _isFavourite) { isFavourite = _isFavourite; }
 
     // Getters
-    Contact getReceiver(){ return receiver; }
+    Contact* getReceiver(){ return receiver; }
     std::list<Message> getMessages()   { return messages; }
     std::string getName(){ return name; }
     bool getIsFavourite(){ return isFavourite; }// get is the conversation favourite or not
@@ -104,7 +107,7 @@ public:
     }
 
 
-    static QClickableGroupBox* renderConversation(Conversation conversation){
+    static QClickableGroupBox* renderConversation(Conversation* conversation){
 
         QHBoxLayout *hLayout = new QHBoxLayout;
         QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -113,8 +116,8 @@ public:
         QLabel *pic = new QLabel() ;
         pic->setMinimumSize(50, 30);
         pic->setMaximumSize(pic->maximumSize());
-        pic->setStyleSheet("border-image: url(" + QString::fromStdString(conversation.receiver.getImgPath()) + ");border-radius:8px");
-        QLabel *senderName = new QLabel(QString::fromStdString(conversation.getName())) ;
+        pic->setStyleSheet("border-image: url(" + QString::fromStdString(conversation->receiver->getImgPath()) + ");border-radius:8px");
+        QLabel *senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
         QLabel *textmsg = new QLabel() ;
         QString texttest = "Start Chat!";
         QSpacerItem* hchildSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);

@@ -36,7 +36,7 @@ void Registerfrom::on_pushButton_3_clicked()
     std::string userName = ui->userNameLE->text().toStdString();
     std::string password = ui->passwordLE->text().toStdString();
 
-    User regUser(userName,userName, firstName, lastName, password);
+    User *regUser = new User(userName,userName, firstName, lastName, password);
 
     if(Application::registerUser(regUser))
     {

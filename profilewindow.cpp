@@ -64,6 +64,8 @@ void profileWindow::on_ProfileUploadBtn_clicked()
 
 void profileWindow::on_pushButton_clicked()
 {
+    qDebug() << "User name size: " << ui->lineEdit->text().size();
+    qDebug() << "Image path size: " << file_path.toStdString().size();
     Application::loggedUser->setUserName(ui->lineEdit->text().toStdString());
     Application::loggedUser->setIMGpath(file_path.toStdString());
 }

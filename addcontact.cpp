@@ -39,14 +39,13 @@ void AddContact::on_pushButton_2_clicked()
      std::string name = ui->lineEdit_5->text().toStdString();
      QString imgPath = img_path;
 
-     User *targetUser = Application::getLogInUser() ;
 
-     if ((&targetUser) != nullptr) {
+     if ((Application::loggedUser) != nullptr) {
 
-        Contact newContact(id, imgPath.toStdString(), name);
-        Conversation newConversation(newContact , false , newContact.getName());
-        targetUser->addContact(newContact) ;
-        targetUser->addNewConversation(newConversation);
+        Contact *newContact = new Contact(id, imgPath.toStdString(), name);
+        Conversation* newConversation = new Conversation(newContact , false , newContact->getName());
+        Application::loggedUser->addContact(newContact) ;
+        Application::loggedUser->addNewConversation(newConversation);
         emit renderConversation() ;
      }
 

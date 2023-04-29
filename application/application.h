@@ -11,7 +11,7 @@ public:
 
     Application();
 
-    static std::list<User> users ;
+    static std::list<User*> users ;
     static User* loggedUser;
     static bool logUserIn(User& user);
     static Conversation *currentConversation ;
@@ -19,8 +19,8 @@ public:
     static User* getLogInUser() {
         for (auto &user : Application::users)
         {
-            if (user.isLoggedIn()) {
-                return &user ;
+            if (user->isLoggedIn()) {
+                return user ;
             }
         }
         return nullptr;
@@ -29,16 +29,16 @@ public:
 
     static User* searchForurUser(std::string userId) {
 
-        for(auto &user : Application::users)
+        for(auto *user : Application::users)
         {
-            if(userId == user.getUserID()) {
-                return &user;
+            if( user != nullptr && userId == user->getUserID()) {
+                return user;
             }
         }
         return nullptr;
     }
 
-    static bool registerUser(User& user)
+    static bool registerUser(User* user)
     {
         if(Application::isAlreadyRegistered(user)){
             return false;
@@ -50,13 +50,13 @@ public:
 
 
 
-    static bool isAlreadyRegistered(User& user)
+    static bool isAlreadyRegistered(User* user)
     {
-        std::string userID = user.getUserID();
+        std::string userID = user->getUserID();
 
         for(auto regUser : Application::users)
         {
-            if(userID == regUser.getUserID())
+            if(userID == regUser->getUserID())
                 return true;
         }
         return false;

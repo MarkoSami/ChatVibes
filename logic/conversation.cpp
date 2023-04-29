@@ -5,10 +5,10 @@
 #include <vector>
 
 
-Conversation::Conversation(Contact _receiver, bool _isFavourite, std::string _name)
+Conversation::Conversation(Contact* _receiver, bool _isFavourite, std::string _name)
     : receiver(_receiver) , isFavourite(_isFavourite)
 {
-    this->name = (_name == "")? _receiver.getID(): _name;
+    this->name = (_name == "")? _receiver->getID(): _name;
 }
 
 bool Conversation::addNewMessage(const Message& newMessage){

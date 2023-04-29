@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1192</width>
+    <width>1196</width>
     <height>619</height>
    </rect>
   </property>
@@ -303,7 +303,7 @@ color : white ;
 </string>
                </property>
                <property name="text">
-                <string>Anonymous ID</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -350,8 +350,8 @@ QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>614</width>
-                  <height>375</height>
+                  <width>620</width>
+                  <height>384</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -674,8 +674,8 @@ QScrollBar::sub-page:vertical {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>376</width>
-              <height>403</height>
+              <width>378</width>
+              <height>399</height>
              </rect>
             </property>
             <property name="sizePolicy">

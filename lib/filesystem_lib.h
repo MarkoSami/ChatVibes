@@ -34,11 +34,11 @@ private :
     }
 
     // ________create a new Contact QJson object ready to add for QJsonArray
-    static  QJsonObject createNewJSONContact( Contact &contact){
+    static  QJsonObject createNewJSONContact( Contact* contact){
         QJsonObject JSONContact;
-        JSONContact["ID"] = contact.getID().c_str();
-        JSONContact["name"] = contact.getName().c_str();
-        JSONContact["imgPath"] = contact.getImgPath().c_str();
+        JSONContact["ID"] = QString::fromStdString(contact->getID());
+        JSONContact["name"] = QString::fromStdString(contact->getName().c_str());
+        JSONContact["imgPath"] = QString::fromStdString(contact->getImgPath().c_str());
 
 
         return JSONContact;
@@ -46,18 +46,18 @@ private :
     }
     // ________create a new Conversation QJson object ready to add for QJsonArray
 
-    static QJsonObject createNewJSONConversation(Conversation conversation){
+    static QJsonObject createNewJSONConversation(Conversation* conversation){
         QJsonObject jsonConversation;
 
         // adding conversation basic data
-        Contact receiver = conversation.getReceiver();
+        Contact* receiver = conversation->getReceiver();
         jsonConversation["receiver"] = (createNewJSONContact(receiver));
-         jsonConversation["name"] = conversation.getName().c_str();
-        jsonConversation["isFavourite"] = conversation.getIsFavourite();
+        jsonConversation["name"] = conversation->getName().c_str();
+        jsonConversation["isFavourite"] = conversation->getIsFavourite();
 
         // adding conversation messages
         QJsonArray messages;
-        for(auto message : conversation.getMessages()){
+        for(auto message : conversation->getMessages()){
             messages.append(createNewJSONMessage(message));
         }
         jsonConversation["messages"] = messages;
@@ -66,31 +66,31 @@ private :
     }
 
     // _______create new user file if it doesn't exist
-    static QJsonObject createNewJSONUser(User user){
+    static QJsonObject createNewJSONUser(User* user){
 
         // preparing user data
         QJsonObject userData;
-        if( (&user) == nullptr ||user.getUserID() == "" || user.getUserName() == "" || user.getUserPassword() == ""){
+        if( (&user) == nullptr ||user->getUserID() == "" || user->getUserName() == "" || user->getUserPassword() == ""){
             return userData ;
         }
-        userData["ID"] =  user.getUserID().c_str();
-        userData["firstName"] =  user.getFirstName().c_str();
-        userData["lastName"] =  user.getlastName().c_str();
-        userData["username"] =  user.getUserName().c_str();
-        userData["password"] =  user.getUserPassword().c_str();
+        userData["ID"] =  user->getUserID().c_str();
+        userData["firstName"] =  user->getFirstName().c_str();
+        userData["lastName"] =  user->getlastName().c_str();
+        userData["username"] =  user->getUserName().c_str();
+        userData["password"] =  user->getUserPassword().c_str();
         userData["loggedIn"] = false;
-        userData["imgPath"] = user.getIMGpath().c_str();
+        userData["imgPath"] = user->getIMGpath().c_str();
 
         // adding user contacts IDs to the QJson array
         QJsonArray contacts;
-        for(auto &contact : user.getUserContacts()){
+        for(Contact *contact : user->getUserContacts()){
             contacts.append(createNewJSONContact(contact));
         }
         userData["contacts"] = contacts;
 
         QJsonArray conversations;
 
-        std::stack<Conversation> conversationsStack = user.getConversations();
+        std::stack<Conversation*> conversationsStack = user->getConversations();
         while(!conversationsStack.empty()){
             conversations.append(createNewJSONConversation(conversationsStack.top()));
             conversationsStack.pop();
@@ -116,8 +116,8 @@ private :
     }
 
     //____ this function creates a new Contact object from a QJsonObj
-    static Contact createNewContactObject(const QJsonObject& jsonContactObj){
-        Contact contact
+    static Contact* createNewContactObject(const QJsonObject& jsonContactObj){
+        Contact *contact = new  Contact
             (
                 jsonContactObj["ID"].toString().toStdString(),
                 jsonContactObj["imgPath"].toString().toStdString(),
@@ -128,8 +128,8 @@ private :
 
 
     //_____ this function creates new COnversation object from a Conversation QJsonObj
-    static Conversation createNewConversationObject(const QJsonObject& jsonConversationObj){
-        Conversation conversationObj
+    static Conversation* createNewConversationObject(const QJsonObject& jsonConversationObj){
+        Conversation *conversationObj = new Conversation
             (
                 createNewContactObject(jsonConversationObj["receiver"].toObject()),
                 jsonConversationObj["isFavourite"].toBool(),
@@ -139,7 +139,7 @@ private :
         // adding conversation messages
         QJsonArray jsonMessages = jsonConversationObj["messages"].toArray();
         for(auto message : jsonMessages){
-            conversationObj.addNewMessage(createNewMessageObject(message.toObject()));
+            conversationObj->addNewMessage(createNewMessageObject(message.toObject()));
         }
 
         return conversationObj;
@@ -147,9 +147,9 @@ private :
 
 
     //_____ this function creates new user object from a user QJsonObj
-    static User createNewUserObject(QJsonObject& jsonUserObj){
+    static User* createNewUserObject(QJsonObject& jsonUserObj){
         // adding basic data from the json Filel oaded from the disk
-        User user
+        User *user = new User
             (
                 jsonUserObj["ID"].toString().toStdString(),
                 jsonUserObj["username"].toString().toStdString(),
@@ -165,14 +165,15 @@ private :
             // adding contacts
             QJsonArray jsonContacts = jsonUserObj["contacts"].toArray();
             for(auto contact : jsonContacts){
-                user.addContact(createNewContactObject(contact.toObject()));
+                Contact *contactJson = createNewContactObject((contact).toObject());
+                user->addContact(contactJson);
             }
 
             // adding conversations
             QJsonArray jsonConversations = jsonUserObj["conversations"].toArray();
             for(auto conversation : jsonConversations){
-                Conversation conversationObj = createNewConversationObject(conversation.toObject());
-                user.addNewConversation(conversationObj);
+                Conversation *conversationObj = createNewConversationObject(conversation.toObject());
+            user->addNewConversation(conversationObj);
             }
 
         return user;
@@ -185,16 +186,16 @@ private :
         while(!conversations.empty()){
             Conversation conversation = conversations.top();
             conversations.pop();
-            JSONConversations.append(createNewJSONConversation(conversation));
+            JSONConversations.append(createNewJSONConversation(&conversation));
         }
         return (QJsonDocument(JSONConversations));
     }
 
 
      //_______this function constructs the users document to be ready to save at the disk
-    static QJsonDocument buildUsersJSONDocument(const std::list<User>& users) {
+    static QJsonDocument buildUsersJSONDocument( std::list<User*> users) {
         QJsonArray JSONUsers;
-        for (const User& user : users) {
+        for (auto  &user : users) {
                 JSONUsers.append(createNewJSONUser(user));
         }
 
@@ -233,7 +234,7 @@ private :
         {
             QTextStream out(&file);
             out << document.toJson(QJsonDocument::Indented); // <-- Use QTextStream to write the formatted JSON data to the file
-
+            qDebug()<<document.toJson(QJsonDocument::Indented);
             file.close();
             return true;
         }
@@ -248,7 +249,8 @@ public:
 
     static  bool saveData(){
         // constructing and saving users list in a json file
-        QJsonDocument users = buildUsersJSONDocument(Application::users);
+        std::list<User*> usersList  = Application::users;
+        QJsonDocument users = buildUsersJSONDocument(usersList);
         storeJSONDocument(users);
 
         // constructing and saving conversations stack in a json file
@@ -283,7 +285,7 @@ public:
 
         if(type == USERS){
             if (!Application::users.empty()) {
-                    std::list<User>& mutableUsers = const_cast<std::list<User>&>(Application::users);
+                    std::list<User*>& mutableUsers = const_cast<std::list<User*>&>(Application::users);
                     mutableUsers.clear();
             }
 
@@ -293,7 +295,7 @@ public:
                     for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
                         if (arrayItr->isObject()) {
                             QJsonObject jsonUserObj = arrayItr->toObject();
-                            User user = createNewUserObject(jsonUserObj);
+                            User *user = createNewUserObject(jsonUserObj);
                             Application::users.push_back(user);
                         }
                     }

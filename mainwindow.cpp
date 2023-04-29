@@ -49,37 +49,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
-    qDebug() << Application::loggedUser->getConversations().size() ;
-
-    std::stack<Conversation> ConversationsCoppied = Application::loggedUser->getConversations();
-
-    std::stack<Conversation*> ConvTemp;
-
-    while (!ConversationsCoppied.empty()) {
-        // Get the top conversation from the original stack
-        Conversation* conversation = &(ConversationsCoppied.top());
-
-        // Create a copy of the conversation with the same address
-        Conversation* conversationCopy = new Conversation(*conversation);
-
-        // Push the copy into the new stack
-        ConvTemp.push(conversationCopy);
-
-        // Pop the original stack
-        ConversationsCoppied.pop();
-    }
+     // Make a copy of the original stack
+    std::stack<Conversation*> tempConversations ;
 
     // Render the copied conversations
-    while (!ConvTemp.empty()) {
-        Conversation* conversation = ConvTemp.top();
+    while (!Application::loggedUser->getConversations().empty()) {
+
+        qDebug()<<"con Name: "<<Application::loggedUser->getConversations().top()->getName();
+        Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
+        tempConversations.push(conversationPtr);
 
         // Convert the address to a string
         std::stringstream ss;
-        ss << conversation;
+        ss << conversationPtr;
         std::string conversationAddress = ss.str();
 
         // Create the QClickableGroupBox widget
-        QClickableGroupBox *renderConversation = Conversation::renderConversation(*conversation);
+        QClickableGroupBox *renderConversation = Conversation::renderConversation(conversationPtr);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
         renderConversation->setEnabled(true);
@@ -89,9 +75,15 @@ MainWindow::MainWindow(QWidget *parent)
             handleClickedConversation(renderConversation);
         });
 
-        // Pop the copied stack
-        ConvTemp.pop();
-    }
+        Application::loggedUser->getConversations().pop();
+     }
+
+    while(!tempConversations.empty()){
+        Application::loggedUser->getConversations().push(tempConversations.top());
+        tempConversations.pop();
+     }
+
+
 
 
 }
@@ -123,9 +115,10 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
     // Cast the void* pointer to the desired type.
     Conversation* conversation = static_cast<Conversation*>(address);
 
-    Application::currentConversation = conversation ;
+    qDebug()<< (Application::currentConversation );
+    Application::currentConversation =  conversation;
+    qDebug()<< (Application::currentConversation );
 
-    qDebug() << conversation->getMessages().size() ;
 
     QLayoutItem *item;
     while ((item = ui->verticalGroupBox_3->layout()->takeAt(0)) != nullptr) {
@@ -133,6 +126,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         delete item;
     }
 
+    ui->label_3->setText(conversation->getName().c_str());
     for (auto &conv : conversation->getMessages()) {
         ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(conv,Conversation::left));
     }
@@ -196,6 +190,7 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
+
 void MainWindow::on_pushButton_7_clicked()
 {
       QString textMsg = ui->sendMessageLineEdit->text();
@@ -204,8 +199,17 @@ void MainWindow::on_pushButton_7_clicked()
       if (!textMsg.isEmpty()) { // check if the text is not empty
         Message messageTest("52", textMsg.toStdString(), "242", QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
+
         ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(messageTest , Conversation::left ));
         ui->sendMessageLineEdit->setText("");
         ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
       }
-}
+      qDebug()<<Application::currentConversation->getMessages().size();
+         std::stack<Conversation*> convs = Application::loggedUser->getConversations();
+        while(!convs.empty()){
+        for(auto& message : convs.top()->getMessages() ){
+                qDebug()<<message.getMessageTxt().c_str()<<"\n";
+            }
+            convs.pop();
+        }
+ }
