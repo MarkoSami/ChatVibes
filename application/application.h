@@ -3,8 +3,8 @@
 #define APPLICATION_H
 #include <list>
 #include <stack>
-#include "logic/user.h"
 #include"logic/user.h"
+#include "logic/conversation.h"
  class Application
 {
 public:
@@ -87,6 +87,59 @@ public:
         }
 
         return true ;
+    }
+
+
+    // get New Conversatoin
+
+
+    static void getNewConverstaions() {
+        for (auto &user : Application::users )  {
+
+                // Make a copy of the original stack
+                std::stack<Conversation*> tempConversations ;
+                // Render the copied conversations
+                while (!user->getConversations().empty()) {
+                    Conversation* conversationPtr = (user->getConversations().top());
+                    tempConversations.push(conversationPtr);
+                    user->getConversations().pop();
+                }
+
+                while(!tempConversations.empty()){
+                    if (user->getUserName() != loggedUser->getUserName()) {
+                        if (tempConversations.top()->getReceiver()->getName() == Application::loggedUser->getUserName()) {
+                            Application::handleNewConversations(tempConversations.top(), user);
+                        }
+                    }
+                    user->getConversations().push(tempConversations.top());
+                    tempConversations.pop();
+                }
+            }
+        }
+
+
+    static void handleNewConversations(Conversation* conv , User* user) {
+
+          // Make a copy of the original stack
+          std::stack<Conversation*> tempConversations ;
+            if (loggedUser->getConversations().empty()) {
+                loggedUser->addNewConversation(conv);
+                return ;
+            }
+
+            while (!loggedUser->getConversations().empty()) {
+                Conversation* conversationPtr = (loggedUser->getConversations().top());
+                tempConversations.push(conversationPtr);
+                loggedUser->getConversations().pop();
+            }
+
+            while(!tempConversations.empty()){
+                if (tempConversations.top()->getName() == conv->getName()) {
+                tempConversations.top()->setName(user->getUserName());
+                loggedUser->getConversations().push(tempConversations.top());
+                tempConversations.pop();
+            }
+        }
     }
 };
 

@@ -52,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent)
      // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
 
+
+    Application::getNewConverstaions() ;
+
     // Render the copied conversations
     while (!Application::loggedUser->getConversations().empty()) {
 
@@ -82,8 +85,6 @@ MainWindow::MainWindow(QWidget *parent)
         Application::loggedUser->getConversations().push(tempConversations.top());
         tempConversations.pop();
      }
-
-
 
 
 }

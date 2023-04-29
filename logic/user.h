@@ -5,7 +5,7 @@
 #include <string.h>
 #include<list>
 #include<stack>
- #include "logic/contact.h"
+#include "logic/contact.h"
 #include "logic/conversation.h"
 
 

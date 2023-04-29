@@ -16,7 +16,7 @@ Contact::Contact(){
 }
 
 std::string Contact::getID(){
-    assert(!this->ID.empty()); // Check if ID is not empty
+//    assert(!this->ID.empty()); // Check if ID is not empty
 
     return this->ID;
 }

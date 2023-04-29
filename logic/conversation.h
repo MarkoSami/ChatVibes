@@ -19,10 +19,11 @@ class Conversation
 {
 private:
 
-    Contact* receiver;
+    Contact* receiver;   // consider it as sender not reciever
     std::list<Message> messages;
     std::string name;
     bool isFavourite;
+
 
 
 
@@ -167,7 +168,7 @@ public:
 
     }
 
-    // render ALL Conversations
+
 
 
 
