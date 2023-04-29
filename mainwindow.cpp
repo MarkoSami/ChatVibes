@@ -148,7 +148,17 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 void MainWindow::renderContactMain() {
-//   ui->contactsCont->layout()->addWidget(Conversation::renderConversation(Application::loggedUser->getUserContacts().back()));
+    QClickableGroupBox* conv = Application::renderConversation(Application::loggedUser->getConversations().top());
+
+    Conversation* conversationPtr = (Application::loggedUser->getConversations().top());   std::stringstream ss;
+    ss << conversationPtr;
+    std::string conversationAddress = ss.str();
+    conv->setObjectName(conversationAddress);
+    connect(conv, &QClickableGroupBox::clicked, [=]() {
+        handleClickedConversation(conv);
+    });
+    ui->contactsCont->layout()->addWidget(conv);
+
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -203,7 +213,7 @@ void MainWindow::on_pushButton_7_clicked()
         Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
 
-        Conversation *receiverConv = Application::getReceiverConversation(Application::loggedUser->getUserName());
+        Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
         if(receiverConv != nullptr)
             receiverConv->addNewMessage(messageTest);
 

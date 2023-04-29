@@ -35,17 +35,7 @@ public:
         left
     };
 
-    static QString breakText(QString& txt){
 
-        if(txt.size() <=70) return txt;
-        QString leftText = txt.mid(0,txt.size()/2);
-        QString rightText = txt.mid(txt.size()/2,txt.size()-1);
-        return breakText(leftText) + "\n" + breakText(rightText);
-    }
-    static int getHalfTextSize(QString& txt){
-        txt =  txt.mid(0,txt.size()/2) + "\n" +txt.mid(txt.size()/2,txt.size()-1);
-        return txt.size();
-    }
 
     Conversation(Contact *_receiver, bool _isFavourite = false,std::string _name = "");
     // Setters

@@ -7,7 +7,7 @@
 Contact::Contact( std::string _ID , std::string _imgPath  , std::string _name  )
 {
     this->ID = _ID;
-    this->imgPath = _imgPath;
+    this->imgPath = (_imgPath.empty())? ":/imgs/Profile (2).png" : _imgPath;
     this->name = _name;
 }
 

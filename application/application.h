@@ -106,8 +106,8 @@ public:
                 }
 
                 while(!tempConversations.empty()){
-                    if (user->getUserName() != loggedUser->getUserName() && tempConversations.top() == Application::currentConversation) {
-                        if (tempConversations.top()->getName() == receiverName) {
+                    if (user->getUserName() != loggedUser->getUserName() ) {
+                        if (tempConversations.top()->getName() == loggedUser->getUserName()) {
                             myConv = tempConversations.top();
                         }
                     }
@@ -131,6 +131,13 @@ public:
         return myConv;
     }
 
+    static QString breakText(QString& txt){
+
+        if(txt.size() <=70) return txt;
+        QString leftText = txt.mid(0,txt.size()-70);
+        QString rightText = txt.mid(txt.size()-70,txt.size()-1);
+        return breakText(leftText) + "\n" + breakText(rightText);
+    }
 
     static void handleNewConversations(Conversation* conv , User* user) {
 
@@ -170,8 +177,7 @@ public:
             QLabel *datemsg = new QLabel();
             datemsg->setText(message.getSendDate().toString());
             QString txt = textmsg->text();
-
-            //        textmsg->setWordWrap(true);
+            textmsg->setText( breakText(txt));
 
             VLayout->addWidget(textmsg);
             VLayout->addWidget(datemsg);
@@ -208,9 +214,17 @@ public:
             QHBoxLayout *hLabelChild = new QHBoxLayout ;
             QHBoxLayout *hLabelName = new QHBoxLayout ;
             QLabel *pic = new QLabel() ;
-            pic->setMinimumSize(50, 30);
-            pic->setMaximumSize(pic->maximumSize());
-            pic->setStyleSheet("border-image: url(" + QString::fromStdString(conversation->getReceiver()->getImgPath()) + ");border-radius:8px");
+
+            QString IMG_PATH =QString::fromStdString(conversation->getReceiver()->getImgPath());
+            QSize imgMaxSize = (IMG_PATH == ":/imgs/Profile (2).png")? *new QSize(40,40) : *new QSize(50,40);
+
+            if(IMG_PATH == ":/imgs/Profile (2).png")
+                pic->setMaximumSize(imgMaxSize);
+
+            pic->setMinimumSize(imgMaxSize);
+
+            QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
+            pic->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
             QLabel *senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
             QLabel *textmsg = new QLabel() ;
             QString texttest = "Start Chat!";
