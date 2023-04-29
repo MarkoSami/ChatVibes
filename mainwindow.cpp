@@ -148,15 +148,20 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 void MainWindow::renderContactMain() {
-    QClickableGroupBox* conv = Application::renderConversation(Application::loggedUser->getConversations().top());
 
-    Conversation* conversationPtr = (Application::loggedUser->getConversations().top());   std::stringstream ss;
+    Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
+    std::stringstream ss;
     ss << conversationPtr;
     std::string conversationAddress = ss.str();
-    conv->setObjectName(conversationAddress);
+
+    // Create the QClickableGroupBox widget
+    QClickableGroupBox *conv = Application::renderConversation(conversationPtr);
+    conv->setObjectName(QString::fromStdString(conversationAddress));
+
     connect(conv, &QClickableGroupBox::clicked, [=]() {
         handleClickedConversation(conv);
     });
+
     ui->contactsCont->layout()->addWidget(conv);
 
 }

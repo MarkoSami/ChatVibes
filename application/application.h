@@ -106,7 +106,7 @@ public:
                 }
 
                 while(!tempConversations.empty()){
-                    if (user->getUserName() != loggedUser->getUserName() ) {
+                    if (user->getUserName() != loggedUser->getUserName() && user->getUserName() == receiverName ) {
                         if (tempConversations.top()->getName() == loggedUser->getUserName()) {
                             myConv = tempConversations.top();
                         }
