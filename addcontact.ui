@@ -91,7 +91,7 @@ border-radius : 5px;</string>
       <property name="spacing">
        <number>15</number>
       </property>
-      <item alignment="Qt::AlignTop">
+      <item>
        <widget class="QGroupBox" name="verticalGroupBox">
         <property name="styleSheet">
          <string notr="true">border:none;</string>
@@ -103,7 +103,7 @@ border-radius : 5px;</string>
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+         <item alignment="Qt::AlignHCenter">
           <widget class="QLabel" name="label_11">
            <property name="styleSheet">
             <string notr="true">color:white ; 

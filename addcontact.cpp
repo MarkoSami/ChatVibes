@@ -44,7 +44,7 @@ void AddContact::on_pushButton_2_clicked()
 
         Contact *newContact = new Contact(id, imgPath.toStdString(), name);
         Conversation* newConversation = new Conversation(newContact , false , newContact->getName());
-        Application::loggedUser->addContact(newContact) ;
+        Application::loggedUser->addContact(newContact);
         Application::loggedUser->addNewConversation(newConversation);
         emit renderConversation() ;
      }

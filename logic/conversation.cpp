@@ -3,7 +3,7 @@
 #include "logic/contact.h"
 #include <string>
 #include <vector>
-
+#include "application/application.h"
 
 Conversation::Conversation(Contact* _receiver, bool _isFavourite, std::string _name)
     : receiver(_receiver) , isFavourite(_isFavourite)
@@ -15,7 +15,6 @@ bool Conversation::addNewMessage( Message* newMessage){
     this->messages.push_back(newMessage);
     return true;
 }
-
 
 
 

@@ -129,7 +129,8 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         delete item;
     }
 
-    ui->label_3->setText(conversation->getName().c_str());
+    ui->ContactName->setText(conversation->getName().c_str());
+    ui->ContactIMG->setStyleSheet("image: url("+QString::fromStdString(conversation->getReceiver()->getImgPath())+");");
     for (auto &conv : conversation->getMessages()) {
         ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
     }
