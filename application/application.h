@@ -93,7 +93,7 @@ public:
     // get New Conversatoin
 
 
-    static void getNewConverstaions() {
+    static Conversation* getReceiverConversation(std::string receiverName) {
         for (auto &user : Application::users )  {
 
                 // Make a copy of the original stack
@@ -106,16 +106,15 @@ public:
                 }
 
                 while(!tempConversations.empty()){
-                    if (user->getUserName() != loggedUser->getUserName()) {
-                        if (tempConversations.top()->getReceiver()->getName() == Application::loggedUser->getUserName()) {
-                            Application::handleNewConversations(tempConversations.top(), user);
-                        }
-                    }
+                     if (tempConversations.top()->getReceiver()->getName() == receiverName) {
+                            return tempConversations.top();
+                     }
                     user->getConversations().push(tempConversations.top());
                     tempConversations.pop();
                 }
             }
-        }
+        return nullptr;
+    }
 
 
     static void handleNewConversations(Conversation* conv , User* user) {
@@ -135,11 +134,12 @@ public:
 
             while(!tempConversations.empty()){
                 if (tempConversations.top()->getName() == conv->getName()) {
-                tempConversations.top()->setName(user->getUserName());
+                    tempConversations.top()->setName(user->getUserName());
+                }
                 loggedUser->getConversations().push(tempConversations.top());
                 tempConversations.pop();
             }
-        }
+
     }
 };
 

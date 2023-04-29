@@ -57,8 +57,8 @@ private :
 
         // adding conversation messages
         QJsonArray messages;
-        for(auto message : conversation->getMessages()){
-            messages.append(createNewJSONMessage(message));
+        for(auto &message : conversation->getMessages()){
+            messages.append(createNewJSONMessage(*message));
         }
         jsonConversation["messages"] = messages;
 
@@ -102,8 +102,8 @@ private :
     }
 
     //____ this function creates a new Message object from a QJsonObj
-    static  Message createNewMessageObject(const QJsonObject& jsonMessageObj){
-        Message message
+    static  Message* createNewMessageObject(const QJsonObject& jsonMessageObj){
+        Message* message = new Message
             (
                 jsonMessageObj["ID"].toString().toStdString(),
                 jsonMessageObj["msgTxt"].toString().toStdString(),

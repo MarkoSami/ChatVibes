@@ -20,7 +20,7 @@ class Conversation
 private:
 
     Contact* receiver;   // consider it as sender not reciever
-    std::list<Message> messages;
+    std::list<Message*> messages;
     std::string name;
     bool isFavourite;
 
@@ -57,11 +57,11 @@ public:
 
     // Getters
     Contact* getReceiver(){ return receiver; }
-    std::list<Message> getMessages()   { return messages; }
+    std::list<Message*> getMessages()   { return messages; }
     std::string getName(){ return name; }
     bool getIsFavourite(){ return isFavourite; }// get is the conversation favourite or not
 
-    bool addNewMessage(const Message &message );
+    bool addNewMessage( Message *message );
     void setAsFavouriteMessage(std::string messageID);
     \
     void unsetAsFavouriteMessage(std::string messageID);

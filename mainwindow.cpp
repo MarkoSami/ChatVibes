@@ -53,7 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
     std::stack<Conversation*> tempConversations ;
 
 
-    Application::getNewConverstaions() ;
 
     // Render the copied conversations
     while (!Application::loggedUser->getConversations().empty()) {
@@ -129,7 +128,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
     ui->label_3->setText(conversation->getName().c_str());
     for (auto &conv : conversation->getMessages()) {
-        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(conv,Conversation::left));
+        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(*conv,Conversation::left));
     }
 }
 
@@ -198,10 +197,14 @@ void MainWindow::on_pushButton_7_clicked()
 
 
       if (!textMsg.isEmpty()) { // check if the text is not empty
-        Message messageTest("52", textMsg.toStdString(), "242", QDateTime::currentDateTime(), false, false);
+        Message *messageTest = new Message("52", textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
+        Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
+        if(receiverConv != nullptr)
+            receiverConv->addNewMessage(messageTest);
 
-        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(messageTest , Conversation::left ));
+
+        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(*messageTest , Conversation::left ));
         ui->sendMessageLineEdit->setText("");
         ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
       }
@@ -209,7 +212,7 @@ void MainWindow::on_pushButton_7_clicked()
          std::stack<Conversation*> convs = Application::loggedUser->getConversations();
         while(!convs.empty()){
         for(auto& message : convs.top()->getMessages() ){
-                qDebug()<<message.getMessageTxt().c_str()<<"\n";
+            qDebug()<<message->getMessageTxt().c_str()<<"\n";
             }
             convs.pop();
         }
