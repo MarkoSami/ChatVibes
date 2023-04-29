@@ -94,8 +94,8 @@ public:
 
 
     static Conversation* getReceiverConversation(std::string receiverName) {
+        Conversation *myConv = nullptr ;
         for (auto &user : Application::users )  {
-
                 // Make a copy of the original stack
                 std::stack<Conversation*> tempConversations ;
                 // Render the copied conversations
@@ -106,14 +106,29 @@ public:
                 }
 
                 while(!tempConversations.empty()){
-                     if (tempConversations.top()->getReceiver()->getName() == receiverName) {
-                            return tempConversations.top();
-                     }
+                    if (user->getUserName() != loggedUser->getUserName() && tempConversations.top() == Application::currentConversation) {
+                        if (tempConversations.top()->getName() == receiverName) {
+                            myConv = tempConversations.top();
+                        }
+                    }
                     user->getConversations().push(tempConversations.top());
                     tempConversations.pop();
                 }
             }
-        return nullptr;
+
+        if (myConv == nullptr) {
+            for (auto &user : Application::users) {
+                    if (user->getUserName() == receiverName) {
+                        Contact *newContact = new Contact("fsfsa" , loggedUser->getIMGpath() , loggedUser->getUserName());
+                        Conversation *newConv = new Conversation(newContact , false , loggedUser->getUserName()) ;
+                        myConv = newConv ;
+                        user->addNewConversation(newConv);
+                        break ;
+                }
+            }
+        }
+
+        return myConv;
     }
 
 
@@ -139,6 +154,110 @@ public:
                 loggedUser->getConversations().push(tempConversations.top());
                 tempConversations.pop();
             }
+
+    }
+
+
+    static QGroupBox* renderMessage(Message message){
+            QHBoxLayout *hLayout = new QHBoxLayout;
+            QVBoxLayout *VLayout = new QVBoxLayout ;
+            QLabel *textmsg = new QLabel() ;
+            textmsg->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+            textmsg->setText(QString::fromStdString(message.getMessageTxt()));
+            textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
+            // Set the cursor to the I-beam cursor
+            textmsg->setCursor(Qt::IBeamCursor);
+            QLabel *datemsg = new QLabel();
+            datemsg->setText(message.getSendDate().toString());
+            QString txt = textmsg->text();
+
+            //        textmsg->setWordWrap(true);
+
+            VLayout->addWidget(textmsg);
+            VLayout->addWidget(datemsg);
+            datemsg->setAlignment(Qt::AlignRight);
+            datemsg->setStyleSheet("color:grey; font-size:8px");
+
+            QGroupBox *VGroupBox = new QGroupBox();
+            VLayout->setSpacing(0);
+            VGroupBox->setLayout(VLayout);
+            VGroupBox->setStyleSheet("background:#161a1d; font-size:17px ; color:white ;font-weight:bold ");
+            QSpacerItem *hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+            if (message.getReceiverId() == loggedUser->getUserName()) {
+                hLayout->addItem(hSpacer);
+                hLayout->addWidget(VGroupBox);
+            }
+            else {
+                hLayout->addWidget(VGroupBox);
+                hLayout->addItem(hSpacer);
+                VGroupBox->setStyleSheet("background-color :#3663fd ; font-size:17px ; color:white ;font-weight:bold ");
+                 datemsg->setStyleSheet("color:white; font-size:8px");
+            }
+            QGroupBox *hGroupBox = new QGroupBox();
+            hGroupBox->setLayout(hLayout);
+
+            return hGroupBox;
+    }
+
+
+    static QClickableGroupBox* renderConversation(Conversation* conversation){
+
+            QHBoxLayout *hLayout = new QHBoxLayout;
+            QVBoxLayout *VLayout = new QVBoxLayout ;
+            QHBoxLayout *hLabelChild = new QHBoxLayout ;
+            QHBoxLayout *hLabelName = new QHBoxLayout ;
+            QLabel *pic = new QLabel() ;
+            pic->setMinimumSize(50, 30);
+            pic->setMaximumSize(pic->maximumSize());
+            pic->setStyleSheet("border-image: url(" + QString::fromStdString(conversation->getReceiver()->getImgPath()) + ");border-radius:8px");
+            QLabel *senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
+            QLabel *textmsg = new QLabel() ;
+            QString texttest = "Start Chat!";
+            QSpacerItem* hchildSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+            QSpacerItem* hchildSpacerName = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+            hLabelName->addWidget(senderName);
+            hLabelName->addItem(hchildSpacerName);
+            hLabelName->setContentsMargins(0,0,0,0);
+            hLabelChild->addWidget(textmsg) ;
+            hLabelChild->addItem(hchildSpacer) ;
+            hLabelChild->setContentsMargins(0,0,0,0);
+            QGroupBox *hGroupBoxName = new QGroupBox();
+            QGroupBox *hGroupBoxChild = new QGroupBox();
+            hGroupBoxName->setLayout(hLabelName);
+            hGroupBoxChild->setLayout(hLabelChild);
+            textmsg->setStyleSheet("color:gray ; font-size :12px ");
+            textmsg->setWordWrap(true);
+            textmsg->setTextFormat(Qt::RichText);
+            VLayout->addWidget(hGroupBoxName);
+            VLayout->addWidget(hGroupBoxChild);
+            int maxWidth = 130; // Maximum width in pixels
+            QFont font("Arial", 12);
+            QFontMetrics fontMetrics(font);
+            QString elidedText = fontMetrics.elidedText(texttest, Qt::ElideRight, maxWidth);
+            textmsg->setText(elidedText);
+            QGroupBox *VGroupBox = new QGroupBox();
+            VGroupBox->setContentsMargins(0,0,0,0);
+            VLayout->setSpacing(4);
+            VGroupBox->setLayout(VLayout);
+            VGroupBox->setStyleSheet("background:#161a1d; font-size:15px ; color:white ;font-weight:bold ");
+            hLayout->addWidget(pic);
+            hLayout->addWidget(VGroupBox);
+
+            QClickableGroupBox *hGroupBox = new QClickableGroupBox();
+            hGroupBox->setLayout(hLayout);
+            QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+            hGroupBox->layout()->addItem(hSpacer);
+
+            QLabel *datemsg = new QLabel();
+            datemsg->setText(QDate::currentDate().toString());
+            datemsg->setStyleSheet("color:grey; font-size:11px ; background:transparent");
+
+            hGroupBox->layout()->addWidget(datemsg);
+            hGroupBox->setStyleSheet("QGroupBox { border:none; background :#161a1d ;border-radius : 5px;}") ;
+
+            hGroupBox->setCursor(Qt::PointingHandCursor);
+            return hGroupBox ;
 
     }
 };

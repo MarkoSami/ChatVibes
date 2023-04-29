@@ -351,7 +351,7 @@ QScrollBar::sub-page:vertical {
                   <x>0</x>
                   <y>0</y>
                   <width>620</width>
-                  <height>384</height>
+                  <height>393</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -674,8 +674,8 @@ QScrollBar::sub-page:vertical {
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>378</width>
-              <height>399</height>
+              <width>382</width>
+              <height>414</height>
              </rect>
             </property>
             <property name="sizePolicy">

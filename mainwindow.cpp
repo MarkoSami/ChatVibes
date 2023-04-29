@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
      ui->setupUi(this);
     // Set the window to open as full screen
 
-
+    ui->stackedWidget->setCurrentIndex(0);
 
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
      this, &MainWindow::on_pushButton_7_clicked);
@@ -52,7 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
      // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
 
-
+    qDebug()<<Application::loggedUser->getUserName() ;
+    qDebug()<<Application::loggedUser->getConversations().size();
 
     // Render the copied conversations
     while (!Application::loggedUser->getConversations().empty()) {
@@ -67,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
         std::string conversationAddress = ss.str();
 
         // Create the QClickableGroupBox widget
-        QClickableGroupBox *renderConversation = Conversation::renderConversation(conversationPtr);
+        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
         renderConversation->setEnabled(true);
@@ -101,6 +102,8 @@ void MainWindow::onRenderConversationClicked()
 }
 
 void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
+    ui->stackedWidget->setCurrentIndex(1);
+
     if (!renderConversation) {
         qDebug() << "Render conversation is null";
         return;
@@ -128,7 +131,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
     ui->label_3->setText(conversation->getName().c_str());
     for (auto &conv : conversation->getMessages()) {
-        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(*conv,Conversation::left));
+        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
     }
 }
 
@@ -197,14 +200,15 @@ void MainWindow::on_pushButton_7_clicked()
 
 
       if (!textMsg.isEmpty()) { // check if the text is not empty
-        Message *messageTest = new Message("52", textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
+        Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
-        Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
+
+        Conversation *receiverConv = Application::getReceiverConversation(Application::loggedUser->getUserName());
         if(receiverConv != nullptr)
             receiverConv->addNewMessage(messageTest);
 
+        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*messageTest));
 
-        ui->verticalGroupBox_3->layout()->addWidget(Conversation::renderMessage(*messageTest , Conversation::left ));
         ui->sendMessageLineEdit->setText("");
         ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
       }
