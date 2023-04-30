@@ -34,7 +34,7 @@ public:
                 MainWindow::connect(storyBox, &QClickableGroupBox::clicked, [=]() {
                     MainWindow::handleStoryClicked(storyBox);
                 });
-                mainWindow->getUI()->StoriesContainer->layout()->addWidget(renderStory(story));
+                mainWindow->getUI()->StoriesContainer->layout()->addWidget(storyBox);
             }
         }
 
