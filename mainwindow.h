@@ -44,11 +44,10 @@ private slots:
 
     void handleClickedConversation(QGroupBox*);
 
-
-
-
-
     void on_addNewStoryBtn_clicked();
+
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -57,6 +56,10 @@ private:
     profileWindow *profWin;
     messageLongAlert *messageLongAlertWin ;
 
+public slots:
+    static void handleStoryClicked(QGroupBox*){
+        qDebug()<<"clicked..!";
+    }
 };
 
 #endif // MAINWINDOW_H

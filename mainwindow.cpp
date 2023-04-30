@@ -71,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Create the QClickableGroupBox widget
         QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr);
+        conversationPtr->setConversationGroupBoxAddress(renderConversation);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
         renderConversation->setEnabled(true);
@@ -244,6 +245,13 @@ void MainWindow::on_pushButton_7_clicked()
       if (!textMsg.isEmpty()) { // check if the text is not empty
         Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
+        QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
+        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
+        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
+        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
+        if(targetLabel.front() != nullptr){
+            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
+        }
 
         Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
         if(receiverConv != nullptr)
@@ -266,6 +274,8 @@ void MainWindow::on_addNewStoryBtn_clicked()
       GUI_render::renderStories(this);
 
 }
+
+
 
 
 

@@ -24,6 +24,7 @@ private:
     std::list<Message*> messages;
     std::string name;
     bool isFavourite;
+    QClickableGroupBox* conversationGroupBoxAddress;
 
 
 
@@ -57,7 +58,9 @@ public:
     \
     void unsetAsFavouriteMessage(std::string messageID);
 
-//_______________________________________
+
+    QClickableGroupBox* getConversationGroupBoxAddress();
+    void setConversationGroupBoxAddress(QClickableGroupBox*);
 
 
 

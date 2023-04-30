@@ -5,7 +5,9 @@
 #include "logic/story.h"
 
 std::list<User*> Application::users = {};
-std::list<Story*> Application::stories = {(new Story("this is a story",":/imgs/logo.png",new Contact("mina",":/imgs/logo.png","mina"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko"))),(new Story("this is a story",":/imgs/logo.png",new Contact("marko",":/imgs/logo.png","Marko")))};
+std::map<std::string, std::list<Story*>> Application::stories = {
+    {"Marko", {new Story("this is a story", ":/imgs/logo.png", new Contact("mina", ":/imgs/logo.png", "mina"))}}
+};
 
 User* Application::loggedUser = nullptr;
 Conversation *Application::currentConversation;
@@ -14,6 +16,7 @@ Application::Application()
 {
 
 }
+
 
 
 

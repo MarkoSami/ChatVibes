@@ -1,8 +1,9 @@
-
 #ifndef APPLICATION_H
 #define APPLICATION_H
 #include <list>
 #include <stack>
+#include <map>
+
 #include"logic/user.h"
 #include "logic/conversation.h"
 #include "logic/story.h"
@@ -13,7 +14,7 @@ public:
     Application();
 
     static std::list<User*> users ;
-    static std::list<Story*> stories ;
+    static std::map<std::string,std::list<Story*>> stories ;
 
     static User* loggedUser;
     static bool logUserIn(User& user);
@@ -246,7 +247,9 @@ public:
 
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
+            VLayout->setObjectName("VLayout");
             QHBoxLayout *hLabelChild = new QHBoxLayout ;
+            hLabelChild->setObjectName("lastMsgBox");
             QHBoxLayout *hLabelName = new QHBoxLayout ;
             QLabel *pic = new QLabel() ;
 
@@ -262,7 +265,8 @@ public:
             pic->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
             QLabel *senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
             QLabel *textmsg = new QLabel() ;
-            QString texttest = "Start Chat!";
+            textmsg->setObjectName("textmsg");
+            QString texttest = QString::fromStdString((conversation->getMessages().empty())? "Chat now !" : conversation->getMessages().back()->getMessageTxt() );
             QSpacerItem* hchildSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
             QSpacerItem* hchildSpacerName = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
             hLabelName->addWidget(senderName);
@@ -271,6 +275,7 @@ public:
             hLabelChild->addWidget(textmsg) ;
             hLabelChild->addItem(hchildSpacer) ;
             hLabelChild->setContentsMargins(0,0,0,0);
+
             QGroupBox *hGroupBoxName = new QGroupBox();
             QGroupBox *hGroupBoxChild = new QGroupBox();
             hGroupBoxName->setLayout(hLabelName);

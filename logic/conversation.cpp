@@ -17,5 +17,12 @@ bool Conversation::addNewMessage( Message* newMessage){
 }
 
 
+QClickableGroupBox* Conversation::getConversationGroupBoxAddress(){
+    return this->conversationGroupBoxAddress;
+}
+void Conversation::setConversationGroupBoxAddress(QClickableGroupBox* address){
+    this->conversationGroupBoxAddress = address;
+}
+
 
 

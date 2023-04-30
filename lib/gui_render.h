@@ -23,9 +23,17 @@ public:
     GUI_render();
 
     static void renderStories(MainWindow* mainWindow){
-        for(auto& story : Application::stories){
+
+
+        for(auto& contact : Application::loggedUser->getUserContacts()){
             qDebug()<<Application::loggedUser->getUserName();
-            if(story->getPublisher()->getName() == Application::loggedUser->getUserName()){
+            qDebug()<<contact->getName();
+            std::list<Story*> storiesList = Application::stories[contact->getName()];
+            for(auto& story : storiesList){
+                QClickableGroupBox* storyBox = renderStory(story);
+                MainWindow::connect(storyBox, &QClickableGroupBox::clicked, [=]() {
+                    MainWindow::handleStoryClicked(storyBox);
+                });
                 mainWindow->getUI()->StoriesContainer->layout()->addWidget(renderStory(story));
             }
         }
