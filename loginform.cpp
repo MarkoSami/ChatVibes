@@ -32,8 +32,8 @@ void loginForm::on_pushButton_2_clicked()
 void loginForm::on_LoginBtn_clicked()
 {
 
-    std::string userName = ui->userNameLE->text().toStdString();
-    std::string password = ui->passwordLE->text().toStdString();
+    std::string userName = ui->userNameLE->text().trimmed().toStdString();
+    std::string password = ui->passwordLE->text().trimmed().toStdString();
 
     if (userName.empty() || password.empty()) {
          ui->loggedInSuccessfully->setStyleSheet("color:red");

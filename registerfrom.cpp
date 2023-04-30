@@ -31,10 +31,10 @@ void Registerfrom::on_pushButton_4_clicked()
 
 void Registerfrom::on_pushButton_3_clicked()
 {
-    std::string firstName = ui->firstNameLE->text().toStdString();
-    std::string lastName = ui->secondNameLE->text().toStdString();
-    std::string userName = ui->userNameLE->text().toStdString();
-    std::string password = ui->passwordLE->text().toStdString();
+    std::string firstName = ui->firstNameLE->text().trimmed().toStdString();
+    std::string lastName = ui->secondNameLE->text().trimmed().toStdString();
+    std::string userName = ui->userNameLE->text().trimmed().toStdString();
+    std::string password = ui->passwordLE->text().trimmed().toStdString();
 
     User *regUser = new User(userName,userName, firstName, lastName, password);
 
