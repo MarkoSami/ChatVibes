@@ -1,8 +1,8 @@
 
 #include "mainwindow.h"
 #include "profilewindow.h"
-  #include "ui_mainwindow.h"
- #include "lib/gui_lib.h"
+#include "ui_mainwindow.h"
+#include "lib/gui_lib.h"
 #include<QString>
 #include <QScreen>
 #include <QPixmap>
@@ -18,6 +18,7 @@
 #include "customGUI/qclickablegroubox.h"
 #include <QTimer>
 #include <QMessageBox>
+#include "lib/gui_render.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -88,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
+}
+
+Ui::MainWindow* MainWindow::getUI(){
+    return this->ui;
 }
 
 
@@ -258,6 +263,7 @@ void MainWindow::on_pushButton_7_clicked()
 void MainWindow::on_addNewStoryBtn_clicked()
 {
       ui->stackedWidget_2->setCurrentIndex(1);
+      GUI_render::renderStories(this);
 
 }
 

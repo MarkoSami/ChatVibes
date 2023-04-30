@@ -14,6 +14,8 @@ SOURCES += \
     customGUI/qclickablegroubox.cpp \
     lib/filesystem_lib.cpp \
     lib/gui_lib.cpp \
+    lib/gui_render.cpp \
+    lib/utils.cpp \
     logic/contact.cpp \
     logic/conversation.cpp \
     logic/message.cpp \
@@ -35,6 +37,8 @@ HEADERS += \
     customGUI/qclickablegroubox.h \
     lib/filesystem_lib.h \
     lib/gui_lib.h \
+    lib/gui_render.h \
+    lib/utils.h \
     logic/contact.h \
     logic/conversation.h \
     logic/message.h \

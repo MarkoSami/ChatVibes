@@ -1,10 +1,7 @@
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
 #include "profilewindow.h"
-#include "registerfrom.h"
-#include "starting_handle.h"
 #include "addcontact.h"
 #include "startnewchat.h"
 #include "messagelongalert.h"
@@ -23,6 +20,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    Ui::MainWindow* getUI();
+
 
 
 

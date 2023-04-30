@@ -1,7 +1,8 @@
 #include "story.h"
 
-Story::Story()
+Story::Story(QString _caption, QString _imgPath, Contact* _publisher):imgPath(_imgPath),caption(_caption),publisher(_publisher)
 {
+
 }
 
 QString Story::getImgPath() const
@@ -24,12 +25,30 @@ void Story::setCaption(const QString &value)
     caption = value;
 }
 
-QString Story::getPublisherID() const
-{
-    return publisherID;
+Contact* Story::getPublisher(){
+    return this->publisher;
+}
+void Story::setPublisher(Contact* publisher){
+    this->publisher = publisher;
 }
 
-void Story::setPublisherID(const QString &value)
-{
-    publisherID = value;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

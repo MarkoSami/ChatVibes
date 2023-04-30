@@ -13,7 +13,7 @@ public:
     Application();
 
     static std::list<User*> users ;
-    static std::list<Story> stories ;
+    static std::list<Story*> stories ;
 
     static User* loggedUser;
     static bool logUserIn(User& user);
