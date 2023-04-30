@@ -17,6 +17,7 @@ SOURCES += \
     logic/contact.cpp \
     logic/conversation.cpp \
     logic/message.cpp \
+    logic/story.cpp \
     logic/user.cpp \
     loginform.cpp \
     main.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     logic/contact.h \
     logic/conversation.h \
     logic/message.h \
+    logic/story.h \
     logic/user.h \
     loginform.h \
     mainwindow.h \

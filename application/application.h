@@ -5,6 +5,7 @@
 #include <stack>
 #include"logic/user.h"
 #include "logic/conversation.h"
+#include "logic/story.h"
  class Application
 {
 public:
@@ -12,6 +13,8 @@ public:
     Application();
 
     static std::list<User*> users ;
+    static std::list<Story> stories ;
+
     static User* loggedUser;
     static bool logUserIn(User& user);
     static Conversation *currentConversation ;

@@ -48,6 +48,9 @@ private slots:
 
 
 
+
+    void on_addNewStoryBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddContact *addContactWin ;

@@ -254,3 +254,29 @@ void MainWindow::on_pushButton_7_clicked()
 
       }
  }
+
+void MainWindow::on_addNewStoryBtn_clicked()
+{
+      ui->stackedWidget_2->setCurrentIndex(1);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
