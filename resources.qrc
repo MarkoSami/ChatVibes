@@ -20,5 +20,6 @@
         <file>imgs/addIcon.png</file>
         <file>imgs/send-message.png</file>
         <file>imgs/left-arrow.png</file>
+        <file>imgs/status.png</file>
     </qresource>
 </RCC>

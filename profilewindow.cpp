@@ -68,6 +68,8 @@ void profileWindow::on_pushButton_clicked()
     qDebug() << "Image path size: " << file_path.toStdString().size();
     Application::loggedUser->setUserName(ui->lineEdit->text().toStdString());
     Application::loggedUser->setIMGpath(file_path.toStdString());
+    Application::updatePhoto(Application::loggedUser->getUserName(),Application::loggedUser->getIMGpath()) ;
+
 }
 
 

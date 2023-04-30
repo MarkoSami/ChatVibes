@@ -16,7 +16,8 @@
 #include "logic/conversation.h"
 #include "logic/message.h"
 #include "customGUI/qclickablegroubox.h"
-
+#include <QTimer>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -84,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
     while(!tempConversations.empty()){
         Application::loggedUser->getConversations().push(tempConversations.top());
         tempConversations.pop();
-     }
+    }
 
 
 }
@@ -96,45 +97,61 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onRenderConversationClicked()
-{
-
-}
 
 void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
+
+    // Set the current index to 1 to show a loading screen
     ui->stackedWidget->setCurrentIndex(1);
 
-    if (!renderConversation) {
-        qDebug() << "Render conversation is null";
-        return;
-    }
+    // Create a QTimer object and set it to a single-shot timer with a 2-second delay
+    QTimer::singleShot(1, [=]() {
 
-    // Create a stringstream object from the string.
-    std::stringstream ss(renderConversation->objectName().toStdString());
+        if (!renderConversation) {
+            qDebug() << "Render conversation is null";
+            return;
+        }
 
-    void* address;
-    ss >> address;// Read the address from the stringstream.
+        // Create a stringstream object from the string.
+        std::stringstream ss(renderConversation->objectName().toStdString());
 
-    // Cast the void* pointer to the desired type.
-    Conversation* conversation = static_cast<Conversation*>(address);
+        void* address;
+        ss >> address;// Read the address from the stringstream.
 
-    qDebug()<< (Application::currentConversation );
-    Application::currentConversation =  conversation;
-    qDebug()<< (Application::currentConversation );
+        // Cast the void* pointer to the desired type.
+        Conversation* conversation = static_cast<Conversation*>(address);
+
+        qDebug()<< (Application::currentConversation );
+        Application::currentConversation =  conversation;
+        qDebug()<< (Application::currentConversation );
 
 
-    QLayoutItem *item;
-    while ((item = ui->verticalGroupBox_3->layout()->takeAt(0)) != nullptr) {
-        delete item->widget();
-        delete item;
-    }
+        QLayoutItem *item;
+        while ((item = ui->verticalGroupBox_3->layout()->takeAt(0)) != nullptr) {
+            delete item->widget();
+            delete item;
+        }
+        ui->horizontalLayout_5->layout()->setSpacing(10);
+        ui->ContactName->setText(conversation->getName().c_str());
 
-    ui->ContactName->setText(conversation->getName().c_str());
-    ui->ContactIMG->setStyleSheet("image: url("+QString::fromStdString(conversation->getReceiver()->getImgPath())+");");
-    for (auto &conv : conversation->getMessages()) {
-        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
-    }
+        QString IMG_PATH =QString::fromStdString(conversation->getReceiver()->getImgPath());
+        QSize imgMaxSize = (IMG_PATH == ":/imgs/Profile (2).png")? *new QSize(40,40) : *new QSize(50,60);
+
+        if(IMG_PATH == ":/imgs/Profile (2).png")
+            ui->ContactIMG->setMaximumSize(imgMaxSize);
+
+        ui->ContactIMG->setMinimumSize(imgMaxSize);
+
+        QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
+        ui->ContactIMG->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
+        for (auto &conv : conversation->getMessages()) {
+            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
+        }
+
+        // Set the current index to 2 to show the conversation
+        ui->stackedWidget->setCurrentIndex(2);
+    });
 }
+
 
 
 
@@ -213,8 +230,12 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_7_clicked()
 {
       QString textMsg = ui->sendMessageLineEdit->text();
-
-
+      int DelayHandler ;
+      if (textMsg.size() > 30000) {
+        messageLongAlertWin = new messageLongAlert() ;
+        messageLongAlertWin->show() ;
+      }
+      else {
       if (!textMsg.isEmpty()) { // check if the text is not empty
         Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
@@ -224,16 +245,12 @@ void MainWindow::on_pushButton_7_clicked()
             receiverConv->addNewMessage(messageTest);
 
         ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*messageTest));
-
         ui->sendMessageLineEdit->setText("");
-        ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
+        DelayHandler = messageTest->getMessageTxt().size() ;
+        QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
+            ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
+        });
       }
-      qDebug()<<Application::currentConversation->getMessages().size();
-         std::stack<Conversation*> convs = Application::loggedUser->getConversations();
-        while(!convs.empty()){
-        for(auto& message : convs.top()->getMessages() ){
-            qDebug()<<message->getMessageTxt().c_str()<<"\n";
-            }
-            convs.pop();
-        }
+
+      }
  }

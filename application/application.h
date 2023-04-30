@@ -131,6 +131,38 @@ public:
         return myConv;
     }
 
+    static Conversation* updatePhoto(std::string receiverName , std::string newImg) {
+
+        for (auto &user : Application::users )  {
+            // Make a copy of the original stack
+            std::stack<Conversation*> tempConversations ;
+            // Render the copied conversations
+            while (!user->getConversations().empty()) {
+                Conversation* conversationPtr = (user->getConversations().top());
+                tempConversations.push(conversationPtr);
+                user->getConversations().pop();
+            }
+
+            while(!tempConversations.empty()){
+                if (user->getUserName() != loggedUser->getUserName() && tempConversations.top()->getReceiver()->getName() == receiverName ) {
+                        tempConversations.top()->getReceiver()->setImgPath(newImg);
+                }
+                user->getConversations().push(tempConversations.top());
+                tempConversations.pop();
+            }
+        }
+    }
+
+    static std::string renderWithPhoto(std::string receiverName) {
+
+        for (auto &user : Application::users )  {
+            if (user->getUserName() == receiverName) {
+                return user->getIMGpath() ;
+            }
+        }
+        return ":/imgs/Profile (2).png" ;
+    }
+
     static QString breakText(QString& txt){
 
         if(txt.size() <=70) return txt;

@@ -50,13 +50,8 @@ void WelcomePage::moveLogin()
     ui->stackedWidget->setCurrentIndex(2);
 }
 
-void WelcomePage::showWelcomePage() {
-    qDebug() << "fsssss" ;
-    this->close();
-}
-
 void WelcomePage::closedHandle() {
-//    this->close() ;
+    this->close() ;
     MainWindow *mainWindowWin = new MainWindow() ;
     mainWindowWin->showMaximized();
 }

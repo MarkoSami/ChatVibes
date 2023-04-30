@@ -21,6 +21,7 @@ SOURCES += \
     loginform.cpp \
     main.cpp \
     mainwindow.cpp \
+    messagelongalert.cpp \
     profilewindow.cpp \
     registerfrom.cpp \
     startnewchat.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     logic/user.h \
     loginform.h \
     mainwindow.h \
+    messagelongalert.h \
     profilewindow.h \
     registerfrom.h \
     startnewchat.h \
@@ -48,6 +50,7 @@ FORMS += \
     addcontact.ui \
     loginform.ui \
     mainwindow.ui \
+    messagelongalert.ui \
     profilewindow.ui \
     registerfrom.ui \
     startnewchat.ui \

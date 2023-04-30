@@ -29,7 +29,7 @@ private slots:
     void closedHandle() ;
     void on_pushButton_7_clicked();
     void on_pushButton_8_clicked();
-    void showWelcomePage();
+
 
 private:
     Ui::WelcomePage *ui;

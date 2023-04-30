@@ -7,6 +7,7 @@
 #include "starting_handle.h"
 #include "addcontact.h"
 #include "startnewchat.h"
+#include "messagelongalert.h"
 #include <QGroupBox>
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +45,7 @@ private slots:
 
     void handleClickedConversation(QGroupBox*);
 
-    void onRenderConversationClicked();
+
 
 
 private:
@@ -52,6 +53,7 @@ private:
     AddContact *addContactWin ;
     StartNewChat *StartNewChatWin;
     profileWindow *profWin;
+    messageLongAlert *messageLongAlertWin ;
 
 };
 
