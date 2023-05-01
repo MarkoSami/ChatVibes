@@ -131,6 +131,7 @@ public:
                         Contact *newContact = new Contact("fsfsa" , loggedUser->getIMGpath() , loggedUser->getUserName());
                         Conversation *newConv = new Conversation(newContact , false , loggedUser->getUserName()) ;
                         myConv = newConv ;
+                        user->addContact(newContact);
                         user->addNewConversation(newConv);
                         break ;
                 }

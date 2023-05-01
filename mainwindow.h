@@ -12,7 +12,7 @@
 #include "application/application.h"
 #include "addstory.h"
 
-QT_BEGIN_NAMESPACE
+        QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
@@ -61,6 +61,8 @@ private slots:
 
     void on_searchForFav_clicked();
 
+    void renderLoggedUserStory(Story *newStory)  ;
+
     void on_pushButton_9_clicked();
 
 private:
@@ -76,75 +78,76 @@ public slots:
         Story *story = storiesList.front() ;
         Application::currentStory = story ;
         Application::currentStoryList = storiesList ;
-            mainWindow->getUI()->storyCaption->setText("");
-            mainWindow->getUI()->picStory->setStyleSheet("");
-            mainWindow->getUI()->picStory->setText("");
-            if (story->getImgPath().isEmpty()) {
-                mainWindow->getUI()->picStory->setText(story->getCaption());
-                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
-                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
-                return;
-            }
-            mainWindow->getUI()->storyCaption->setText(story->getCaption());
-            mainWindow->getUI()->picStory->setStyleSheet(story->getImgPath());
+        mainWindow->getUI()->storyCaption->setText("");
+        mainWindow->getUI()->picStory->setStyleSheet("");
+        mainWindow->getUI()->picStory->setText("");
+        if (story->getImgPath().isEmpty()) {
+            mainWindow->getUI()->picStory->setText(story->getCaption());
+            mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+            mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
             mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
+            return;
+        }
+        mainWindow->getUI()->storyCaption->setText(story->getCaption());
+        mainWindow->getUI()->picStory->setStyleSheet("image: url(" + story->getImgPath() + ")");
+        mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
     }
 
     static void BackBtnStoryHandle(MainWindow* mainWindow) {
-         Story *PrevStory = nullptr;
-            for (auto story : Application::currentStoryList) {
-                if (story == Application::currentStory) {
-                    break;
-                }
-                PrevStory = story ;
+        Story *PrevStory = nullptr;
+        for (auto story : Application::currentStoryList) {
+            if (story == Application::currentStory) {
+                break;
             }
+            PrevStory = story ;
+        }
 
-            if (PrevStory == nullptr) {
-                PrevStory = Application::currentStoryList.back() ;
-            }
-            Application::currentStory = PrevStory ;
-            mainWindow->getUI()->storyCaption->setText("");
-            mainWindow->getUI()->picStory->setStyleSheet("");
-            mainWindow->getUI()->picStory->setText("");
-            if (PrevStory->getImgPath().isEmpty()) {
-                mainWindow->getUI()->picStory->setText(PrevStory->getCaption());
-                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
-                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
-                return;
-            }
-            mainWindow->getUI()->storyCaption->setText(PrevStory->getCaption());
-            mainWindow->getUI()->picStory->setStyleSheet(PrevStory->getImgPath());
-            mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
+        if (PrevStory == nullptr) {
+            PrevStory = Application::currentStoryList.back() ;
+        }
+        Application::currentStory = PrevStory ;
+        mainWindow->getUI()->storyCaption->setText("");
+        mainWindow->getUI()->picStory->setStyleSheet("");
+        mainWindow->getUI()->picStory->setText("");
+        if (PrevStory->getImgPath().isEmpty()) {
+            mainWindow->getUI()->picStory->setText(PrevStory->getCaption());
+            mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+            mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
+            return;
+        }
+        mainWindow->getUI()->storyCaption->setText(PrevStory->getCaption());
+        mainWindow->getUI()->picStory->setStyleSheet("image: url(" + PrevStory->getImgPath() + ")");
+        mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
     }
 
     static void NextBtnStoryHandle(MainWindow* mainWindow) {
-            Story *NextStory = nullptr;
-            int i = 0 ;
-            for (auto story : Application::currentStoryList) {
-                if (i == 1) {
-                    NextStory = story ;
-                    break ;
-                }
-                if (story == Application::currentStory) {
-                    i++ ;
-                }
+        Story *NextStory = nullptr;
+        int i = 0 ;
+        for (auto story : Application::currentStoryList) {
+            if (i == 1) {
+                NextStory = story ;
+                break ;
             }
-            if (NextStory == nullptr) {
-                NextStory = Application::currentStoryList.front() ;
+            if (story == Application::currentStory) {
+                i++ ;
             }
-            Application::currentStory = NextStory ;
-            mainWindow->getUI()->storyCaption->setText("");
-            mainWindow->getUI()->picStory->setStyleSheet("");
-            mainWindow->getUI()->picStory->setText("");
-            if (NextStory->getImgPath().isEmpty()) {
-                mainWindow->getUI()->picStory->setText(NextStory->getCaption());
-                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
-                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
-                return;
-            }
-            mainWindow->getUI()->storyCaption->setText(NextStory->getCaption());
-            mainWindow->getUI()->picStory->setStyleSheet(NextStory->getImgPath());
-            mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
+        }
+        if (NextStory == nullptr) {
+            NextStory = Application::currentStoryList.front() ;
+        }
+        Application::currentStory = NextStory ;
+        mainWindow->getUI()->storyCaption->setText("");
+        mainWindow->getUI()->picStory->setStyleSheet("");
+        mainWindow->getUI()->picStory->setText("");
+        if (NextStory->getImgPath().isEmpty()) {
+            mainWindow->getUI()->picStory->setText(NextStory->getCaption());
+            mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+            mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
+            return;
+        }
+        mainWindow->getUI()->storyCaption->setText(NextStory->getCaption());
+        mainWindow->getUI()->picStory->setStyleSheet("image: url("+NextStory->getImgPath()+")");
+        mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
     }
 };
 

@@ -52,6 +52,8 @@ void loginForm::on_LoginBtn_clicked()
 
         connect(delayTimer, &QTimer::timeout, [=]() {
             // close the current window
+            Contact *newUserContact = new Contact("42",Application::loggedUser->getIMGpath() , Application::loggedUser->getUserName()) ;
+            Application::loggedUser->setUserContact(newUserContact);
             emit LoggedInSuccessfully();
             delayTimer->disconnect(); // disconnect the signal after emitting once
         });
