@@ -1,4 +1,3 @@
-
 #include "mainwindow.h"
 #include "profilewindow.h"
 #include "ui_mainwindow.h"
@@ -28,13 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-     ui->setupUi(this);
+    ui->setupUi(this);
     // Set the window to open as full screen
 
-     ui->stackedWidget->setCurrentIndex(0);
-    GUI_render::renderStories(this);
+    ui->stackedWidget->setCurrentIndex(0);
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
-     this, &MainWindow::on_pushButton_7_clicked);
+            this, &MainWindow::on_pushButton_7_clicked);
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -53,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
-     // Make a copy of the original stack
+    // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
 
     qDebug()<<Application::loggedUser->getUserName() ;
@@ -84,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
         Application::loggedUser->getConversations().pop();
-     }
+    }
 
     while(!tempConversations.empty()){
         Application::loggedUser->getConversations().push(tempConversations.top());
@@ -105,11 +103,31 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::renderLoggedUserStory(Story *newStory) {
+
+    QLayout* layout = ui->horizontalGroupBox_3->layout();
+    QLayoutItem* item;
+    while((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget();
+        delete item;
+    }
+
+    QClickableGroupBox* storyBox = GUI_render::renderStory(newStory);
+    if (Application::stories[Application::loggedUser->getUserName()].size() > 1) {
+         MainWindow::handleStoryClicked(storyBox , Application::stories[Application::loggedUser->getUserName()] , this);
+    }
+
+    MainWindow::connect(storyBox, &QClickableGroupBox::clicked, [=]() {
+        MainWindow::handleStoryClicked(storyBox , Application::stories[Application::loggedUser->getUserName()] , this);
+    });
+    ui->horizontalGroupBox_3->layout()->addWidget(storyBox) ;
+}
+
 
 void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
     // Set the current index to 1 to show a loading screen
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(1);
 
     // Create a QTimer object and set it to a single-shot timer with a 2-second delay
     QTimer::singleShot(1, [=]() {
@@ -168,7 +186,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 void MainWindow::on_pushButton_3_clicked()
 {
 
-//    Application::conversations.push(Conversation(Contact("sdfs")));
+    //    Application::conversations.push(Conversation(Contact("sdfs")));
     fileSystem_lib::saveData();
     this->close();
 }
@@ -214,50 +232,51 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-     addContactWin = new AddContact() ;
-     addContactWin->show();
-     connect(addContactWin, SIGNAL(renderConversation()), this, SLOT(renderContactMain()));
+
+    addContactWin = new AddContact() ;
+    addContactWin->show();
+    connect(addContactWin, SIGNAL(renderConversation()), this, SLOT(renderContactMain()));
 }
 
 
 void MainWindow::on_pushButton_6_clicked()
 {
-      profWin = new profileWindow();
-      profWin->show();
+    profWin = new profileWindow();
+    profWin->show();
 }
 
 
 void MainWindow::on_pushButton_clicked()
 {
-      StartNewChatWin = new StartNewChat();
-      StartNewChatWin->show();
+    StartNewChatWin = new StartNewChat();
+    StartNewChatWin->show();
 }
 
 
 
 void MainWindow::on_pushButton_7_clicked()
 {
-      QString textMsg = ui->sendMessageLineEdit->text();
-      int DelayHandler ;
-      if (textMsg.size() > 30000) {
+    QString textMsg = ui->sendMessageLineEdit->text();
+    int DelayHandler ;
+    if (textMsg.size() > 30000) {
         messageLongAlertWin = new messageLongAlert() ;
         messageLongAlertWin->show() ;
-      }
-      else {
-      if (!textMsg.isEmpty()) { // check if the text is not empty
-        Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
-        Application::currentConversation->addNewMessage(messageTest);
-        QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
-//        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
-//        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
-//        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
-//        if(targetLabel.front() != nullptr){
-//            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
-//        }
+    }
+    else {
+        if (!textMsg.isEmpty()) { // check if the text is not empty
+            Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
+            Application::currentConversation->addNewMessage(messageTest);
+            QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
+            //        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
+            //        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
+            //        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
+            //        if(targetLabel.front() != nullptr){
+            //            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
+            //        }
 
-        Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
-        if(receiverConv != nullptr)
-            receiverConv->addNewMessage(messageTest);
+            Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
+            if(receiverConv != nullptr)
+                receiverConv->addNewMessage(messageTest);
 
         ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
         ui->sendMessageLineEdit->setText("");
@@ -271,11 +290,12 @@ void MainWindow::on_pushButton_7_clicked()
 
  }
 
+
 void MainWindow::on_addNewStoryBtn_clicked()
 {
-      ui->stackedWidget_2->setCurrentIndex(1);
+    ui->stackedWidget_2->setCurrentIndex(1);
 
-
+    GUI_render::renderStories(this);
 }
 
 
@@ -283,7 +303,7 @@ void MainWindow::on_addNewStoryBtn_clicked()
 
 void MainWindow::on_viewFavMsg_clicked()
 {
-      ui->stackedWidget_2->setCurrentIndex(2);
+    ui->stackedWidget_2->setCurrentIndex(2);
 }
 
 void MainWindow::on_backSotryBtn_clicked()
@@ -294,20 +314,20 @@ void MainWindow::on_backSotryBtn_clicked()
 
 void MainWindow::on_searchForFav_clicked()
 {
-      std::string search_keyword = ui->searchFavMsg->text().toStdString();
-      std::stack<Conversation *> conv = Application::loggedUser->getConversations();
-      while(!conv.empty())
-      {
-      std::list<Message* > messages = conv.top()->getMessages();
-      for(auto msg : messages)
-      {
-        if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword))
+    std::string search_keyword = ui->searchFavMsg->text().toStdString();
+    std::stack<Conversation *> conv = Application::loggedUser->getConversations();
+    while(!conv.empty())
+    {
+        std::list<Message* > messages = conv.top()->getMessages();
+        for(auto msg : messages)
         {
-            qDebug()<<"Found fav message: " + msg->getMessageTxt();
+            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword))
+            {
+                qDebug()<<"Found fav message: " + msg->getMessageTxt();
+            }
         }
-      }
-      conv.pop();
-      }
+        conv.pop();
+    }
 }
 
 void MainWindow::on_NextStoryBtn_clicked()
@@ -318,13 +338,13 @@ void MainWindow::on_NextStoryBtn_clicked()
 
 void MainWindow::on_pushButton_8_clicked()
 {
-      addStoryWin = new AddStory() ;
-      addStoryWin->show() ;
+    addStoryWin = new AddStory() ;
+    addStoryWin->show() ;
+    connect(addStoryWin, SIGNAL(AddStoryhandler(Story*)), this, SLOT(renderLoggedUserStory(Story*)));
 }
 
 
 void MainWindow::on_pushButton_9_clicked()
 {
-      this->ui->stackedWidget_2->setCurrentIndex(0);
+    this->ui->stackedWidget_2->setCurrentIndex(0);
 }
-

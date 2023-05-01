@@ -21,6 +21,7 @@ private:
     std::stack<Conversation*> conversations;
     std::string imgPath;
     bool loggedIn;
+    Contact *UserConatct;
 
 
 
@@ -59,7 +60,11 @@ public:
     bool removeContact(std::string contactID);
     Contact* findContact(std::string contactID);
 
+    // Getter for UserContact
+    Contact* getUserContact();
 
+    // Setter for UserContact
+    void setUserContact(Contact* contact);
 
 
 };

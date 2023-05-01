@@ -53,19 +53,5 @@ void AddContact::on_pushButton_2_clicked()
 }
 
 
-void AddContact::on_pushButton_9_clicked()
-{
-     // Open a file dialog and get the selected file
-     img_path = QFileDialog::getOpenFileName(this, tr("Select Image"), QDir::homePath(), tr("Image files (*.png *.jpg *.jpeg *.bmp *.gif)"));
 
-     // Check if a file was selected
-     if (!img_path.isEmpty()) {
-        // Upload the file to the server or perform other actions with it
-         ui->profileIMGLB->setStyleSheet("border-image: url(" + img_path + ");border-radius:5px");
-        qDebug() << "File selected:" << img_path;
-     } else {
-        // Handle case where no file was selected
-        qDebug() << "No file selected.";
-     }
-}
 

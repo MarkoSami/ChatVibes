@@ -24,5 +24,8 @@
         <file>imgs/story1.png</file>
         <file>imgs/story2.jpg</file>
         <file>imgs/story3.jpg</file>
+        <file>imgs/fav.png</file>
+        <file>imgs/arrow-right.png</file>
+        <file>imgs/left-arrow-slider.png</file>
     </qresource>
 </RCC>

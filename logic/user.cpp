@@ -1,4 +1,3 @@
-
 #include "user.h"
 #include "contact.h"
 #include <list>
@@ -91,4 +90,11 @@ void User::setLoggedIn(bool value) {
     this->loggedIn = value;
 }
 
+Contact* User::getUserContact(){
+    return this->UserConatct;
+}
+
+void User::setUserContact(Contact* contact) {
+    this->UserConatct = contact;
+}
 
