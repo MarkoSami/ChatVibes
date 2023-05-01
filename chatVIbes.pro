@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     addcontact.cpp \
+    addstory.cpp \
     application/application.cpp \
     customGUI/qclickablegroubox.cpp \
     lib/filesystem_lib.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     addcontact.h \
+    addstory.h \
     application/application.h \
     customGUI/qclickablegroubox.h \
     customGUI/qclickablegroubox.h \
@@ -54,6 +56,7 @@ HEADERS += \
 
 FORMS += \
     addcontact.ui \
+    addstory.ui \
     loginform.ui \
     mainwindow.ui \
     messagelongalert.ui \

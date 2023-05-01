@@ -19,6 +19,8 @@ public:
     static User* loggedUser;
     static bool logUserIn(User& user);
     static Conversation *currentConversation ;
+    static Story* currentStory ;
+    static std::list<Story*>currentStoryList ;
 
     static User* getLogInUser() {
         for (auto &user : Application::users)

@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
      ui->setupUi(this);
     // Set the window to open as full screen
 
-    ui->stackedWidget->setCurrentIndex(0);
-
+     ui->stackedWidget->setCurrentIndex(0);
+    GUI_render::renderStories(this);
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
      this, &MainWindow::on_pushButton_7_clicked);
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
@@ -107,7 +107,7 @@ MainWindow::~MainWindow()
 void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
     // Set the current index to 1 to show a loading screen
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
 
     // Create a QTimer object and set it to a single-shot timer with a 2-second delay
     QTimer::singleShot(1, [=]() {
@@ -154,7 +154,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         }
 
         // Set the current index to 2 to show the conversation
-        ui->stackedWidget->setCurrentIndex(2);
+        ui->stackedWidget->setCurrentIndex(3);
     });
 }
 
@@ -246,12 +246,12 @@ void MainWindow::on_pushButton_7_clicked()
         Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
         Application::currentConversation->addNewMessage(messageTest);
         QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
-        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
-        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
-        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
-        if(targetLabel.front() != nullptr){
-            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
-        }
+//        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
+//        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
+//        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
+//        if(targetLabel.front() != nullptr){
+//            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
+//        }
 
         Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
         if(receiverConv != nullptr)
@@ -271,15 +271,21 @@ void MainWindow::on_pushButton_7_clicked()
 void MainWindow::on_addNewStoryBtn_clicked()
 {
       ui->stackedWidget_2->setCurrentIndex(1);
-      GUI_render::renderStories(this);
+
 
 }
+
 
 
 
 void MainWindow::on_viewFavMsg_clicked()
 {
       ui->stackedWidget_2->setCurrentIndex(2);
+}
+
+void MainWindow::on_backSotryBtn_clicked()
+{
+    MainWindow::BackBtnStoryHandle(this);
 }
 
 
@@ -296,9 +302,20 @@ void MainWindow::on_searchForFav_clicked()
         {
             qDebug()<<"Found fav message: " + msg->getMessageTxt();
         }
-
       }
       conv.pop();
       }
+}
+
+void MainWindow::on_NextStoryBtn_clicked()
+{
+    MainWindow::NextBtnStoryHandle(this);
+}
+
+
+void MainWindow::on_pushButton_8_clicked()
+{
+      addStoryWin = new AddStory() ;
+      addStoryWin->show() ;
 }
 

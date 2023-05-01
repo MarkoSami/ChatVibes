@@ -30,6 +30,7 @@ private :
         JSONmessage["seen"] = message.isSeen();
         JSONmessage["sendDate"] = QJsonValue::fromVariant(message.getSendDate());
         JSONmessage["receiverID"] = message.getReceiverId().c_str();
+        JSONmessage["Favourite"] = message.isFavourite();
         return JSONmessage;
     }
 

@@ -11,9 +11,12 @@ private:
     QString publisherImgPath;
     QString caption;
     Contact* publisher;
+    Story* prevStoryAddress = nullptr;
+    Story* nextStoryAddress = nullptr;
 
 public:
-    Story(QString _caption, QString _imgPath, Contact* _publisher);
+
+    Story(QString _caption, QString _imgPath, Contact* _publisher , Story* prevStoryAddress = nullptr, Story* nextStoryAddress=nullptr);
 
     QString getImgPath() const;
     void setImgPath(const QString &value);

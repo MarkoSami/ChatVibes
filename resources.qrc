@@ -21,5 +21,8 @@
         <file>imgs/send-message.png</file>
         <file>imgs/left-arrow.png</file>
         <file>imgs/status.png</file>
+        <file>imgs/story1.png</file>
+        <file>imgs/story2.jpg</file>
+        <file>imgs/story3.jpg</file>
     </qresource>
 </RCC>
