@@ -6,6 +6,11 @@
 #include "startnewchat.h"
 #include "messagelongalert.h"
 #include <QGroupBox>
+#include "logic/story.h"
+#include <list>
+#include "ui_mainwindow.h"
+#include "application/application.h"
+#include "addstory.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -46,8 +51,11 @@ private slots:
 
     void on_addNewStoryBtn_clicked();
 
+    void on_backSotryBtn_clicked();
 
+    void on_NextStoryBtn_clicked();
 
+    void on_pushButton_8_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -55,10 +63,82 @@ private:
     StartNewChat *StartNewChatWin;
     profileWindow *profWin;
     messageLongAlert *messageLongAlertWin ;
+    AddStory *addStoryWin ;
 
 public slots:
-    static void handleStoryClicked(QGroupBox*){
-        qDebug()<<"clicked..!";
+    static void handleStoryClicked(QGroupBox* , std::list<Story*> storiesList , MainWindow* mainWindow){
+        Story *story = storiesList.front() ;
+        Application::currentStory = story ;
+        Application::currentStoryList = storiesList ;
+            mainWindow->getUI()->storyCaption->setText("");
+            mainWindow->getUI()->picStory->setStyleSheet("");
+            mainWindow->getUI()->picStory->setText("");
+            if (story->getImgPath().isEmpty()) {
+                mainWindow->getUI()->picStory->setText(story->getCaption());
+                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
+                return;
+            }
+            mainWindow->getUI()->storyCaption->setText(story->getCaption());
+            mainWindow->getUI()->picStory->setStyleSheet(story->getImgPath());
+            mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
+    }
+
+    static void BackBtnStoryHandle(MainWindow* mainWindow) {
+         Story *PrevStory = nullptr;
+            for (auto story : Application::currentStoryList) {
+                if (story == Application::currentStory) {
+                    break;
+                }
+                PrevStory = story ;
+            }
+
+            if (PrevStory == nullptr) {
+                PrevStory = Application::currentStoryList.back() ;
+            }
+            Application::currentStory = PrevStory ;
+            mainWindow->getUI()->storyCaption->setText("");
+            mainWindow->getUI()->picStory->setStyleSheet("");
+            mainWindow->getUI()->picStory->setText("");
+            if (PrevStory->getImgPath().isEmpty()) {
+                mainWindow->getUI()->picStory->setText(PrevStory->getCaption());
+                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
+                return;
+            }
+            mainWindow->getUI()->storyCaption->setText(PrevStory->getCaption());
+            mainWindow->getUI()->picStory->setStyleSheet(PrevStory->getImgPath());
+            mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
+    }
+
+    static void NextBtnStoryHandle(MainWindow* mainWindow) {
+            Story *NextStory = nullptr;
+            int i = 0 ;
+            for (auto story : Application::currentStoryList) {
+                if (i == 1) {
+                    NextStory = story ;
+                    break ;
+                }
+                if (story == Application::currentStory) {
+                    i++ ;
+                }
+            }
+            if (NextStory == nullptr) {
+                NextStory = Application::currentStoryList.front() ;
+            }
+            Application::currentStory = NextStory ;
+            mainWindow->getUI()->storyCaption->setText("");
+            mainWindow->getUI()->picStory->setStyleSheet("");
+            mainWindow->getUI()->picStory->setText("");
+            if (NextStory->getImgPath().isEmpty()) {
+                mainWindow->getUI()->picStory->setText(NextStory->getCaption());
+                mainWindow->getUI()->picStory->setAlignment(Qt::AlignCenter);
+                mainWindow->getUI()->picStory->setStyleSheet("font-size:50px ; font-weight:bold ; color :white ");
+                return;
+            }
+            mainWindow->getUI()->storyCaption->setText(NextStory->getCaption());
+            mainWindow->getUI()->picStory->setStyleSheet(NextStory->getImgPath());
+            mainWindow->getUI()->stackedWidget->setCurrentIndex(2);
     }
 };
 
