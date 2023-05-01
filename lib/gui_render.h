@@ -23,6 +23,31 @@ public:
     GUI_render();
 
     static void renderStories(MainWindow* mainWindow){
+        QLayout* layout = mainWindow->getUI()->horizontalGroupBox_3->layout();
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget() != mainWindow->getUI()->label_3) {
+                delete item->widget(); // delete the widget associated with the item
+                delete item; // delete the item itself
+            }
+        }
+
+
+        QLayout* layout2 = mainWindow->getUI()->StoriesContainer->layout();
+        QLayoutItem* item2;
+        while ((item2 = layout2->takeAt(0)) != nullptr) {
+            delete item2->widget(); // delete the widget associated with the item
+            delete item2; // delete the item itself
+        }
+
+
+        if (Application::stories[Application::loggedUser->getUserName()].size() > 0) {
+            QClickableGroupBox* storyBoxLoggedUser = renderStory(Application::stories[Application::loggedUser->getUserName()].front());
+            MainWindow::connect(storyBoxLoggedUser, &QClickableGroupBox::clicked, [=]() {
+                MainWindow::handleStoryClicked(storyBoxLoggedUser , Application::stories[Application::loggedUser->getUserName()] , mainWindow);
+            });
+            mainWindow->getUI()->horizontalGroupBox_3->layout()->addWidget(storyBoxLoggedUser) ;
+        }
 
         for(auto& contact : Application::loggedUser->getUserContacts()){
             qDebug()<<Application::loggedUser->getUserName();
