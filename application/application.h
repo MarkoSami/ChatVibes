@@ -30,6 +30,9 @@ public:
         return nullptr;
     }
 
+    static bool isSubstringFound(const std::string& inputString, const std::string& substring) {
+        return inputString.find(substring) != std::string::npos;
+    }
 
     static User* searchForurUser(std::string userId) {
 

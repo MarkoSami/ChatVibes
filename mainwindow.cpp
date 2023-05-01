@@ -277,22 +277,28 @@ void MainWindow::on_addNewStoryBtn_clicked()
 
 
 
+void MainWindow::on_viewFavMsg_clicked()
+{
+      ui->stackedWidget_2->setCurrentIndex(2);
+}
 
 
+void MainWindow::on_searchForFav_clicked()
+{
+      std::string search_keyword = ui->searchFavMsg->text().toStdString();
+      std::stack<Conversation *> conv = Application::loggedUser->getConversations();
+      while(!conv.empty())
+      {
+      std::list<Message* > messages = conv.top()->getMessages();
+      for(auto msg : messages)
+      {
+        if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword))
+        {
+            qDebug()<<"Found fav message: " + msg->getMessageTxt();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      }
+      conv.pop();
+      }
+}
 

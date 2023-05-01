@@ -33,7 +33,7 @@ public:
     QDateTime getSendDate();
     std::string getReceiverId();
     bool isSeen();
-    void isFavourite();
+    bool isFavourite();
     void setSeenStatus(bool seenStatus);
 
 };

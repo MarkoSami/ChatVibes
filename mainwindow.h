@@ -49,6 +49,10 @@ private slots:
 
 
 
+    void on_viewFavMsg_clicked();
+
+    void on_searchForFav_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddContact *addContactWin ;

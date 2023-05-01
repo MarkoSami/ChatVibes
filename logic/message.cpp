@@ -17,9 +17,10 @@ Message::Message(std::string _ID, std::string _messageTxt, std::string _receiver
     this->Favourite = _Favourite ;
 }
 
-void Message::isFavourite() {
-    Favourite = !Favourite;
+bool Message::isFavourite() {
+    return Favourite;
 }
+
 
 std::string Message::getID(){
     return this->ID;
