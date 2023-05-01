@@ -223,13 +223,13 @@ border-radius : 5px; </string>
               </widget>
              </item>
              <item>
-              <widget class="QGroupBox" name="verticalGroupBox">
+              <widget class="QGroupBox" name="StoriesPageCont">
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_17">
                 <property name="bottomMargin">
-                 <number>23</number>
+                 <number>36</number>
                 </property>
                 <item>
                  <spacer name="verticalSpacer">
@@ -282,7 +282,7 @@ border-radius : 5px; </string>
                    </sizepolicy>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">font-size : 15px ; 
+                   <string notr="true">font-size : 30px ; 
 font-weight : bold ;
 color : white;  </string>
                   </property>
@@ -385,8 +385,8 @@ QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>89</width>
-                  <height>110</height>
+                  <width>624</width>
+                  <height>457</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1117,7 +1117,7 @@ QScrollBar::sub-page:vertical {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>0</height>
+              <height>36</height>
              </size>
             </property>
             <property name="baseSize">
@@ -1126,29 +1126,91 @@ QScrollBar::sub-page:vertical {
               <height>0</height>
              </size>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="searchForFav">
-            <property name="text">
-             <string>Search</string>
+            <property name="styleSheet">
+             <string notr="true">background : #161a1d ; 
+border-radius : 5px; 
+padding : 3px 5px;
+color : white; </string>
+            </property>
+            <property name="placeholderText">
+             <string>Search favourite Messages</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QScrollArea" name="scrollArea_4">
+          <property name="styleSheet">
+           <string notr="true">#scrollArea_4{ 
+border:none;
+}
+QScrollBar:vertical {
+   background : #161a1d ; /* Set the desired background color */
+    width: 6px;
+    margin: 0px;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    width: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: white;
+    border-radius: 3px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #e0e0e0;
+}
+
+QScrollBar::handle:vertical:pressed {
+    background-color: #c0c0c0;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background-color: none;
+}
+</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </spacer>
+          <widget class="QWidget" name="scrollAreaWidgetContents_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>382</width>
+             <height>512</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_22">
+            <item alignment="Qt::AlignTop">
+             <widget class="QGroupBox" name="favMessageCont">
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <property name="spacing">
+                <number>14</number>
+               </property>
+               <item>
+                <widget class="QGroupBox" name="verticalGroupBox_5">
+                 <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <property name="spacing">
+                   <number>41</number>
+                  </property>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -1318,6 +1380,22 @@ image: url(:/imgs/discussion_1.png);
           <property name="spacing">
            <number>20</number>
           </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="minimumSize">
+             <size>
+              <width>42</width>
+              <height>49</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">image: url(:/imgs/home.png);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QPushButton" name="pushButton_6">
             <property name="minimumSize">

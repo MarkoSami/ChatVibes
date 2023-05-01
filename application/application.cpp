@@ -6,6 +6,7 @@
 
 std::list<User*> Application::users = {};
 
+
 std::map<std::string, std::list<Story*>> Application::stories ;
 
 

@@ -3,10 +3,11 @@
 #include <list>
 #include <stack>
 #include <map>
-
+#include <QGraphicsBlurEffect>
 #include"logic/user.h"
 #include "logic/conversation.h"
 #include "logic/story.h"
+#include "lib/utils.h"
  class Application
 {
 public:
@@ -173,12 +174,12 @@ public:
         return ":/imgs/Profile (2).png" ;
     }
 
-    static QString breakText(QString& txt){
+    static QString breakText(QString& txt , int range){
 
-        if(txt.size() <=70) return txt;
-        QString leftText = txt.mid(0,txt.size()-70);
-        QString rightText = txt.mid(txt.size()-70,txt.size()-1);
-        return breakText(leftText) + "\n" + breakText(rightText);
+        if(txt.size() <=range) return txt;
+        QString leftText = txt.mid(0,txt.size()-range);
+        QString rightText = txt.mid(txt.size()-range,txt.size()-1);
+        return breakText(leftText,range) + "\n" + breakText(rightText,range);
     }
 
     static void handleNewConversations(Conversation* conv , User* user) {
@@ -205,21 +206,25 @@ public:
             }
 
     }
+    struct messageLayout
+    {
+        QClickableGroupBox* outerLayout;
+        QGroupBox * innerLAyout;
+    };
 
-
-    static QGroupBox* renderMessage(Message message){
+    static messageLayout* renderMessage(Message* message){
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
             QLabel *textmsg = new QLabel() ;
             textmsg->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-            textmsg->setText(QString::fromStdString(message.getMessageTxt()));
+            textmsg->setText(QString::fromStdString(message->getMessageTxt()));
             textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
             // Set the cursor to the I-beam cursor
             textmsg->setCursor(Qt::IBeamCursor);
             QLabel *datemsg = new QLabel();
-            datemsg->setText(message.getSendDate().toString());
+            datemsg->setText(message->getSendDate().toString());
             QString txt = textmsg->text();
-            textmsg->setText( breakText(txt));
+            textmsg->setText( breakText(txt,70));
 
             VLayout->addWidget(textmsg);
             VLayout->addWidget(datemsg);
@@ -229,25 +234,44 @@ public:
             QGroupBox *VGroupBox = new QGroupBox();
             VLayout->setSpacing(0);
             VGroupBox->setLayout(VLayout);
-            VGroupBox->setStyleSheet("background:#161a1d; font-size:17px ; color:white ;font-weight:bold ");
+            VGroupBox->setStyleSheet("background:#"+ (QString)((message->isFavourite())? "F0A500": "#161a1d" ) +"; font-size:17px ; color: white ;font-weight:bold ");
             QSpacerItem *hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-            if (message.getReceiverId() == loggedUser->getUserName()) {
+            if (message->getReceiverId() == loggedUser->getUserName()) {
                 hLayout->addItem(hSpacer);
                 hLayout->addWidget(VGroupBox);
             }
             else {
                 hLayout->addWidget(VGroupBox);
                 hLayout->addItem(hSpacer);
-                VGroupBox->setStyleSheet("background-color :#3663fd ; font-size:17px ; color:white ;font-weight:bold ");
+                VGroupBox->setStyleSheet("background:#"+ (QString)((message->isFavourite())? "F0A500": "3663fd" ) +"; font-size:17px ; color: white;font-weight:bold ");
                  datemsg->setStyleSheet("color:white; font-size:8px");
             }
-            QGroupBox *hGroupBox = new QGroupBox();
+            QClickableGroupBox *hGroupBox = new QClickableGroupBox();
+            hGroupBox->setObjectName(utils::convertAddressToString(message));
             hGroupBox->setLayout(hLayout);
 
-            return hGroupBox;
+            messageLayout* msgLayout = new messageLayout;
+            msgLayout->innerLAyout = VGroupBox;
+            msgLayout->outerLayout = hGroupBox;
+            QAction::connect(hGroupBox, &QClickableGroupBox::doubleClickDetected, [=]() {
+                handleDoubleClicked(msgLayout);
+            });
+
+            return msgLayout;
     }
 
+
+
+    static void handleDoubleClicked(messageLayout* message){
+        qDebug()<<"Double clicked..!";
+        Message* messagePtr = (Message*)utils::convertStringToaddress(message->outerLayout->objectName().toStdString());
+        messagePtr->toggleFavourite();
+        QString style = "background:#"+ ((QString)((messagePtr->isFavourite())? "F0A500": "3663fd" ) +"; font-size:17px ; color: white ;font-weight:bold ");
+        message->innerLAyout->setStyleSheet(style);
+        qDebug()<<messagePtr->isFavourite();
+
+    }
 
     static QClickableGroupBox* renderConversation(Conversation* conversation){
 

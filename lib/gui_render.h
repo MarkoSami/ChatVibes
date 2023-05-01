@@ -138,6 +138,18 @@ public:
         return storyGroupBox;
     }
 
+    static QLabel* renderFavMessage(Message message) {
+        QLabel* favMessage = new QLabel() ;
+        QString messageText = QString::fromStdString(message.getMessageTxt());
+        QString wraptext = Application::breakText(messageText,40);
+        favMessage->setText(wraptext);
+        favMessage->setStyleSheet("background : rgb(22, 26, 29); padding :16px 20px;border-radius:8px;color:white ; font-weight:bold ; ")  ;
+        favMessage->setMinimumHeight(61);
+        favMessage->setWordWrap(true);
+        favMessage->setMaximumWidth(340);
+        return favMessage ;
+        }
+
 };
 
 #endif // GUI_RENDER_H

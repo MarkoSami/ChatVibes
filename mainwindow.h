@@ -65,6 +65,8 @@ private slots:
 
     void on_pushButton_9_clicked();
 
+    void on_pushButton_10_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddContact *addContactWin ;
@@ -75,6 +77,7 @@ private:
 
 public slots:
     static void handleStoryClicked(QGroupBox* , std::list<Story*> storiesList , MainWindow* mainWindow){
+
         Story *story = storiesList.front() ;
         Application::currentStory = story ;
         Application::currentStoryList = storiesList ;

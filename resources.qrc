@@ -27,5 +27,6 @@
         <file>imgs/fav.png</file>
         <file>imgs/arrow-right.png</file>
         <file>imgs/left-arrow-slider.png</file>
+        <file>imgs/home.png</file>
     </qresource>
 </RCC>

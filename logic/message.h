@@ -34,6 +34,7 @@ public:
     std::string getReceiverId();
     bool isSeen();
     bool isFavourite();
+    void toggleFavourite();
     void setSeenStatus(bool seenStatus);
 
 };

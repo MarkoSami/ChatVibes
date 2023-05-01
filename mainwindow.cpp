@@ -18,6 +18,8 @@
 #include <QTimer>
 #include <QMessageBox>
 #include "lib/gui_render.h"
+#include <QChar>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -31,6 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(0);
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
             this, &MainWindow::on_pushButton_7_clicked);
+
+    connect(ui->searchFavMsg, &QLineEdit::returnPressed,
+            this, &MainWindow::on_searchForFav_clicked);
+
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->scrollArea_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -168,7 +174,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
         ui->ContactIMG->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
         for (auto &conv : conversation->getMessages()) {
-            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
+            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(conv)->outerLayout);
         }
 
         // Set the current index to 2 to show the conversation
@@ -276,16 +282,18 @@ void MainWindow::on_pushButton_7_clicked()
             if(receiverConv != nullptr)
                 receiverConv->addNewMessage(messageTest);
 
-            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*messageTest));
-            ui->sendMessageLineEdit->setText("");
-            DelayHandler = messageTest->getMessageTxt().size() ;
-            QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
-                ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
-            });
-        }
+        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
+        ui->sendMessageLineEdit->setText("");
+        DelayHandler = messageTest->getMessageTxt().size() ;
+        QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
+            ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
+        });
+      }
 
-    }
-}
+      }
+
+ }
+
 
 void MainWindow::on_addNewStoryBtn_clicked()
 {
@@ -295,11 +303,33 @@ void MainWindow::on_addNewStoryBtn_clicked()
 }
 
 
-
-
 void MainWindow::on_viewFavMsg_clicked()
 {
+    QLayout* layout = ui->favMessageCont->layout();
+    QLayoutItem* item;
+
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget(); // delete the widget associated with the item
+        delete item; // delete the item itself
+    }
+
     ui->stackedWidget_2->setCurrentIndex(2);
+    ui->scrollArea_4->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    std::stack<Conversation *> conv = Application::loggedUser->getConversations();
+    while(!conv.empty())
+    {
+      std::list<Message* > messages = conv.top()->getMessages();
+      for(auto &msg : messages)
+      {
+        if(msg->isFavourite())
+        {
+                QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
+                ui->favMessageCont->layout()->addWidget(favMessage);
+        }
+      }
+      conv.pop();
+    }
 }
 
 void MainWindow::on_backSotryBtn_clicked()
@@ -310,16 +340,25 @@ void MainWindow::on_backSotryBtn_clicked()
 
 void MainWindow::on_searchForFav_clicked()
 {
-    std::string search_keyword = ui->searchFavMsg->text().toStdString();
+    QLayout* layout = ui->favMessageCont->layout();
+    QLayoutItem* item;
+
+    while ((item = layout->takeAt(0)) != nullptr) {
+      delete item->widget(); // delete the widget associated with the item
+      delete item; // delete the item itself
+    }
+
+    QString search_keyword = ui->searchFavMsg->text().remove(QRegularExpression("\\s+"));
     std::stack<Conversation *> conv = Application::loggedUser->getConversations();
     while(!conv.empty())
     {
         std::list<Message* > messages = conv.top()->getMessages();
         for(auto msg : messages)
         {
-            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword))
+            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()))
             {
-                qDebug()<<"Found fav message: " + msg->getMessageTxt();
+                QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
+                ui->favMessageCont->layout()->addWidget(favMessage);
             }
         }
         conv.pop();
@@ -344,3 +383,9 @@ void MainWindow::on_pushButton_9_clicked()
 {
     this->ui->stackedWidget_2->setCurrentIndex(0);
 }
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(0);
+}
+

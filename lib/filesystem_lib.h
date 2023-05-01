@@ -16,6 +16,7 @@
 #include "application/application.h"
 #include "logic/message.h"
 #include <QDebug>
+#include <map>
 
 class fileSystem_lib
 {
@@ -45,6 +46,20 @@ private :
         return JSONContact;
 
     }
+
+
+    // ________create a new Story QJson object ready to add for QJsonArray
+
+    static QJsonObject createNewJSONStory(Story* story){
+        QJsonObject jsonStory;
+        jsonStory["imgPath"] = story->getImgPath();
+        jsonStory["publisher"] = createNewJSONContact(story->getPublisher());
+        jsonStory["caption"] = story->getCaption();
+        return jsonStory;
+    }
+
+
+
     // ________create a new Conversation QJson object ready to add for QJsonArray
 
     static QJsonObject createNewJSONConversation(Conversation* conversation){
@@ -128,7 +143,7 @@ private :
     }
 
 
-    //_____ this function creates new COnversation object from a Conversation QJsonObj
+    //_____ this function creates new Conversation object from a Conversation QJsonObj
     static Conversation* createNewConversationObject(const QJsonObject& jsonConversationObj){
         Conversation *conversationObj = new Conversation
             (
@@ -146,6 +161,19 @@ private :
         return conversationObj;
     }
 
+
+    //_____ this function creates Story user object from a user QJsonObj
+    static Story* createNewStoryObject(QJsonObject& jsonStoryObj){
+
+        Contact* publisher= createNewContactObject(jsonStoryObj["publisher"].toObject());
+         Story* story = new Story
+            (
+                jsonStoryObj["caption"].toString(),
+                jsonStoryObj["imgPath"].toString(),
+                publisher
+            );
+        return story;
+    }
 
     //_____ this function creates new user object from a user QJsonObj
     static User* createNewUserObject(QJsonObject& jsonUserObj){
@@ -192,6 +220,24 @@ private :
         return (QJsonDocument(JSONConversations));
     }
 
+    //_______this function constructs the Stories document to be ready to save at the disk
+
+    static QJsonDocument buildStoriesJSONDocument( std::map<std::string,std::list<Story*>> stories) {
+        QJsonArray JSONStories;
+        for(auto &storyPtr : stories){
+            QJsonObject jsonStory;
+
+            std::list<Story*> stories = storyPtr.second;
+            QJsonArray jsonStoryList;
+
+            for(auto &story : stories){
+                jsonStoryList.append(createNewJSONStory(story));
+            }
+            jsonStory[QString::fromStdString(storyPtr.first)] = jsonStoryList;
+            JSONStories.append(jsonStory);
+        }
+        return QJsonDocument(JSONStories);
+    }
 
      //_______this function constructs the users document to be ready to save at the disk
     static QJsonDocument buildUsersJSONDocument( std::list<User*> users) {
@@ -211,6 +257,7 @@ private :
     enum DocumentType {
         USERS,
         CONVERSATIONS,
+        STOORIES,
         UNKNOWN
     };
 
@@ -229,7 +276,7 @@ private :
     //_______ this function saves takes a JSON document and save it to the disk
     static   bool storeJSONDocument(QJsonDocument &document){
 
-        QString PATH = (getDocumentType(document) == USERS)? "users.json" : "conversations.json";
+        QString PATH = (getDocumentType(document) == USERS)? "users.json" : "stories.json";
         QFile file(PATH);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
@@ -255,15 +302,15 @@ public:
         storeJSONDocument(users);
 
         // constructing and saving conversations stack in a json file
-//        QJsonDocument conversations = buildConversationsJSONDocument(Application::conversations);
-//        storeJSONDocument(conversations);
+        QJsonDocument stories = buildStoriesJSONDocument(Application::stories);
+        storeJSONDocument(stories);
 
         return true;
     }
 
     static void internalLoadData(DocumentType type){
 
-        QString PATH = (type == USERS)? "users.json" : "conversations.json";
+        QString PATH = (type == USERS)? "users.json" : "stories.json";
         QFile file(PATH);
 
         if (!file.open(QIODevice::ReadOnly)) {
@@ -289,7 +336,6 @@ public:
                     std::list<User*>& mutableUsers = const_cast<std::list<User*>&>(Application::users);
                     mutableUsers.clear();
             }
-
             // putting the read users data into the application::users list
             if (jsonDoc.isArray()) {
                     QJsonArray jsonArray = jsonDoc.array();
@@ -302,15 +348,51 @@ public:
                     }
             }
         }
+        else if(type == STOORIES){
+            if (!Application::stories.empty()) {
+                    std::map<std::string,std::list<Story*> >& mutableUsers = const_cast< std::map<std::string,std::list<Story*> >& > (Application::stories);
+                    mutableUsers.clear();
+            }
+            if (jsonDoc.isArray()) {
+                QJsonArray jsonArray = jsonDoc.array();
+                    for (QJsonArray::const_iterator arrayItr = jsonArray.constBegin(); arrayItr != jsonArray.constEnd(); ++arrayItr) {
+                        if (arrayItr->isObject()) {
+                            QJsonObject jsonStoryObj = arrayItr->toObject();
+
+                            // Get the publisher's name
+                            QStringList keys = jsonStoryObj.keys();
+                            if (keys.size() == 1) {
+                                std::string publisherName = keys[0].toStdString();
+
+                                // Parse the stories for this publisher
+                                QJsonArray storiesArray = jsonStoryObj.value(QString::fromStdString(publisherName)).toArray();
+                                std::list<Story*> stories;
+                                for (QJsonArray::const_iterator storyItr = storiesArray.constBegin(); storyItr != storiesArray.constEnd(); ++storyItr) {
+                                    if (storyItr->isObject()) {
+                                        QJsonObject jsonStory = storyItr->toObject();
+
+                                        // Parse the story details
+                                        Story *story = createNewStoryObject(jsonStory);
+                                        stories.push_back(story);
+                                    }
+                                }
+                                Application::stories[publisherName] = stories;
+
+                            }
+
+                        }
 
 
+                    }
+            }
+        }
     }
 
 
     //______loading application data from the json files
     static void loadData(){
         internalLoadData(USERS);
-        internalLoadData(CONVERSATIONS);
+        internalLoadData(STOORIES);
 
     }
 
