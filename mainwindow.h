@@ -61,6 +61,8 @@ private slots:
 
     void on_searchForFav_clicked();
 
+    void on_pushButton_9_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddContact *addContactWin ;

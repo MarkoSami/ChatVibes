@@ -319,3 +319,9 @@ void MainWindow::on_pushButton_8_clicked()
       addStoryWin->show() ;
 }
 
+
+void MainWindow::on_pushButton_9_clicked()
+{
+      this->ui->stackedWidget_2->setCurrentIndex(0);
+}
+

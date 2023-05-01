@@ -366,8 +366,8 @@ QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>89</width>
-                  <height>110</height>
+                  <width>90</width>
+                  <height>117</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -589,7 +589,7 @@ padding : 14px 12px; </string>
        <string notr="true">border:none</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_6">
        <property name="sizePolicy">
@@ -810,8 +810,8 @@ QScrollBar::sub-page:vertical {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>382</width>
-                <height>398</height>
+                <width>378</width>
+                <height>381</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -846,6 +846,59 @@ QScrollBar::sub-page:vertical {
       </widget>
       <widget class="QWidget" name="page_7">
        <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="QGroupBox" name="backBtnGBX">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QPushButton" name="pushButton_9">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>64</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>34</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background : rgb(54, 99, 253,0);
+color : white ; 
+font-weight:bold ;
+image: url(:/imgs/left-arrow.png);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item>
          <widget class="QGroupBox" name="horizontalGroupBox">
           <property name="sizePolicy">
@@ -1069,8 +1122,8 @@ QScrollBar::sub-page:vertical {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>382</width>
-             <height>436</height>
+             <width>378</width>
+             <height>381</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_18">
