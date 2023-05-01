@@ -21,6 +21,8 @@
 #include "lib/gui_render.h"
 
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -150,7 +152,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
         ui->ContactIMG->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
         for (auto &conv : conversation->getMessages()) {
-            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*conv));
+            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(conv)->outerLayout);
         }
 
         // Set the current index to 2 to show the conversation
@@ -257,7 +259,7 @@ void MainWindow::on_pushButton_7_clicked()
         if(receiverConv != nullptr)
             receiverConv->addNewMessage(messageTest);
 
-        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(*messageTest));
+        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
         ui->sendMessageLineEdit->setText("");
         DelayHandler = messageTest->getMessageTxt().size() ;
         QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
@@ -266,6 +268,7 @@ void MainWindow::on_pushButton_7_clicked()
       }
 
       }
+
  }
 
 void MainWindow::on_addNewStoryBtn_clicked()

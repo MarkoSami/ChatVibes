@@ -15,8 +15,10 @@ public:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 signals:
     void clicked();
+    void doubleClickDetected();
 };
 #endif // QCLICKABLEGROUBOX_H

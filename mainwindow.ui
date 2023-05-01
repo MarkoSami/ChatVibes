@@ -366,7 +366,7 @@ QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>90</width>
+                  <width>94</width>
                   <height>117</height>
                  </rect>
                 </property>
@@ -589,7 +589,7 @@ padding : 14px 12px; </string>
        <string notr="true">border:none</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_6">
        <property name="sizePolicy">
@@ -854,7 +854,25 @@ QScrollBar::sub-page:vertical {
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">#backBtnGBX{
+	padding:0;
+	margin:0
+}</string>
+          </property>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QPushButton" name="pushButton_9">
              <property name="sizePolicy">
@@ -1123,7 +1141,7 @@ QScrollBar::sub-page:vertical {
              <x>0</x>
              <y>0</y>
              <width>378</width>
-             <height>381</height>
+             <height>383</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_18">

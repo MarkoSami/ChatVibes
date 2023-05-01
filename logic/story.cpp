@@ -1,7 +1,7 @@
 #include "story.h"
 
-Story::Story(QString _caption, QString _imgPath, Contact* _publisher, Story* prevStoryAddress, Story* nextStoryAddress)
-    : caption(_caption), imgPath(_imgPath), publisher(_publisher), prevStoryAddress(prevStoryAddress), nextStoryAddress(nextStoryAddress)
+Story::Story(QString _caption, QString _imgPath, Contact* _publisher )
+    : caption(_caption), imgPath(_imgPath), publisher(_publisher)
 {}
 
 QString Story::getImgPath() const
