@@ -22,3 +22,9 @@ void StartNewChat::on_pushButton_clicked()
 
 }
 
+
+void StartNewChat::on_pushButton_5_clicked()
+{
+    this->close();
+}
+

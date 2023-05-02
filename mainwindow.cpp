@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include "lib/gui_render.h"
 #include <QChar>
+#include <algorithm>
 
 
 
@@ -62,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     //    connect(animation, &QPropertyAnimation::finished, this, &MainWindow::show);
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+
 
     // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
@@ -188,6 +190,12 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
         // Set the current index to 2 to show the conversation
         ui->stackedWidget->setCurrentIndex(3);
+
+        QTimer::singleShot(0, this, [=]() {
+            int max = ui->scrollArea_2->verticalScrollBar()->maximum();
+            ui->scrollArea_2->verticalScrollBar()->setValue(max);
+        });
+
     });
 }
 
@@ -325,7 +333,14 @@ void MainWindow::on_viewFavMsg_clicked()
       std::list<Message* > messages = conv.top()->getMessages();
       for(auto &msg : messages)
       {
-        if(msg->isFavourite())
+        bool isFavedByUser = false ;
+
+        for (auto &putFavUser : msg->getMessageFavBy()) {
+                if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                    isFavedByUser = true;
+                }
+        }
+         if(isFavedByUser )
         {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);
@@ -358,7 +373,14 @@ void MainWindow::on_searchForFav_clicked()
         std::list<Message* > messages = conv.top()->getMessages();
         for(auto msg : messages)
         {
-            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()))
+            bool isFavedByUser = false ;
+
+            for (auto &putFavUser : msg->getMessageFavBy()) {
+                    if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                        isFavedByUser = true;
+                    }
+            }
+            if(isFavedByUser&& Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()) )
             {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);

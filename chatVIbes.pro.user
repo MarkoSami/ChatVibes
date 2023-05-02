@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Written by QtCreator 10.0.0, 2023-05-02T19:15:04. -->
 <qtcreator>
  <data>
@@ -8,6 +9,9 @@
   <value type="QByteArray">{ef435303-4f13-4ca8-a74b-9acfe14381b1}</value>
 =======
 <!-- Written by QtCreator 10.0.0, 2023-05-02T19:29:57. -->
+=======
+<!-- Written by QtCreator 10.0.0, 2023-05-02T19:57:59. -->
+>>>>>>> 5c179ef52ff682c500f83f179a3609eb399b252c
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -264,22 +268,29 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/DSProject/chatVibes/chatVIbes.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/DSProject/chatVibes/chatVIbes.pro</value>
 =======
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/chatVibes/chatVibes/chatVIbes.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/chatVibes/chatVibes/chatVIbes.pro</value>
 >>>>>>> a069634e90e9e510654a5fdd2514ca6eceb9d3d2
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey"></value>
+>>>>>>> 5c179ef52ff682c500f83f179a3609eb399b252c
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
-    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/DSProject/build-chatVIbes-Desktop_Qt_6_5_0_MinGW_64_bit-Debug</value>
 =======
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/chatVibes/build-chatVIbes-Desktop_Qt_6_5_0_MinGW_64_bit-Debug</value>
 >>>>>>> a069634e90e9e510654a5fdd2514ca6eceb9d3d2
+=======
+>>>>>>> 5c179ef52ff682c500f83f179a3609eb399b252c
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
