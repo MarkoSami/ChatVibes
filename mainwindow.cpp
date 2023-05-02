@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include "lib/gui_render.h"
 #include <QChar>
+#include <algorithm>
 
 
 
@@ -317,7 +318,14 @@ void MainWindow::on_viewFavMsg_clicked()
       std::list<Message* > messages = conv.top()->getMessages();
       for(auto &msg : messages)
       {
-        if(msg->isFavourite())
+        bool isFavedByUser = false ;
+
+        for (auto &putFavUser : msg->getMessageFavBy()) {
+                if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                    isFavedByUser = true;
+                }
+        }
+         if(isFavedByUser )
         {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);
@@ -350,7 +358,14 @@ void MainWindow::on_searchForFav_clicked()
         std::list<Message* > messages = conv.top()->getMessages();
         for(auto msg : messages)
         {
-            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()))
+            bool isFavedByUser = false ;
+
+            for (auto &putFavUser : msg->getMessageFavBy()) {
+                    if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                        isFavedByUser = true;
+                    }
+            }
+            if(isFavedByUser&& Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()) )
             {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);
