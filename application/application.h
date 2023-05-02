@@ -213,13 +213,21 @@ public:
     };
 
     static messageLayout* renderMessage(Message* message){
+        bool isFavouriteHandler = false ;
+
+        for (auto &putFavUser : message->getMessageFavBy()) {
+                if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && message->isFavourite()) {
+                    isFavouriteHandler = true;
+                }
+        }
+
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
             QLabel *textmsg = new QLabel() ;
             textmsg->setObjectName("textmsg");
             textmsg->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
             textmsg->setText((message->isDeleted())? "Deleted message." : QString::fromStdString(message->getMessageTxt()));
-            textmsg->setStyleSheet((message->isDeleted())? "color:red": "color:white");
+            textmsg->setStyleSheet((message->isDeleted())? "color: #999999;": "color:white");
             textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
             // Set the cursor to the I-beam cursor
             textmsg->setCursor(Qt::IBeamCursor);
@@ -236,7 +244,9 @@ public:
             QGroupBox *VGroupBox = new QGroupBox();
             VLayout->setSpacing(0);
             VGroupBox->setLayout(VLayout);
-            VGroupBox->setStyleSheet("background:#"+ (QString)((message->isFavourite())? "F0A500": "#161a1d" ) +"; font-size:17px ; color: white ;font-weight:bold ");
+            if (!message->isDeleted()) {
+            VGroupBox->setStyleSheet("background:#"+ (QString)((isFavouriteHandler)? "F0A500": "#161a1d" ) +"; font-size:17px ; color: white ;font-weight:bold ");
+            }
             QSpacerItem *hSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
             if (message->getReceiverId() == loggedUser->getUserName()) {
@@ -246,9 +256,9 @@ public:
             else {
                 hLayout->addWidget(VGroupBox);
                 hLayout->addItem(hSpacer);
-                VGroupBox->setStyleSheet("background:#"+ (QString)((message->isFavourite())? "F0A500": "3663fd" ) +"; font-size:17px ; color: white;font-weight:bold ");
-                datemsg->setStyleSheet("color:white; font-size:8px");
             }
+            VGroupBox->setStyleSheet("background:#"+ (QString)((isFavouriteHandler)? "F0A500": "3663fd" ) +"; font-size:17px ; color: white;font-weight:bold ");
+            datemsg->setStyleSheet("color:white; font-size:8px");
             QClickableGroupBox *hGroupBox = new QClickableGroupBox();
             hGroupBox->setProperty("type","message");
             hGroupBox->setObjectName(utils::convertAddressToString(message));
@@ -270,8 +280,23 @@ public:
         qDebug()<<"Double clicked..!";
         Message* messagePtr = (Message*)utils::convertStringToaddress(message->outerLayout->objectName().toStdString());
         messagePtr->toggleFavourite();
+        if (messagePtr->isFavourite()) {
+                messagePtr->setMessageFavBy(Application::loggedUser->getUserContact());
+        }
+        else {
+                auto contacts = messagePtr->getMessageFavBy();
+                for (auto contact = contacts.begin(); contact != contacts.end(); ++contact) {
+                    if ((*contact)->getName() == Application::loggedUser->getUserContact()->getName()) {
+                        contacts.erase(contact);
+                        break;
+                    }
+                }
+        }
+
+        if (!messagePtr->isDeleted()){
         QString style = "background:#"+ ((QString)((messagePtr->isFavourite())? "F0A500": "3663fd" ) +"; font-size:17px ; color: white ;font-weight:bold ");
         message->innerLAyout->setStyleSheet(style);
+        }
         qDebug()<<messagePtr->isFavourite();
 
     }

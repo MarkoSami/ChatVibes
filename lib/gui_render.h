@@ -148,7 +148,7 @@ public:
         favMessage->setWordWrap(true);
         favMessage->setMaximumWidth(340);
         return favMessage ;
-        }
+    }
 
 };
 

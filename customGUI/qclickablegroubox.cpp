@@ -63,7 +63,7 @@ void QClickableGroupBox::handleDeleteAction()
         // changing the GUI of the message to be deleted
         QLabel* msgText = this->findChild<QLabel*>("textmsg");
         msgText->setText("Deleted Message.");
-        msgText->setStyleSheet("color:red");
+        msgText->setStyleSheet("color: #607380;");
         //casting the address to be of type Message
         Message* messagePtr = (Message*)object;
         messagePtr->toggleDeleted();
@@ -73,10 +73,6 @@ void QClickableGroupBox::handleDeleteAction()
         conversationPtr->toggleDeleted();
         this->deleteLater();
     }
-
-
-
-
 
 
 }

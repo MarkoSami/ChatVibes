@@ -5,6 +5,7 @@
 #include<string.h>
 #include<QDateTime>
 #include <QGroupBox>
+#include "logic/contact.h"
 /*
 
 Message text
@@ -26,6 +27,7 @@ private:
     bool seen;
     bool Favourite;
     bool deleted;
+    std::list<Contact *>messageFavBy ;
 
 public:
     Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite ,bool deleted = false);
@@ -39,6 +41,8 @@ public:
     void setSeenStatus(bool seenStatus);
     bool isDeleted();
     void toggleDeleted();
+    std::list<Contact *>& getMessageFavBy();
+    void setMessageFavBy(Contact * name);
 
 };
 

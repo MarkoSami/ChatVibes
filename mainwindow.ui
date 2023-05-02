@@ -76,7 +76,7 @@ border-radius : 5px ;</string>
          <item>
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="currentIndex">
-            <number>2</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="page_3">
             <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -385,8 +385,8 @@ QScrollBar::sub-page:vertical {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>624</width>
-                  <height>457</height>
+                  <width>620</width>
+                  <height>448</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -829,8 +829,8 @@ QScrollBar::sub-page:vertical {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>382</width>
-                <height>398</height>
+                <width>378</width>
+                <height>381</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -1077,8 +1077,8 @@ QScrollBar::sub-page:vertical {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>364</width>
-                <height>375</height>
+                <width>50</width>
+                <height>44</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1185,8 +1185,8 @@ QScrollBar::sub-page:vertical {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>382</width>
-             <height>512</height>
+             <width>72</width>
+             <height>66</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_22">
@@ -1326,7 +1326,7 @@ border-radius : 5px;</string>
       <property name="minimumSize">
        <size>
         <width>89</width>
-        <height>0</height>
+        <height>155</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -1378,7 +1378,7 @@ image: url(:/imgs/discussion_1.png);
         <widget class="QGroupBox" name="verticalGroupBox">
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <property name="spacing">
-           <number>20</number>
+           <number>40</number>
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_10">
@@ -1387,6 +1387,9 @@ image: url(:/imgs/discussion_1.png);
               <width>42</width>
               <height>49</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">image: url(:/imgs/home.png);</string>

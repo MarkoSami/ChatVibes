@@ -18,8 +18,18 @@ Message::Message(std::string _ID, std::string _messageTxt, std::string _receiver
     this->deleted = _deleted;
 }
 
+
+
 bool Message::isDeleted(){
     return this->deleted;
+}
+
+std::list<Contact *>& Message::getMessageFavBy() {
+    return this->messageFavBy ;
+}
+
+void Message::setMessageFavBy(Contact * name) {
+    this->messageFavBy.push_back(name);
 }
 
 void Message::toggleDeleted(){
