@@ -24,7 +24,7 @@ bool Message::isDeleted(){
     return this->deleted;
 }
 
-std::list<Contact *> Message::getMessageFavBy() {
+std::list<Contact *>& Message::getMessageFavBy() {
     return this->messageFavBy ;
 }
 

@@ -148,7 +148,7 @@ private :
             QJsonObject contactObj = contact.toObject();
             std::string contactName = contactObj["name"].toString().toStdString();
             // create a new Contact object for each favorite contact and add it to the message's messageFavBy list
-            message->getMessageFavBy().push_back(new Contact(contactName));
+            message->getMessageFavBy().push_back((new Contact(contactName,"NA",contactName)));
         }
 
 
