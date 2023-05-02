@@ -5,10 +5,19 @@
 #include <vector>
 #include "application/application.h"
 
-Conversation::Conversation(Contact* _receiver, bool _isFavourite, std::string _name)
-    : receiver(_receiver) , isFavourite(_isFavourite)
+Conversation::Conversation(Contact* _receiver, bool _isFavourite, std::string _name,bool _deleted)
+    : receiver(_receiver) , isFavourite(_isFavourite),deleted(_deleted)
 {
     this->name = (_name == "")? _receiver->getID(): _name;
+}
+
+
+bool Conversation::isDeleted(){
+    return this->deleted;
+}
+
+void Conversation::toggleDeleted(){
+    this->deleted = !this->deleted;
 }
 
 bool Conversation::addNewMessage( Message* newMessage){

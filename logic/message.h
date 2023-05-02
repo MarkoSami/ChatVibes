@@ -25,9 +25,10 @@ private:
     QDateTime sendDate;
     bool seen;
     bool Favourite;
+    bool deleted;
 
 public:
-    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite );
+    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite ,bool deleted);
     std::string getID();
     std::string getMessageTxt();
     QDateTime getSendDate();
@@ -36,6 +37,7 @@ public:
     bool isFavourite();
     void toggleFavourite();
     void setSeenStatus(bool seenStatus);
+    bool isDeleted();
 
 };
 

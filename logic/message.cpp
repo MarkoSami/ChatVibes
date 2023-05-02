@@ -7,7 +7,7 @@
 #include <QDateTime>
 #include <string>
 
-Message::Message(std::string _ID, std::string _messageTxt, std::string _receiverID, QDateTime _sendDate, bool _seen , bool _Favourite = false )
+Message::Message(std::string _ID, std::string _messageTxt, std::string _receiverID, QDateTime _sendDate, bool _seen , bool _Favourite = false,bool _deleted = false )
 {
     this->ID = _ID;
     this->messageTxt = _messageTxt;
@@ -15,6 +15,15 @@ Message::Message(std::string _ID, std::string _messageTxt, std::string _receiver
     this->sendDate = _sendDate;
     this->seen = _seen;
     this->Favourite = _Favourite ;
+    this->deleted = _deleted;
+}
+
+bool Message::isDeleted(){
+    return this->deleted;
+}
+
+void Message::toggleDeleted(){
+    this->deleted = !this->deleted;
 }
 
 bool Message::isFavourite() {

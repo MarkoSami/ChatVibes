@@ -23,9 +23,9 @@ private:
     Contact* receiver;   // consider it as sender not reciever
     std::list<Message*> messages;
     std::string name;
-    bool isFavourite;
     QClickableGroupBox* conversationGroupBoxAddress;
-
+    bool isFavourite;
+    bool deleted;
 
 
 
@@ -38,12 +38,16 @@ public:
 
 
 
-    Conversation(Contact *_receiver, bool _isFavourite = false,std::string _name = "");
+    Conversation(Contact *_receiver, bool _isFavourite = false,std::string _name = "",bool deleted = false);
     // Setters
     void setReceiver(Contact _receiver) {
         receiver->setName(_receiver.getName());
         receiver->setImgPath(_receiver.getImgPath());
     }
+
+    bool isDeleted();
+    void toggleDeleted();
+
     void setName(std::string _name) { name = _name; }
     void setIsFavourite(bool _isFavourite) { isFavourite = _isFavourite; }
 
