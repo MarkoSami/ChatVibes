@@ -31,7 +31,18 @@ private :
         JSONmessage["seen"] = message.isSeen();
         JSONmessage["sendDate"] = QJsonValue::fromVariant(message.getSendDate());
         JSONmessage["receiverID"] = message.getReceiverId().c_str();
-        JSONmessage["Favourite"] = message.isFavourite();
+        JSONmessage["Favourite"] = (message.isDeleted())? false : message.isFavourite();
+        JSONmessage["deleted"] = message.isDeleted();
+
+        QJsonArray favByArray;
+        for (auto contact : message.getMessageFavBy()) {
+            QJsonObject contactObj;
+            contactObj["name"] = contact->getName().c_str();
+            // add any other relevant information about the contact here
+            favByArray.append(contactObj);
+        }
+        JSONmessage["messageFavBy"] = favByArray;
+
         return JSONmessage;
     }
 
@@ -70,6 +81,7 @@ private :
         jsonConversation["receiver"] = (createNewJSONContact(receiver));
         jsonConversation["name"] = conversation->getName().c_str();
         jsonConversation["isFavourite"] = conversation->getIsFavourite();
+        jsonConversation["deleted"] = conversation->isDeleted();
 
         // adding conversation messages
         QJsonArray messages;
@@ -108,7 +120,8 @@ private :
 
         std::stack<Conversation*> conversationsStack = user->getConversations();
         while(!conversationsStack.empty()){
-            conversations.append(createNewJSONConversation(conversationsStack.top()));
+            if(!conversationsStack.top()->isDeleted())
+                conversations.append(createNewJSONConversation(conversationsStack.top()));
             conversationsStack.pop();
         }
         userData["conversations"] = conversations;
@@ -118,16 +131,27 @@ private :
     }
 
     //____ this function creates a new Message object from a QJsonObj
-    static  Message* createNewMessageObject(const QJsonObject& jsonMessageObj){
+    static Message* createNewMessageObject(const QJsonObject& jsonMessageObj){
         Message* message = new Message
             (
                 jsonMessageObj["ID"].toString().toStdString(),
-                jsonMessageObj["msgTxt"].toString().toStdString(),
+                (jsonMessageObj["deleted"].toBool())? "Deleted Message." :jsonMessageObj["msgTxt"].toString().toStdString(),
                 jsonMessageObj["receiverID"].toString().toStdString(),
                 jsonMessageObj["sendDate"].toVariant().toDateTime(),
                 jsonMessageObj["seen"].toBool(),
-                jsonMessageObj["Favourite"].toBool()
-            );
+                jsonMessageObj["Favourite"].toBool(),
+                jsonMessageObj["deleted"].toBool()
+                );
+
+        QJsonArray favByArray = jsonMessageObj["messageFavBy"].toArray();
+        for (auto contact : favByArray) {
+            QJsonObject contactObj = contact.toObject();
+            std::string contactName = contactObj["name"].toString().toStdString();
+            // create a new Contact object for each favorite contact and add it to the message's messageFavBy list
+            message->getMessageFavBy().push_back(new Contact(contactName));
+        }
+
+
         return message;
     }
 
@@ -138,7 +162,7 @@ private :
                 jsonContactObj["ID"].toString().toStdString(),
                 jsonContactObj["imgPath"].toString().toStdString(),
                 jsonContactObj["name"].toString().toStdString()
-            );
+             );
         return contact;
     }
 
@@ -149,7 +173,8 @@ private :
             (
                 createNewContactObject(jsonConversationObj["receiver"].toObject()),
                 jsonConversationObj["isFavourite"].toBool(),
-                jsonConversationObj["name"].toString().toStdString()
+                jsonConversationObj["name"].toString().toStdString(),
+                jsonConversationObj["deleted"].toBool()
             );
 
         // adding conversation messages

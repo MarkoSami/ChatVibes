@@ -28,5 +28,8 @@
         <file>imgs/arrow-right.png</file>
         <file>imgs/left-arrow-slider.png</file>
         <file>imgs/home.png</file>
+        <file>imgs/delete.png</file>
+        <file>imgs/star.png</file>
+        <file>imgs/RozanovaGEO-Demo-SemiBold.otf</file>
     </qresource>
 </RCC>

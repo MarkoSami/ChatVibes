@@ -174,6 +174,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
         QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
         ui->ContactIMG->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
         for (auto &conv : conversation->getMessages()) {
+            qDebug() << conv->getMessageFavBy().size() << conv->getMessageTxt() ;
             ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(conv)->outerLayout);
         }
 
@@ -271,12 +272,6 @@ void MainWindow::on_pushButton_7_clicked()
             Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
             Application::currentConversation->addNewMessage(messageTest);
             QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
-            //        QList<QVBoxLayout*> vlayout= ConversationgroubBoxAddress->findChildren<QVBoxLayout*>("VLayout");
-            //        QList<QHBoxLayout*> hlayout = vlayout.front()->findChildren<QHBoxLayout*>("lastMsgBox");
-            //        QList<QLabel*> targetLabel= hlayout.front()->findChildren<QLabel*>("textmsg",Qt::FindChildrenRecursively);
-            //        if(targetLabel.front() != nullptr){
-            //            targetLabel.front()->setText((Application::currentConversation->getMessages().empty())? "Chat now !" : QString::fromStdString(Application::currentConversation->getMessages().back()->getMessageTxt()));
-            //        }
 
             Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
             if(receiverConv != nullptr)
@@ -348,7 +343,7 @@ void MainWindow::on_searchForFav_clicked()
       delete item; // delete the item itself
     }
 
-    QString search_keyword = ui->searchFavMsg->text().remove(QRegularExpression("\\s+"));
+    QString search_keyword = ui->searchFavMsg->text();
     std::stack<Conversation *> conv = Application::loggedUser->getConversations();
     while(!conv.empty())
     {

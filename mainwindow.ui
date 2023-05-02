@@ -76,7 +76,7 @@ border-radius : 5px ;</string>
          <item>
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="currentIndex">
-            <number>2</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="page_3">
             <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1077,8 +1077,8 @@ QScrollBar::sub-page:vertical {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>364</width>
-                <height>375</height>
+                <width>58</width>
+                <height>36</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1185,8 +1185,8 @@ QScrollBar::sub-page:vertical {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>382</width>
-             <height>512</height>
+             <width>76</width>
+             <height>54</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_22">
