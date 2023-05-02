@@ -34,8 +34,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
             this, &MainWindow::on_pushButton_7_clicked);
 
-    connect(ui->searchFavMsg, &QLineEdit::returnPressed,
+    connect(ui->searchFavMsg, &QLineEdit::textChanged,
             this, &MainWindow::on_searchForFav_clicked);
+
+    connect(ui->ContactSearchLE, &QLineEdit::textChanged,
+            this, [=]() {
+                std::string keyword = ui->ContactSearchLE->text().toStdString();
+                searchForContact(keyword);
+            });
+
+
 
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -382,5 +390,41 @@ void MainWindow::on_pushButton_9_clicked()
 void MainWindow::on_pushButton_10_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void MainWindow::searchForContact(std::string key_word)
+{
+
+    std::stack<Conversation* > convs = Application::loggedUser->getConversations();
+    QLayout* layout = ui->contactsCont->layout();
+    QLayoutItem* item;
+
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget(); // delete the widget associated with the item
+        delete item; // delete the item itself
+    }
+    while(!convs.empty())
+    {
+        if(Application::isSubstringFound(convs.top()->getName(), key_word))
+        {
+            Conversation* conversationPtr = (convs.top());
+            std::stringstream ss;
+            ss << conversationPtr;
+            std::string conversationAddress = ss.str();
+
+            // Create the QClickableGroupBox widget
+            QClickableGroupBox *conv = Application::renderConversation(conversationPtr);
+            conv->setObjectName(QString::fromStdString(conversationAddress));
+
+            connect(conv, &QClickableGroupBox::clicked, [=]() {
+                handleClickedConversation(conv);
+            });
+
+            ui->contactsCont->layout()->addWidget(conv);
+        }
+        convs.pop();
+    }
+
+
 }
 
