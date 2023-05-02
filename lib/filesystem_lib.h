@@ -31,7 +31,8 @@ private :
         JSONmessage["seen"] = message.isSeen();
         JSONmessage["sendDate"] = QJsonValue::fromVariant(message.getSendDate());
         JSONmessage["receiverID"] = message.getReceiverId().c_str();
-        JSONmessage["Favourite"] = message.isFavourite();
+        JSONmessage["Favourite"] = (message.isDeleted())? false : message.isFavourite();
+        JSONmessage["deleted"] = message.isDeleted();
         return JSONmessage;
     }
 
@@ -70,6 +71,7 @@ private :
         jsonConversation["receiver"] = (createNewJSONContact(receiver));
         jsonConversation["name"] = conversation->getName().c_str();
         jsonConversation["isFavourite"] = conversation->getIsFavourite();
+        jsonConversation["deleted"] = conversation->isDeleted();
 
         // adding conversation messages
         QJsonArray messages;
@@ -108,7 +110,8 @@ private :
 
         std::stack<Conversation*> conversationsStack = user->getConversations();
         while(!conversationsStack.empty()){
-            conversations.append(createNewJSONConversation(conversationsStack.top()));
+            if(!conversationsStack.top()->isDeleted())
+                conversations.append(createNewJSONConversation(conversationsStack.top()));
             conversationsStack.pop();
         }
         userData["conversations"] = conversations;
@@ -122,11 +125,12 @@ private :
         Message* message = new Message
             (
                 jsonMessageObj["ID"].toString().toStdString(),
-                jsonMessageObj["msgTxt"].toString().toStdString(),
+                (jsonMessageObj["deleted"].toBool())? "Deleted Message." :jsonMessageObj["msgTxt"].toString().toStdString(),
                 jsonMessageObj["receiverID"].toString().toStdString(),
                 jsonMessageObj["sendDate"].toVariant().toDateTime(),
                 jsonMessageObj["seen"].toBool(),
-                jsonMessageObj["Favourite"].toBool()
+                jsonMessageObj["Favourite"].toBool(),
+                jsonMessageObj["deleted"].toBool()
             );
         return message;
     }
@@ -138,7 +142,7 @@ private :
                 jsonContactObj["ID"].toString().toStdString(),
                 jsonContactObj["imgPath"].toString().toStdString(),
                 jsonContactObj["name"].toString().toStdString()
-            );
+             );
         return contact;
     }
 
@@ -149,7 +153,8 @@ private :
             (
                 createNewContactObject(jsonConversationObj["receiver"].toObject()),
                 jsonConversationObj["isFavourite"].toBool(),
-                jsonConversationObj["name"].toString().toStdString()
+                jsonConversationObj["name"].toString().toStdString(),
+                jsonConversationObj["deleted"].toBool()
             );
 
         // adding conversation messages

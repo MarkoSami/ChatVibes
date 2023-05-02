@@ -7,7 +7,7 @@
 #include <QDateTime>
 #include <string>
 
-Message::Message(std::string _ID, std::string _messageTxt, std::string _receiverID, QDateTime _sendDate, bool _seen , bool _Favourite = false,bool _deleted = false )
+Message::Message(std::string _ID, std::string _messageTxt, std::string _receiverID, QDateTime _sendDate, bool _seen , bool _Favourite = false,bool _deleted  )
 {
     this->ID = _ID;
     this->messageTxt = _messageTxt;

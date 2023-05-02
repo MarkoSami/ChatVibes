@@ -216,8 +216,10 @@ public:
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
             QLabel *textmsg = new QLabel() ;
+            textmsg->setObjectName("textmsg");
             textmsg->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-            textmsg->setText(QString::fromStdString(message->getMessageTxt()));
+            textmsg->setText((message->isDeleted())? "Deleted message." : QString::fromStdString(message->getMessageTxt()));
+            textmsg->setStyleSheet((message->isDeleted())? "color:red": "color:white");
             textmsg->setTextInteractionFlags(Qt::TextSelectableByMouse);
             // Set the cursor to the I-beam cursor
             textmsg->setCursor(Qt::IBeamCursor);
@@ -245,9 +247,10 @@ public:
                 hLayout->addWidget(VGroupBox);
                 hLayout->addItem(hSpacer);
                 VGroupBox->setStyleSheet("background:#"+ (QString)((message->isFavourite())? "F0A500": "3663fd" ) +"; font-size:17px ; color: white;font-weight:bold ");
-                 datemsg->setStyleSheet("color:white; font-size:8px");
+                datemsg->setStyleSheet("color:white; font-size:8px");
             }
             QClickableGroupBox *hGroupBox = new QClickableGroupBox();
+            hGroupBox->setProperty("type","message");
             hGroupBox->setObjectName(utils::convertAddressToString(message));
             hGroupBox->setLayout(hLayout);
 
@@ -329,6 +332,8 @@ public:
             hLayout->addWidget(VGroupBox);
 
             QClickableGroupBox *hGroupBox = new QClickableGroupBox();
+            hGroupBox->setProperty("type","conversation");
+            hGroupBox->setProperty("msgText","conversation");
             hGroupBox->setLayout(hLayout);
             QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
             hGroupBox->layout()->addItem(hSpacer);

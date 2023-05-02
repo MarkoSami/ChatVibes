@@ -28,7 +28,7 @@ private:
     bool deleted;
 
 public:
-    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite ,bool deleted);
+    Message(std::string _ID, std::string _messageTxt ,std::string _receiverID , QDateTime _sendDate, bool _seen , bool Favourite ,bool deleted = false);
     std::string getID();
     std::string getMessageTxt();
     QDateTime getSendDate();
@@ -38,6 +38,7 @@ public:
     void toggleFavourite();
     void setSeenStatus(bool seenStatus);
     bool isDeleted();
+    void toggleDeleted();
 
 };
 
