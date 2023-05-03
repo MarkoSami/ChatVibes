@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
         std::string conversationAddress = ss.str();
 
         // Create the QClickableGroupBox widget
-        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr);
+        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
         conversationPtr->setConversationGroupBoxAddress(renderConversation);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
@@ -160,6 +160,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
             delete item->widget();
             delete item;
         }
+        ui->contactsCont->layout() ;
         ui->horizontalLayout_5->layout()->setSpacing(10);
         ui->ContactName->setText(conversation->getName().c_str());
 
@@ -204,7 +205,7 @@ void MainWindow::renderContactMain() {
     std::string conversationAddress = ss.str();
 
     // Create the QClickableGroupBox widget
-    QClickableGroupBox *conv = Application::renderConversation(conversationPtr);
+    QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
     conv->setObjectName(QString::fromStdString(conversationAddress));
 
     connect(conv, &QClickableGroupBox::clicked, [=]() {
@@ -269,6 +270,14 @@ void MainWindow::on_pushButton_7_clicked()
     }
     else {
         if (!textMsg.isEmpty()) { // check if the text is not empty
+            // Make a copy of the original stack
+            std::stack<Conversation*> tempConversations ;
+            QLayoutItem* item;
+            while ((item = ui->contactsCont->layout()->takeAt(0)) != nullptr) {
+                delete item->widget();
+                delete item;
+            }
+
             Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
             Application::currentConversation->addNewMessage(messageTest);
             QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
@@ -278,6 +287,37 @@ void MainWindow::on_pushButton_7_clicked()
                 receiverConv->addNewMessage(messageTest);
 
         ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
+
+            while (!Application::loggedUser->getConversations().empty()) {
+
+                qDebug()<<"con Name: "<<Application::loggedUser->getConversations().top()->getName();
+                Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
+                tempConversations.push(conversationPtr);
+
+                // Convert the address to a string
+                std::stringstream ss;
+                ss << conversationPtr;
+                std::string conversationAddress = ss.str();
+
+                // Create the QClickableGroupBox widget
+                QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
+                conversationPtr->setConversationGroupBoxAddress(renderConversation);
+                renderConversation->setObjectName(QString::fromStdString(conversationAddress));
+                ui->contactsCont->layout()->addWidget(renderConversation);
+                renderConversation->setEnabled(true);
+
+                // Connect the clicked() signal to a lambda function
+                connect(renderConversation, &QClickableGroupBox::clicked, [=]() {
+                    handleClickedConversation(renderConversation);
+                });
+
+                Application::loggedUser->getConversations().pop();
+            }
+
+            while(!tempConversations.empty()){
+                Application::loggedUser->getConversations().push(tempConversations.top());
+                tempConversations.pop();
+            }
         ui->sendMessageLineEdit->setText("");
         DelayHandler = messageTest->getMessageTxt().size() ;
         QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){

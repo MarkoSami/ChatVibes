@@ -301,7 +301,13 @@ public:
 
     }
 
-    static QClickableGroupBox* renderConversation(Conversation* conversation){
+    struct conversationLayout
+    {
+        QClickableGroupBox* outerLayout;
+        QLabel * lastmessage;
+    };
+
+    static conversationLayout* renderConversation(Conversation* conversation){
 
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -371,7 +377,14 @@ public:
             hGroupBox->setStyleSheet("QGroupBox { border:none; background :#161a1d ;border-radius : 5px;}") ;
 
             hGroupBox->setCursor(Qt::PointingHandCursor);
-            return hGroupBox ;
+
+            conversationLayout* convLayout = new conversationLayout;
+
+            convLayout->outerLayout = hGroupBox ;
+            convLayout->lastmessage =  textmsg ;
+
+
+            return convLayout ;
 
     }
 };
