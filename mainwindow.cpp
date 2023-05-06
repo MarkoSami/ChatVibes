@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include "lib/gui_render.h"
 #include <QChar>
+#include <algorithm>
 
 
 
@@ -34,8 +35,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
             this, &MainWindow::on_pushButton_7_clicked);
 
-    connect(ui->searchFavMsg, &QLineEdit::returnPressed,
+    connect(ui->searchFavMsg, &QLineEdit::textChanged,
             this, &MainWindow::on_searchForFav_clicked);
+
+    connect(ui->ContactSearchLE, &QLineEdit::textChanged,
+            this, [=]() {
+                std::string keyword = ui->ContactSearchLE->text().toStdString();
+                searchForContact(keyword);
+            });
+
+
 
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -54,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     //    connect(animation, &QPropertyAnimation::finished, this, &MainWindow::show);
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+
 
     // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
@@ -181,6 +191,12 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
         // Set the current index to 2 to show the conversation
         ui->stackedWidget->setCurrentIndex(3);
+
+        QTimer::singleShot(0, this, [=]() {
+            int max = ui->scrollArea_2->verticalScrollBar()->maximum();
+            ui->scrollArea_2->verticalScrollBar()->setValue(max);
+        });
+
     });
 }
 
@@ -357,7 +373,14 @@ void MainWindow::on_viewFavMsg_clicked()
       std::list<Message* > messages = conv.top()->getMessages();
       for(auto &msg : messages)
       {
-        if(msg->isFavourite())
+        bool isFavedByUser = false ;
+
+        for (auto &putFavUser : msg->getMessageFavBy()) {
+                if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                    isFavedByUser = true;
+                }
+        }
+         if(isFavedByUser )
         {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);
@@ -390,7 +413,14 @@ void MainWindow::on_searchForFav_clicked()
         std::list<Message* > messages = conv.top()->getMessages();
         for(auto msg : messages)
         {
-            if(msg->isFavourite() && Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()))
+            bool isFavedByUser = false ;
+
+            for (auto &putFavUser : msg->getMessageFavBy()) {
+                    if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && msg->isFavourite()) {
+                        isFavedByUser = true;
+                    }
+            }
+            if(isFavedByUser&& Application::isSubstringFound(msg->getMessageTxt(), search_keyword.toStdString()) )
             {
                 QLabel *favMessage = GUI_render::renderFavMessage(*msg) ;
                 ui->favMessageCont->layout()->addWidget(favMessage);
@@ -422,5 +452,41 @@ void MainWindow::on_pushButton_9_clicked()
 void MainWindow::on_pushButton_10_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void MainWindow::searchForContact(std::string key_word)
+{
+
+    std::stack<Conversation* > convs = Application::loggedUser->getConversations();
+    QLayout* layout = ui->contactsCont->layout();
+    QLayoutItem* item;
+
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget(); // delete the widget associated with the item
+        delete item; // delete the item itself
+    }
+    while(!convs.empty())
+    {
+        if(Application::isSubstringFound(convs.top()->getName(), key_word))
+        {
+            Conversation* conversationPtr = (convs.top());
+            std::stringstream ss;
+            ss << conversationPtr;
+            std::string conversationAddress = ss.str();
+
+            // Create the QClickableGroupBox widget
+            QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
+            conv->setObjectName(QString::fromStdString(conversationAddress));
+
+            connect(conv, &QClickableGroupBox::clicked, [=]() {
+                handleClickedConversation(conv);
+            });
+
+            ui->contactsCont->layout()->addWidget(conv);
+        }
+        convs.pop();
+    }
+
+
 }
 

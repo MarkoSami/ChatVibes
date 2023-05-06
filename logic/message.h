@@ -41,7 +41,7 @@ public:
     void setSeenStatus(bool seenStatus);
     bool isDeleted();
     void toggleDeleted();
-    std::list<Contact *> getMessageFavBy();
+    std::list<Contact *>& getMessageFavBy();
     void setMessageFavBy(Contact * name);
 
 };

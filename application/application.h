@@ -215,7 +215,7 @@ public:
     static messageLayout* renderMessage(Message* message){
         bool isFavouriteHandler = false ;
 
-        for (auto putFavUser : message->getMessageFavBy()) {
+        for (auto &putFavUser : message->getMessageFavBy()) {
                 if (putFavUser->getName() == Application::loggedUser->getUserContact()->getName() && message->isFavourite()) {
                     isFavouriteHandler = true;
                 }

@@ -20,6 +20,7 @@ void QClickableGroupBox::createContextMenu()
     m_contextMenu->setStyleSheet("background:grey;font-weight:bold;padding:5px");
     m_contextMenu->setCursor(QCursor(Qt::PointingHandCursor));
 
+
     m_favAction = m_contextMenu->addAction("Favourite");
     m_favAction->setIcon(*(new QIcon(":/imgs/star.png")));
 
