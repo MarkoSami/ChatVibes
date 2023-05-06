@@ -278,7 +278,7 @@ public:
 
     static void handleDoubleClicked(messageLayout* message){
         qDebug()<<"Double clicked..!";
-        Message* messagePtr = (Message*)utils::convertStringToaddress(message->outerLayout->objectName().toStdString());
+            Message* messagePtr = (Message*)utils::convertStringToaddress(message->outerLayout->objectName());
         messagePtr->toggleFavourite();
         if (messagePtr->isFavourite()) {
                 messagePtr->setMessageFavBy(Application::loggedUser->getUserContact());
@@ -301,7 +301,13 @@ public:
 
     }
 
-    static QClickableGroupBox* renderConversation(Conversation* conversation){
+    struct conversationLayout
+    {
+        QClickableGroupBox* outerLayout;
+        QLabel * lastmessage;
+    };
+
+    static conversationLayout* renderConversation(Conversation* conversation){
 
             QHBoxLayout *hLayout = new QHBoxLayout;
             QVBoxLayout *VLayout = new QVBoxLayout ;
@@ -359,6 +365,7 @@ public:
             QClickableGroupBox *hGroupBox = new QClickableGroupBox();
             hGroupBox->setProperty("type","conversation");
             hGroupBox->setProperty("msgText","conversation");
+            hGroupBox->setProperty("labelAddress",utils::convertAddressToString(textmsg));
             hGroupBox->setLayout(hLayout);
             QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
             hGroupBox->layout()->addItem(hSpacer);
@@ -371,7 +378,14 @@ public:
             hGroupBox->setStyleSheet("QGroupBox { border:none; background :#161a1d ;border-radius : 5px;}") ;
 
             hGroupBox->setCursor(Qt::PointingHandCursor);
-            return hGroupBox ;
+
+            conversationLayout* convLayout = new conversationLayout;
+
+            convLayout->outerLayout = hGroupBox ;
+            convLayout->lastmessage =  textmsg ;
+
+
+            return convLayout ;
 
     }
 };

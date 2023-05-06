@@ -402,13 +402,9 @@ public:
                                     }
                                 }
                                 Application::stories[publisherName] = stories;
-
-                            }
-
                         }
-
-
                     }
+                }
             }
         }
     }

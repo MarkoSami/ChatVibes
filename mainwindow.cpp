@@ -35,8 +35,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->sendMessageLineEdit, &QLineEdit::returnPressed,
             this, &MainWindow::on_pushButton_7_clicked);
 
-    connect(ui->searchFavMsg, &QLineEdit::returnPressed,
+    connect(ui->searchFavMsg, &QLineEdit::textChanged,
             this, &MainWindow::on_searchForFav_clicked);
+
+    connect(ui->ContactSearchLE, &QLineEdit::textChanged,
+            this, [=]() {
+                std::string keyword = ui->ContactSearchLE->text().toStdString();
+                searchForContact(keyword);
+            });
+
+
 
     GUI_lib::setUpWindow(this, "Chat Vibes", ":/imgs/logo.png");
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -55,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     //    connect(animation, &QPropertyAnimation::finished, this, &MainWindow::show);
 
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+
 
     // Make a copy of the original stack
     std::stack<Conversation*> tempConversations ;
@@ -75,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
         std::string conversationAddress = ss.str();
 
         // Create the QClickableGroupBox widget
-        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr);
+        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
         conversationPtr->setConversationGroupBoxAddress(renderConversation);
         renderConversation->setObjectName(QString::fromStdString(conversationAddress));
         ui->contactsCont->layout()->addWidget(renderConversation);
@@ -161,6 +170,7 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
             delete item->widget();
             delete item;
         }
+        ui->contactsCont->layout() ;
         ui->horizontalLayout_5->layout()->setSpacing(10);
         ui->ContactName->setText(conversation->getName().c_str());
 
@@ -181,6 +191,12 @@ void MainWindow::handleClickedConversation(QGroupBox *renderConversation) {
 
         // Set the current index to 2 to show the conversation
         ui->stackedWidget->setCurrentIndex(3);
+
+        QTimer::singleShot(0, this, [=]() {
+            int max = ui->scrollArea_2->verticalScrollBar()->maximum();
+            ui->scrollArea_2->verticalScrollBar()->setValue(max);
+        });
+
     });
 }
 
@@ -205,7 +221,7 @@ void MainWindow::renderContactMain() {
     std::string conversationAddress = ss.str();
 
     // Create the QClickableGroupBox widget
-    QClickableGroupBox *conv = Application::renderConversation(conversationPtr);
+    QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
     conv->setObjectName(QString::fromStdString(conversationAddress));
 
     connect(conv, &QClickableGroupBox::clicked, [=]() {
@@ -270,21 +286,29 @@ void MainWindow::on_pushButton_7_clicked()
     }
     else {
         if (!textMsg.isEmpty()) { // check if the text is not empty
+            // Make a copy of the original stack
+            std::stack<Conversation*> tempConversations ;
+            QLayoutItem* item;
+
+
             Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
             Application::currentConversation->addNewMessage(messageTest);
+            QLabel* messageLabelAddress = (QLabel*)utils::convertStringToaddress(Application::currentConversation->getConversationGroupBoxAddress()->property("labelAddress").toString());
+            messageLabelAddress->setText(messageTest->getMessageTxt().c_str());
             QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
 
             Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
             if(receiverConv != nullptr)
                 receiverConv->addNewMessage(messageTest);
 
-        ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
-        ui->sendMessageLineEdit->setText("");
-        DelayHandler = messageTest->getMessageTxt().size() ;
-        QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
-            ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
-        });
-      }
+            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
+
+            ui->sendMessageLineEdit->setText("");
+            DelayHandler = messageTest->getMessageTxt().size() ;
+            QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
+                ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
+            });
+        }
 
       }
 
@@ -397,5 +421,41 @@ void MainWindow::on_pushButton_9_clicked()
 void MainWindow::on_pushButton_10_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void MainWindow::searchForContact(std::string key_word)
+{
+
+    std::stack<Conversation* > convs = Application::loggedUser->getConversations();
+    QLayout* layout = ui->contactsCont->layout();
+    QLayoutItem* item;
+
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item->widget(); // delete the widget associated with the item
+        delete item; // delete the item itself
+    }
+    while(!convs.empty())
+    {
+        if(Application::isSubstringFound(convs.top()->getName(), key_word))
+        {
+            Conversation* conversationPtr = (convs.top());
+            std::stringstream ss;
+            ss << conversationPtr;
+            std::string conversationAddress = ss.str();
+
+            // Create the QClickableGroupBox widget
+            QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
+            conv->setObjectName(QString::fromStdString(conversationAddress));
+
+            connect(conv, &QClickableGroupBox::clicked, [=]() {
+                handleClickedConversation(conv);
+            });
+
+            ui->contactsCont->layout()->addWidget(conv);
+        }
+        convs.pop();
+    }
+
+
 }
 

@@ -3,6 +3,7 @@
 #define UTILS_H
 #include <iostream>
 #include<sstream>
+#include<QString>
 
 
 
@@ -13,15 +14,15 @@ class utils
 public:
     utils();
 
-    static std::string convertAddressToString(void* address){
+    static QString convertAddressToString(void* address){
         std::stringstream ss ;
         ss << address;
         std::string stringAddress = ss.str();
-        return stringAddress;
+        return stringAddress.c_str();
     }
 
-    static void* convertStringToaddress(std::string str){
-        std::stringstream ss(str);
+    static void* convertStringToaddress(QString str){
+        std::stringstream ss(str.toStdString());
         void* address;
         ss >> address;// Read the address from the stringstream.
         return address;

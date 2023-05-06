@@ -58,7 +58,7 @@ void QClickableGroupBox::handleDeleteAction()
 {
     // Delete the selected item here
     qDebug() << "Item deleted";
-    void* object = utils::convertStringToaddress(this->objectName().toStdString());
+    void* object = utils::convertStringToaddress(this->objectName());
     if(this->property("type") == "message"){
         // changing the GUI of the message to be deleted
         QLabel* msgText = this->findChild<QLabel*>("textmsg");
