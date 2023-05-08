@@ -150,6 +150,48 @@ public:
         return favMessage ;
     }
 
+    static void renderConversations(MainWindow* mainWindow){
+
+        // Make a copy of the original stack
+        std::stack<Conversation*> tempConversations ;
+
+        qDebug()<<Application::loggedUser->getUserName() ;
+        qDebug()<<Application::loggedUser->getConversations().size();
+
+        // Render the copied conversations
+        while (!Application::loggedUser->getConversations().empty()) {
+
+            qDebug()<<"con Name: "<<Application::loggedUser->getConversations().top()->getName();
+            Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
+            tempConversations.push(conversationPtr);
+
+            // Convert the address to a string
+            std::stringstream ss;
+            ss << conversationPtr;
+            std::string conversationAddress = ss.str();
+
+            // Create the QClickableGroupBox widget
+            QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
+            conversationPtr->setConversationGroupBoxAddress(renderConversation);
+            renderConversation->setObjectName(QString::fromStdString(conversationAddress));
+            mainWindow->getUI()->contactsCont->layout()->addWidget(renderConversation);
+            renderConversation->setEnabled(true);
+
+            // Connect the clicked() signal to a lambda function
+            MainWindow::connect(renderConversation, &QClickableGroupBox::clicked, [=]() {
+                mainWindow->handleClickedConversation(renderConversation);
+            });
+
+            Application::loggedUser->getConversations().pop();
+        }
+
+        while(!tempConversations.empty()){
+            Application::loggedUser->getConversations().push(tempConversations.top());
+            tempConversations.pop();
+        }
+    }
+
+
 };
 
 #endif // GUI_RENDER_H

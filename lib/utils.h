@@ -1,9 +1,11 @@
-
 #ifndef UTILS_H
 #define UTILS_H
 #include <iostream>
 #include<sstream>
 #include<QString>
+#include <stack>
+#include <iostream>
+#include "logic/conversation.h"
 
 
 
@@ -27,6 +29,29 @@ public:
         ss >> address;// Read the address from the stringstream.
         return address;
     }
+
+    static void moveToTop(std::stack<Conversation*>& conversations,Conversation* targetConversation){
+        std::stack<Conversation*> temp;
+        while(!conversations.empty()){
+            Conversation* topConversastion = conversations.top();
+            conversations.pop();
+
+            if(topConversastion == targetConversation){
+
+                while(!temp.empty()){
+                    conversations.push(temp.top());
+                    temp.pop();
+                }
+                conversations.push(topConversastion);
+                return;
+            }
+            temp.push(topConversastion);
+
+        }
+
+    }
+
+
 };
 
 #endif // UTILS_H

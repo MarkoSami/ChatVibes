@@ -20,6 +20,7 @@
 #include "lib/gui_render.h"
 #include <QChar>
 #include <algorithm>
+#include "lib/utils.h"
 
 
 
@@ -65,43 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
 
-    // Make a copy of the original stack
-    std::stack<Conversation*> tempConversations ;
-
-    qDebug()<<Application::loggedUser->getUserName() ;
-    qDebug()<<Application::loggedUser->getConversations().size();
-
-    // Render the copied conversations
-    while (!Application::loggedUser->getConversations().empty()) {
-
-        qDebug()<<"con Name: "<<Application::loggedUser->getConversations().top()->getName();
-        Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
-        tempConversations.push(conversationPtr);
-
-        // Convert the address to a string
-        std::stringstream ss;
-        ss << conversationPtr;
-        std::string conversationAddress = ss.str();
-
-        // Create the QClickableGroupBox widget
-        QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
-        conversationPtr->setConversationGroupBoxAddress(renderConversation);
-        renderConversation->setObjectName(QString::fromStdString(conversationAddress));
-        ui->contactsCont->layout()->addWidget(renderConversation);
-        renderConversation->setEnabled(true);
-
-        // Connect the clicked() signal to a lambda function
-        connect(renderConversation, &QClickableGroupBox::clicked, [=]() {
-            handleClickedConversation(renderConversation);
-        });
-
-        Application::loggedUser->getConversations().pop();
-    }
-
-    while(!tempConversations.empty()){
-        Application::loggedUser->getConversations().push(tempConversations.top());
-        tempConversations.pop();
-    }
+    ///////////////////////
+    GUI_render::renderConversations(this);
 
 
 }
@@ -216,13 +182,11 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::renderContactMain() {
 
     Conversation* conversationPtr = (Application::loggedUser->getConversations().top());
-    std::stringstream ss;
-    ss << conversationPtr;
-    std::string conversationAddress = ss.str();
 
     // Create the QClickableGroupBox widget
     QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
-    conv->setObjectName(QString::fromStdString(conversationAddress));
+    conversationPtr->setConversationGroupBoxAddress(conv);
+    conv->setObjectName(utils::convertAddressToString(conversationPtr));
 
     connect(conv, &QClickableGroupBox::clicked, [=]() {
         handleClickedConversation(conv);
@@ -288,12 +252,16 @@ void MainWindow::on_pushButton_7_clicked()
         if (!textMsg.isEmpty()) { // check if the text is not empty
             // Make a copy of the original stack
             std::stack<Conversation*> tempConversations ;
-            QLayoutItem* item;
 
 
             Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
             Application::currentConversation->addNewMessage(messageTest);
-            QLabel* messageLabelAddress = (QLabel*)utils::convertStringToaddress(Application::currentConversation->getConversationGroupBoxAddress()->property("labelAddress").toString());
+
+            Conversation* crnt = Application::currentConversation;
+            QClickableGroupBox* gb = crnt->getConversationGroupBoxAddress();
+            QString addrs = gb->property("labelAddress").toString();
+            QLabel* messageLabelAddress = (QLabel*)utils::convertStringToaddress(addrs);
+
             messageLabelAddress->setText(messageTest->getMessageTxt().c_str());
             QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
 
@@ -308,6 +276,17 @@ void MainWindow::on_pushButton_7_clicked()
             QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
                 ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
             });
+
+            utils::moveToTop(Application::loggedUser->getConversations(),Application::currentConversation);
+            QLayout* layout = ui->contactsCont->layout();
+            QLayoutItem* item;
+
+            while ((item = layout->takeAt(0)) != nullptr) {
+                delete item->widget(); // delete the widget associated with the item
+                delete item; // delete the item itself
+            }
+            GUI_render::renderConversations(this);
+
         }
 
       }
@@ -438,14 +417,10 @@ void MainWindow::searchForContact(std::string key_word)
     {
         if(Application::isSubstringFound(convs.top()->getName(), key_word))
         {
-            Conversation* conversationPtr = (convs.top());
-            std::stringstream ss;
-            ss << conversationPtr;
-            std::string conversationAddress = ss.str();
 
             // Create the QClickableGroupBox widget
-            QClickableGroupBox *conv = Application::renderConversation(conversationPtr)->outerLayout;
-            conv->setObjectName(QString::fromStdString(conversationAddress));
+            QClickableGroupBox *conv = Application::renderConversation(convs.top())->outerLayout;
+            conv->setObjectName(utils::convertAddressToString(convs.top()));
 
             connect(conv, &QClickableGroupBox::clicked, [=]() {
                 handleClickedConversation(conv);

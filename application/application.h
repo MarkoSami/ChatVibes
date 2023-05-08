@@ -363,9 +363,11 @@ public:
             hLayout->addWidget(VGroupBox);
 
             QClickableGroupBox *hGroupBox = new QClickableGroupBox();
+
             hGroupBox->setProperty("type","conversation");
             hGroupBox->setProperty("msgText","conversation");
             hGroupBox->setProperty("labelAddress",utils::convertAddressToString(textmsg));
+
             hGroupBox->setLayout(hLayout);
             QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
             hGroupBox->layout()->addItem(hSpacer);

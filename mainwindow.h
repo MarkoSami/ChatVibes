@@ -47,7 +47,6 @@ private slots:
 
     void renderContactMain();
 
-    void handleClickedConversation(QGroupBox*);
 
     void on_addNewStoryBtn_clicked();
 
@@ -79,6 +78,8 @@ private:
     AddStory *addStoryWin ;
 
 public slots:
+    void handleClickedConversation(QGroupBox*);
+
     static void handleStoryClicked(QGroupBox* , std::list<Story*> storiesList , MainWindow* mainWindow){
 
         Story *story = storiesList.front() ;
