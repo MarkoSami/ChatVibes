@@ -225,9 +225,10 @@ private :
 
             // adding conversations
             QJsonArray jsonConversations = jsonUserObj["conversations"].toArray();
-            for(auto conversation : jsonConversations){
+            for(int i = jsonConversations.size() - 1; i >= 0; i--){
+                auto conversation = jsonConversations[i];
                 Conversation *conversationObj = createNewConversationObject(conversation.toObject());
-            user->addNewConversation(conversationObj);
+                user->addNewConversation(conversationObj);
             }
 
         return user;

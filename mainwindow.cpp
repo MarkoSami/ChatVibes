@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ///////////////////////
-    GUI_render::renderConversations(this);
+    GUI_render::renderConversations(this,false);
 
 
 }
@@ -192,7 +192,10 @@ void MainWindow::renderContactMain() {
         handleClickedConversation(conv);
     });
 
-    ui->contactsCont->layout()->addWidget(conv);
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(ui->contactsCont->layout());
+    if (layout) {
+         layout->insertWidget(0, conv);
+    }
 
 }
 
@@ -285,7 +288,7 @@ void MainWindow::on_pushButton_7_clicked()
                 delete item->widget(); // delete the widget associated with the item
                 delete item; // delete the item itself
             }
-            GUI_render::renderConversations(this);
+            GUI_render::renderConversations(this,false);
 
         }
 

@@ -150,7 +150,7 @@ public:
         return favMessage ;
     }
 
-    static void renderConversations(MainWindow* mainWindow){
+    static void renderConversations(MainWindow* mainWindow,bool reversed){
 
         // Make a copy of the original stack
         std::stack<Conversation*> tempConversations ;
@@ -174,7 +174,15 @@ public:
             QClickableGroupBox *renderConversation = Application::renderConversation(conversationPtr)->outerLayout;
             conversationPtr->setConversationGroupBoxAddress(renderConversation);
             renderConversation->setObjectName(QString::fromStdString(conversationAddress));
-            mainWindow->getUI()->contactsCont->layout()->addWidget(renderConversation);
+            if(!reversed)
+                mainWindow->getUI()->contactsCont->layout()->addWidget(renderConversation);
+            else{
+                QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(mainWindow->getUI()->contactsCont->layout());
+                if (layout) {
+                    layout->insertWidget(0, renderConversation);
+                }
+
+            }
             renderConversation->setEnabled(true);
 
             // Connect the clicked() signal to a lambda function
