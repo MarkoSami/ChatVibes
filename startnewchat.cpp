@@ -19,7 +19,13 @@ StartNewChat::~StartNewChat()
 
 void StartNewChat::on_pushButton_clicked()
 {
-
+    std::string id = ui->contactName->text().toStdString();
+    Contact *newContact = new Contact(id);
+    Conversation* newConversation = new Conversation(newContact , false , id);
+    newConversation->setAnonymously(true);
+    Application::loggedUser->addNewConversation(newConversation);
+    newConversation->getReceiver()->setImgPath(Application::renderWithPhoto(newContact->getName()));
+    emit renderConversation() ;
 }
 
 

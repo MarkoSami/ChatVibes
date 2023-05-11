@@ -32,6 +32,13 @@ QClickableGroupBox* Conversation::getConversationGroupBoxAddress(){
 void Conversation::setConversationGroupBoxAddress(QClickableGroupBox* address){
     this->conversationGroupBoxAddress = address;
 }
+bool Conversation::getIsAnonymously() {
+    return this->isAnonymously ;
+}
+
+void Conversation::setAnonymously(bool _isAnonymously) {
+    this->isAnonymously = _isAnonymously ;
+}
 
 
 

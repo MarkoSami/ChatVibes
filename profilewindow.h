@@ -27,6 +27,7 @@ private slots:
     void rebootSlot();
     void on_pushButton_2_clicked();
 
+
 private:
     Ui::profileWindow *ui;
     QAction *actionReboot;

@@ -118,7 +118,7 @@ padding:5px;
 </string>
         </property>
         <property name="placeholderText">
-         <string>Type Contact name</string>
+         <string>Type username</string>
         </property>
        </widget>
       </item>

@@ -26,6 +26,7 @@ private:
     QClickableGroupBox* conversationGroupBoxAddress;
     bool isFavourite;
     bool deleted;
+    bool isAnonymously;
 
 
 
@@ -44,6 +45,9 @@ public:
         receiver->setName(_receiver.getName());
         receiver->setImgPath(_receiver.getImgPath());
     }
+
+    bool getIsAnonymously();
+    void setAnonymously(bool isAnonymously) ;
 
     bool isDeleted();
     void toggleDeleted();

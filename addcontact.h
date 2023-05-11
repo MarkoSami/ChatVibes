@@ -2,6 +2,7 @@
 #define ADDCONTACT_H
 
 #include <QDialog>
+#include <QLineEdit>
 
 namespace Ui {
 class AddContact;
@@ -14,6 +15,9 @@ class AddContact : public QDialog
 public:
     explicit AddContact(QWidget *parent = nullptr);
     ~AddContact();
+
+public slots:
+    void setText(QString text);
 
 
 signals: void renderConversation();

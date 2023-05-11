@@ -335,6 +335,13 @@ padding: 5px;}
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="text">
+            <string>Show my img</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButton_2">
            <property name="styleSheet">
             <string notr="true">#pushButton_2{background-color :rgb(203, 33, 36);

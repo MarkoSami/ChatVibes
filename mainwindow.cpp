@@ -239,6 +239,7 @@ void MainWindow::on_pushButton_clicked()
 {
     StartNewChatWin = new StartNewChat();
     StartNewChatWin->show();
+    connect(StartNewChatWin, SIGNAL(renderConversation()), this, SLOT(renderContactMain()));
 }
 
 
@@ -257,25 +258,28 @@ void MainWindow::on_pushButton_7_clicked()
             std::stack<Conversation*> tempConversations ;
 
 
-            Message *messageTest = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
-            Application::currentConversation->addNewMessage(messageTest);
+            Message *messageText = new Message(Application::loggedUser->getUserName(), textMsg.toStdString(), Application::currentConversation->getReceiver()->getName(), QDateTime::currentDateTime(), false, false);
+            Application::currentConversation->addNewMessage(messageText);
 
             Conversation* crnt = Application::currentConversation;
             QClickableGroupBox* gb = crnt->getConversationGroupBoxAddress();
             QString addrs = gb->property("labelAddress").toString();
             QLabel* messageLabelAddress = (QLabel*)utils::convertStringToaddress(addrs);
 
-            messageLabelAddress->setText(messageTest->getMessageTxt().c_str());
+            messageLabelAddress->setText(messageText->getMessageTxt().c_str());
             QClickableGroupBox* ConversationgroubBoxAddress  = Application::currentConversation->getConversationGroupBoxAddress();
 
-            Conversation *receiverConv = Application::getReceiverConversation(Application::currentConversation->getReceiver()->getName());
-            if(receiverConv != nullptr)
-                receiverConv->addNewMessage(messageTest);
+            std::string recieverId = Application::currentConversation->getReceiver()->getID();
+            std::string recieverName = Application::currentConversation->getReceiver()->getName();
 
-            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageTest)->outerLayout);
+            Conversation *receiverConv = Application::getReceiverConversation(recieverName == "" ? recieverId : recieverName);
+            if(receiverConv != nullptr)
+            receiverConv->addNewMessage(messageText);
+
+            ui->verticalGroupBox_3->layout()->addWidget(Application::renderMessage(messageText)->outerLayout);
 
             ui->sendMessageLineEdit->setText("");
-            DelayHandler = messageTest->getMessageTxt().size() ;
+            DelayHandler = messageText->getMessageTxt().size() ;
             QTimer::singleShot(DelayHandler = DelayHandler <= 300 ? DelayHandler + 100 : 300 , [=](){
                 ui->scrollArea_2->verticalScrollBar()->setValue(ui->scrollArea_2->verticalScrollBar()->maximum());
             });
@@ -435,5 +439,14 @@ void MainWindow::searchForContact(std::string key_word)
     }
 
 
+}
+
+
+void MainWindow::on_AddContactBtn_clicked()
+{
+    addContactWin = new AddContact() ;
+    QString CurrentConvID = QString::fromStdString(Application::currentConversation->getName()) ;
+    addContactWin->setText(CurrentConvID) ;
+    addContactWin->show();
 }
 

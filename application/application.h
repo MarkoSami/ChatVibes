@@ -41,7 +41,7 @@ public:
 
         for(auto *user : Application::users)
         {
-            if( user != nullptr && userId == user->getUserID()) {
+            if( user != nullptr && userId == user->getUserName()) {
                 return user;
             }
         }
@@ -129,10 +129,9 @@ public:
         if (myConv == nullptr) {
             for (auto &user : Application::users) {
                     if (user->getUserName() == receiverName) {
-                        Contact *newContact = new Contact("fsfsa" , loggedUser->getIMGpath() , loggedUser->getUserName());
-                        Conversation *newConv = new Conversation(newContact , false , loggedUser->getUserName()) ;
+                        Contact *newContact = new Contact(loggedUser->getUserID());
+                        Conversation *newConv = new Conversation(newContact , false , loggedUser->getUserID()) ;
                         myConv = newConv ;
-                        user->addContact(newContact);
                         user->addNewConversation(newConv);
                         break ;
                 }
@@ -167,7 +166,7 @@ public:
     static std::string renderWithPhoto(std::string receiverName) {
 
         for (auto &user : Application::users )  {
-            if (user->getUserName() == receiverName) {
+            if (user->getUserName() == receiverName && user->getShowImg()) {
                 return user->getIMGpath() ;
             }
         }
@@ -327,7 +326,10 @@ public:
 
             QString imgType = IMG_PATH == ":/imgs/Profile (2).png"? "image" : "border-image";
             pic->setStyleSheet( imgType+  ":url(" + IMG_PATH + ");border-radius:8px");
-            QLabel *senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
+            QLabel *senderName = new QLabel();
+            if (conversation->getIsAnonymously()) senderName = new QLabel(QString::fromStdString(conversation->getReceiver()->getID())) ;
+            else senderName = new QLabel(QString::fromStdString(conversation->getName())) ;
+
             QLabel *textmsg = new QLabel() ;
             textmsg->setObjectName("textmsg");
             QString texttest = QString::fromStdString((conversation->getMessages().empty())? "Chat now !" : conversation->getMessages().back()->getMessageTxt() );
@@ -367,6 +369,7 @@ public:
             hGroupBox->setProperty("type","conversation");
             hGroupBox->setProperty("msgText","conversation");
             hGroupBox->setProperty("labelAddress",utils::convertAddressToString(textmsg));
+            hGroupBox->setProperty("ContactNameAddress",utils::convertAddressToString(senderName));
 
             hGroupBox->setLayout(hLayout);
             QSpacerItem* hSpacer = new QSpacerItem(10, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
